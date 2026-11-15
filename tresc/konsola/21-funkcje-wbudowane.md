@@ -1,108 +1,105 @@
 ---
 tytul: "sum, len, min, max, sorted, reversed, zip"
 dzial: konsola
-tagi: [python, sum, len, min, max, sorted, sort, reversed, zip, funkcje wbudowane]
+tagi: [python, sum, len, min, max, sorted, sort, count, index, funkcje wbudowane]
 status: do-weryfikacji
 zrodla:
+  - https://docs.python.org/3/library/functions.html#sum
   - https://docs.python.org/3/library/functions.html#sorted
-  - https://docs.python.org/3/library/functions.html#max
-  - https://docs.python.org/3/library/functions.html#reversed
-  - https://docs.python.org/3/library/functions.html#zip
   - https://docs.python.org/3/library/stdtypes.html#list.sort
-  - Zasady oceniania INF.04 2021 cze (R.2.2, R.2.3) i 2025 sty (R.2.5, R.2.10)
-arkusze: [2021 cze, 2025 sty]
+  - https://docs.python.org/3/library/stdtypes.html#common-sequence-operations
+  - Arkusz INF.04 2021 cze (założenia: bez gotowych funkcji sortowania i szukania maksimum)
+  - Zasady oceniania INF.04 2021 cze (R.2.1-R.2.3), 2025 sty (R.2.5, R.2.10)
+arkusze: [2021 cze, 2024 cze, 2025 sty]
 ---
 
 ## Po co to jest
 
-Gotowe funkcje skracają sprawdzanie wyników i program główny: suma, średnia, największa wartość. Na egzaminie bywają jednak ==zakazane==: w 2021 cze sortowanie i szukanie maksimum miały być napisane bez gotowych funkcji. Wtedy idź do karty o ręcznym liczeniu.
+Gotowe funkcje skracają średnią (2025 sty), liczenie powtórzeń oczek (2024 cze) i wyszukiwanie (2025 sty). Bywają jednak ==zakazane==, jak sortowanie i maksimum w 2021 cze. Wtedy piszesz pętlę z karty o ręcznym liczeniu.
 
 ## Jak to działa
 
-Każda funkcja dostaje listę i coś zwraca. Ważne, ==czy zwraca nową rzecz, czy zmienia listę==. Dla `oceny = [4, 2, 5, 3, 5]`:
+Ważne, ==czy funkcja zwraca nową rzecz, czy zmienia listę==. Dla `oceny = [4, 2, 5, 3, 5]`:
 
-| Wywołanie | Zwraca | Lista `oceny` po wywołaniu |
+| Wywołanie | Zwraca | `oceny` po wywołaniu |
 | --- | --- | --- |
-| `sum(oceny)` | `19` | bez zmian |
-| `len(oceny)` | `5` | bez zmian |
+| `sum(oceny)`, `len(oceny)` | `19`, `5` | bez zmian |
 | `min(oceny)`, `max(oceny)` | `2`, `5` | bez zmian |
-| `sorted(oceny)` | nowa lista `[2, 3, 4, 5, 5]` | bez zmian |
+| `oceny.count(5)` | `2`, tyle razy jest 5 | bez zmian |
+| `5 in oceny` | `True` | bez zmian |
+| `oceny.index(5)` | `2`, pierwsze wystąpienie | bez zmian |
 | `sorted(oceny, reverse=True)` | nowa lista `[5, 5, 4, 3, 2]` | bez zmian |
 | `oceny.sort()` | `None` | `[2, 3, 4, 5, 5]` |
-| `reversed(oceny)` | iterator (jednorazowy) | bez zmian |
-| `zip(imiona, oceny)` | iterator par | bez zmian |
 
-`zip` paruje elementy o tym samym indeksie: `("Ola", 4)`, `("Jan", 2)` i tak dalej. Kończy na krótszej liście. `key=len` każe porównywać nie same napisy, tylko ich długości. Przy remisie `max` i `min` oddają pierwszy z równych.
+Kiedy wolno ich użyć:
+
+| Arkusz | Co | Wolno? |
+| --- | --- | --- |
+| 2021 cze | `sorted`, `sort`, `max` | nie, treść zadania zabrania |
+| 2025 sty | `index`, `in` do wyszukiwania | tak, R.2.5 dopuszcza wbudowaną metodę |
+| 2025 sty | `sum(...) / len(...)` | tak, R.2.10 chce suma / rozmiar |
+| 2024 cze | `count` do punktów | treść tego nie zabrania |
+
+Żadne zadanie z arkuszy 2021-2026 nie wymaga `reversed` ani `zip` z tytułu karty. Napis odwracasz wycinkiem `[::-1]` (karta o palindromie).
 
 ## Składnia do zapamiętania
 
 ```python
 suma = sum(oceny)
 srednia = sum(oceny) / len(oceny)
-najwieksza = max(oceny)
-indeks = oceny.index(max(oceny))
-rosnaco = sorted(oceny)
+ile_piatek = oceny.count(5)
+if szukana in oceny:
+    indeks = oceny.index(szukana)
+else:
+    indeks = -1
 malejaco = sorted(oceny, reverse=True)
 oceny.sort()
-od_konca = list(reversed(oceny))
-for imie, ocena in zip(imiona, oceny):
-    print(f"{imie}: {ocena}")
 ```
 
 ## Przykład
 
-```python wbudowane.py {5,8,10,12,14}
+```python wbudowane.py {4,6,9,11,13}
 oceny = [4, 2, 5, 3, 5]
-imiona = ["Ola", "Jan", "Ewa", "Piotr", "Zosia"]
 
-print("Suma:", sum(oceny), "ile:", len(oceny))
+print("Suma:", sum(oceny), "| ile:", len(oceny))
 print("Średnia:", sum(oceny) / len(oceny))
-print("Min:", min(oceny), "max:", max(oceny))
-print("Indeks max:", oceny.index(max(oceny)))
-for imie, ocena in zip(imiona, oceny):
-    print(f"{imie}: {ocena}")
+print("Min:", min(oceny), "| max:", max(oceny))
+print("Ile piątek:", oceny.count(5))
+szukana = 5
+if szukana in oceny:
+    print("Pierwsza piątka pod indeksem", oceny.index(szukana))
+
 malejaco = sorted(oceny, reverse=True)
-print("sorted:", malejaco, "oryginał:", oceny)
+print("sorted:", malejaco, "| oryginał:", oceny)
 wynik = oceny.sort()
-print("sort:", oceny, "zwraca:", wynik)
-print("Od końca:", list(reversed(imiona)))
-print("Najdłuższe imię:", max(imiona, key=len))
+print("sort:", oceny, "| zwraca:", wynik)
 ```
 
 ```wynik
 $ python wbudowane.py
-Suma: 19 ile: 5
+Suma: 19 | ile: 5
 Średnia: 3.8
-Min: 2 max: 5
-Indeks max: 2
-Ola: 4
-Jan: 2
-Ewa: 5
-Piotr: 3
-Zosia: 5
-sorted: [5, 5, 4, 3, 2] oryginał: [4, 2, 5, 3, 5]
-sort: [2, 3, 4, 5, 5] zwraca: None
-Od końca: ['Zosia', 'Piotr', 'Ewa', 'Jan', 'Ola']
-Najdłuższe imię: Piotr
+Min: 2 | max: 5
+Ile piątek: 2
+Pierwsza piątka pod indeksem 2
+sorted: [5, 5, 4, 3, 2] | oryginał: [4, 2, 5, 3, 5]
+sort: [2, 3, 4, 5, 5] | zwraca: None
 ```
 
 1. Średnia to suma przez liczbę elementów; `/` zawsze daje `float`.
-2. `zip` rozpakowuje każdą parę od razu do `imie` i `ocena`.
-3. `sorted` oddaje nową listę, oryginał zostaje.
-4. `sort()` sortuje w miejscu i zwraca `None`.
-5. `reversed` daje iterator, więc do wypisania owijasz go w `list()`.
+2. `count` liczy, ile razy wartość jest w liście.
+3. `index` wołasz dopiero po sprawdzeniu `in`, bo przy braku elementu rzuca `ValueError`. W 2025 sty metoda zwracała wtedy -1.
+4. `sorted` oddaje nową listę, oryginał zostaje.
+5. `sort()` sortuje w miejscu i zwraca `None`.
 
 ## Pułapki
 
-- Gdy treść zabrania gotowych funkcji do sortowania i szukania maksimum (2021 cze), `sorted`, `sort` i `max` odbierają punkty za algorytm. Pisz pętlę ręcznie.
+- 2021 cze: treść zabrania gotowych funkcji sortowania i szukania maksimum, a zasady sprawdzają w kodzie metodę szukającą i algorytm przez wybieranie (R.2.1-R.2.3). `max`, `sorted` czy `sort` łamią treść i nie pokazują algorytmu. Pisz pętlę.
 - `oceny = oceny.sort()` zostawia `None` zamiast listy.
-- `print(reversed(oceny))` wypisuje `<list_reverseiterator object ...>`. Iterator zużywa się po jednym przejściu: drugi `list()` da `[]`.
-- `max([])` i `min([])` rzucają `ValueError`. Sprawdź najpierw, czy lista nie jest pusta.
-- `sum(oceny) / len(oceny)` to dokładnie wzór suma / rozmiar z 2025 sty (R.2.10). W klasie dziel przez pole z liczbą elementów.
-- Wbudowane wyszukiwanie (`index`, `in`) jest dopuszczone w 2025 sty (R.2.5), ale `index` rzuca `ValueError`, gdy elementu nie ma.
+- W klasie z 2025 sty dziel przez pole z liczbą elementów: `sum(self.__liczby) / self.__rozmiar` (R.2.10).
 
 ## Powiązane
 
 - [Ręcznie: min, max, suma, liczenie](#/karta/konsola/25-reczne-min-max-suma)
 - [Sortowanie przez wybieranie](#/karta/konsola/29-sortowanie-przez-wybieranie)
-- [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
+- [Palindrom i odwracanie napisu](#/karta/konsola/38-palindrom-i-odwracanie)

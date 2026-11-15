@@ -6,7 +6,8 @@ status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/tutorial/controlflow.html#for-statements
   - https://docs.python.org/3/library/stdtypes.html#range
-  - Zasady oceniania INF.04 2021 cze (R.2.1, R.2.2), 2024 cze (R.2.6), 2025 sty (R.2.3, R.2.9, R.2.10)
+  - Arkusz INF.04 2021 cze (założenia: bez gotowych funkcji sortowania i szukania maksimum)
+  - Zasady oceniania INF.04 2021 cze (R.2.1, R.2.2, R.2.4), 2024 cze (R.2.6), 2025 sty (R.2.9, R.2.10)
 arkusze: [2021 cze, 2024 cze, 2025 sty]
 ---
 
@@ -27,20 +28,11 @@ Maksimum: ==zacznij od pierwszego elementu==, potem porównuj z każdym następn
 
 Znak `>` zostawia pierwsze wystąpienie. Z `>=` wynik byłby 3, czyli ostatnie wystąpienie.
 
-Ten sam przebieg, gdy start to `najwieksza = 0` zamiast pierwszego elementu:
-
-| Element | `najwieksza` przed | większy? | `najwieksza` po |
-| --- | --- | --- | --- |
-| -5 | 0 | nie | 0 |
-| -2 | 0 | nie | 0 |
-| -8, -2, -3 | 0 | nie | 0 |
-
-Wynik 0, a takiej liczby w liście nie ma. Dla samych dodatnich błąd jest niewidoczny, dlatego łatwo go przeoczyć.
+Suma i licznik działają tak samo: zmienna startuje od 0 ==przed pętlą== (w środku zerowałaby się w każdym obrocie), a w każdym obrocie dodajesz element albo, gdy warunek jest prawdziwy, 1.
 
 ## Składnia do zapamiętania
 
 ```python
-najwieksza = liczby[0]
 indeks = 0
 for i in range(1, len(liczby)):
     if liczby[i] > liczby[indeks]:
@@ -79,7 +71,7 @@ indeks = indeks_maksimum(temperatury)
 print("Max:", temperatury[indeks], "pod indeksem", indeks)
 print("Min:", najmniejsza)
 print("Suma:", suma, "| średnia:", suma / len(temperatury))
-print("Dni z mrozem -5 lub większym:", ile_mrozow)
+print("Dni z temperaturą -5 lub niższą:", ile_mrozow)
 ```
 
 ```wynik
@@ -87,24 +79,22 @@ $ python reczne.py
 Max: -2 pod indeksem 1
 Min: -8
 Suma: -20 | średnia: -4.0
-Dni z mrozem -5 lub większym: 2
+Dni z temperaturą -5 lub niższą: 2
 ```
 
 1. Start od indeksu 0, czyli od pierwszego elementu, nie od zera jako wartości.
 2. Pętla od 1, bo element 0 jest już kandydatem.
 3. Minimum tak samo: start od `temperatury[0]`, znak `<`.
 4. Suma zaczyna od 0, bo 0 nic nie dodaje.
-5. Liczenie warunkowe: licznik rośnie tylko, gdy warunek jest prawdziwy.
+5. Licznik rośnie tylko, gdy warunek jest prawdziwy.
 
 ## Pułapki
 
-- `max()`, `sorted()` lub `sort()` przy zakazie gotowych funkcji (2021 cze) odbierają punkty za algorytm. Szukanie maksimum ma być pętlą (R.2.1, R.2.2).
-- Metoda szukająca w 2021 cze miała być widoczna tylko w klasie: w Pythonie `def __indeks_maksimum(self):`.
-- `najwieksza = 0` psuje wynik dla liczb ujemnych, a `najmniejsza = 0` dla dodatnich. Zawsze startuj od `liczby[0]`.
-- Zwracaj to, co mówi treść: wartość albo indeks, typ całkowity (2021 cze R.2.2, 2025 sty R.2.3). Nie mieszaj obu w jednej funkcji.
+- W 2021 cze treść zabraniała gotowych funkcji sortowania i szukania maksimum, a zasady sprawdzają w kodzie metodę szukającą (R.2.1, R.2.2). `max()`, `sorted()` czy `sort()` łamią treść. Szukaj pętlą.
+- Metoda szukająca w 2021 cze miała mieć zasięg prywatny (R.2.4): w Pythonie `def __indeks_maksimum(self):`.
+- `najwieksza = 0` na starcie psuje wynik dla samych ujemnych: dla tej listy żaden element nie jest większy od 0, więc wyszłoby 0, którego w liście nie ma. Tak samo `najmniejsza = 0` dla samych dodatnich. Startuj od `liczby[0]`.
 - Wyświetlanie nieparzystych i zwracanie ich liczby (2025 sty R.2.9): `print` w pętli, `return ile` dopiero po pętli, nie w jej środku.
-- Średnia to `suma / len(...)` albo suma przez pole z rozmiarem (2025 sty R.2.10). `//` obetnie część ułamkową.
-- `suma = 0` wewnątrz pętli zeruje sumę w każdym obrocie. Inicjalizacja zawsze przed pętlą.
+- Średnia to suma przez rozmiar (2025 sty R.2.10). `//` zamiast `/` obetnie część ułamkową.
 
 ## Powiązane
 
