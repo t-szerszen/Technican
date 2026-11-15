@@ -101,12 +101,11 @@ Suma kontrolna jest zgodna.
 
 ## Pułapki
 
-- `int(input())` na cały PESEL gubi zero z przodu (`02070803628` staje się 10-cyfrowe) i nie da się go indeksować. Napis albo lista cyfr (R.1.5, 2024 sty).
-- Bez `int()` `pesel[i] * wagi[i]` to powtórzenie napisu: `"7" * 9` daje dziewięć siódemek, a potem `TypeError`. Jawna konwersja każdej cyfry (R.1.5, 2024 sty).
+- `int(input())` na cały PESEL gubi zero z przodu (`02070803628` staje się 10-cyfrowe) i nie da się go indeksować. Trzymaj napis albo listę cyfr (R.1.5, 2024 sty).
+- `pesel[i] * wagi[i]` bez `int()` to powtórzenie napisu (`"7" * 9` daje `"777777777"`), a dodanie go do `S` rzuca `TypeError`. W Pythonie wymagana jest jawna konwersja (R.1.5, 2024 sty).
 - `pesel[10]` zamiast `pesel[9]` przy płci: indeksy liczą się od 0 (R.2.2, 2024 sty).
 - Funkcja płci zwraca `'K'`/`'M'`, a całe słowo „Kobieta” lub „Mężczyzna” wypisuje program główny (R.1.7). Funkcja sumy zwraca `bool`, nie napis „zgodna” (R.2.3).
 - Nazwy `S`, `M`, `R` są dozwolone, bo pochodzą z algorytmu (R.1.4). Funkcje wołaj dla PESEL-u wczytanego z klawiatury (R.2.7).
-- Za krótki numer rzuci `IndexError`. Arkusz nie wymagał kontroli, ale `len(pesel) == 11 and pesel.isdigit()` to tania ochrona.
 
 ## Powiązane
 
