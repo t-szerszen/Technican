@@ -3,6 +3,8 @@ import { dzialy } from './dzialy'
 
 const pliki = import.meta.glob('/tresc/*/*.md', { query: '?raw', import: 'default', eager: true })
 
+const STATUSY = ['do-weryfikacji', 'zweryfikowane']
+
 function jakoLista(wartosc) {
   if (!wartosc) return []
   if (Array.isArray(wartosc)) return wartosc.map(String)
@@ -20,28 +22,45 @@ export function normalizuj(tekst) {
     .toLowerCase()
 }
 
-// Identyfikator nagłówka do spisu treści, liczony tak samo z Markdowna i z gotowego tekstu
-export function kotwica(tekst) {
-  return normalizuj(tekst).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+function bezFormatowania(linia) {
+  return linia
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/==|\*\*|`/g, '')
 }
 
-function bezSkladniMarkdown(tresc) {
-  return tresc
-    .normalize('NFC')
-    .replace(/^```.*$/gm, '')
-    .replace(/^#+\s*/gm, '')
-    .replace(/^>\s*(\[!\w+\])?\s*/gm, '')
-    .replace(/\[\[|\]\]|==|\*\*|`/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
+// Tekst karty bez składni Markdowna: do wyszukiwania i do wycinków w wynikach.
+// Kod zostaje taki, jaki jest, bo po nim też się szuka.
+function zwyklyTekst(tresc) {
+  let wKodzie = false
+  const linie = []
+  for (const linia of tresc.normalize('NFC').split('\n')) {
+    if (linia.startsWith('```')) {
+      wKodzie = !wKodzie
+      continue
+    }
+    if (wKodzie) {
+      linie.push(linia.replace(/\[\[|\]\]/g, ''))
+      continue
+    }
+    if (/^\s*\|?[\s:|-]+\|?\s*$/.test(linia) && linia.includes('-')) continue
+    linie.push(
+      bezFormatowania(linia)
+        .replace(/^#+\s*/, '')
+        .replace(/^>\s*(\[!\w+\])?\s*/, '')
+        .replace(/^\s*(\d+\.|[-*])\s+/, '')
+        .replace(/\|/g, ' '),
+    )
+  }
+  return linie.join(' ').replace(/\s+/g, ' ').trim()
 }
 
+// Nagłówki # i ## to sekcje karty: numerowane w treści i wypisane w spisie "Na tej stronie"
 function sekcje(tresc) {
   const wynik = []
   let wKodzie = false
   for (const linia of tresc.split('\n')) {
     if (linia.startsWith('```')) wKodzie = !wKodzie
-    else if (!wKodzie && linia.startsWith('## ')) wynik.push(linia.slice(3).trim())
+    else if (!wKodzie && /^#{1,2} /.test(linia)) wynik.push(bezFormatowania(linia.replace(/^#{1,2} /, '')).trim())
   }
   return wynik
 }
@@ -57,15 +76,25 @@ function wczytajKarte(sciezka, tekst) {
       console.error(`Zły frontmatter w ${sciezka}:`, blad.message)
     }
   }
+
+  // Dział wyznacza folder; pole "dzial" we frontmatterze tylko sprawdzamy
+  if (meta.dzial && meta.dzial !== dzial) {
+    console.error(`${sciezka}: dzial "${meta.dzial}" nie zgadza się z folderem "${dzial}"`)
+  }
+  if (meta.status && !STATUSY.includes(meta.status)) {
+    console.error(`${sciezka}: nieznany status "${meta.status}", dozwolone: ${STATUSY.join(', ')}`)
+  }
+
   const tresc = frontmatter ? tekst.slice(frontmatter[0].length) : tekst
-  const czysta = bezSkladniMarkdown(tresc)
+  const tytul = meta.tytul ? String(meta.tytul) : plik
+  const tagi = jakoLista(meta.tagi)
+  const czysta = zwyklyTekst(tresc)
 
   return {
     id: `${dzial}/${plik}`,
-    plik,
     dzial,
-    tytul: meta.tytul ? String(meta.tytul) : plik,
-    tagi: jakoLista(meta.tagi),
+    tytul,
+    tagi,
     status: meta.status === 'zweryfikowane' ? 'zweryfikowane' : 'do-weryfikacji',
     zrodla: jakoLista(meta.zrodla),
     arkusze: jakoLista(meta.arkusze),
@@ -73,15 +102,22 @@ function wczytajKarte(sciezka, tekst) {
     sekcje: sekcje(tresc),
     czysta,
     doSzukania: {
-      tytul: normalizuj(meta.tytul ? String(meta.tytul) : plik),
-      tagi: jakoLista(meta.tagi).map(normalizuj),
+      tytul: normalizuj(tytul),
+      tagi: tagi.map(normalizuj),
       tresc: normalizuj(czysta),
     },
   }
 }
 
-export const karty = Object.entries(pliki)
-  .map(([sciezka, tekst]) => wczytajKarte(sciezka, tekst))
+const wczytane = Object.entries(pliki).map(([sciezka, tekst]) => wczytajKarte(sciezka, tekst))
+
+for (const karta of wczytane) {
+  if (!dzialy.some((d) => d.id === karta.dzial)) {
+    console.error(`Karta ${karta.id} leży w folderze, którego nie ma w src/dane/dzialy.js, więc jej nie widać`)
+  }
+}
+
+export const karty = wczytane
   .filter((karta) => dzialy.some((d) => d.id === karta.dzial))
   .sort((a, b) => a.id.localeCompare(b.id, 'pl', { numeric: true }))
 
