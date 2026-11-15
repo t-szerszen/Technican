@@ -1,12 +1,12 @@
 ---
 tytul: "Testy klasy Kosc"
 dzial: testy
-tagi: [python, unittest, Kosc, random, assertGreaterEqual, zadanie]
+tagi: [python, unittest, Kosc, assertGreaterEqual, assertEqual, zadanie]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertGreaterEqual
-  - https://docs.python.org/3/library/random.html#random.randint
-  - Zasady oceniania INF.04 2026 sty (R.2.5, R.4.1-R.4.5)
+  - Arkusz INF.04 2026 sty, część III
+  - Zasady oceniania INF.04 2026 sty (R.4.1-R.4.5)
 arkusze: [2026 sty]
 ---
 
@@ -16,34 +16,29 @@ W 2026 sty trzecia część to testy metody rzutu kością z klasy `Kosc`. Arkus
 
 ## Jak to działa
 
-Rzut jest losowy, więc jeden rzut niewiele dowodzi. Gdyby `rzuc()` miało błąd `randint(0, 6)`, jeden rzut wyłapie go tylko, gdy wypadnie 0. Dlatego test rzuca w pętli:
+Rzut jest losowy, więc jeden rzut niewiele dowodzi. Błąd typu `randint(0, 6)` wyjdzie tylko wtedy, gdy akurat wypadnie 0. Dlatego test ==rzuca w pętli==, np. 100 razy, i po każdym rzucie sprawdza obie granice.
 
-| Rzutów w teście | Szansa, że błąd `randint(0, 6)` wyjdzie |
-| --- | --- |
-| 1 | 14% |
-| 10 | 79% |
-| 100 | 99,99998% |
-
-Drugi przypadek: tworzysz kość ze ==znaną wartością== `Kosc(4)`, blokujesz ją i rzucasz wiele razy. Po każdym rzucie oczka mają być nadal 4. Bez pętli test mógłby przejść przypadkiem, gdy zepsute `rzuc()` wylosuje akurat 4 (szansa 1 do 6). Znana wartość startowa to też „dane testowe”, z których wynika wynik testu (R.4.5).
+Drugi przypadek: tworzysz kość ze ==znaną wartością== `Kosc(4)`, blokujesz ją i rzucasz w pętli. Po każdym rzucie oczka mają być nadal 4. Znana wartość startowa to „dane testowe”, z których wynika wynik testu (R.4.5).
 
 ## Składnia do zapamiętania
 
 ```python
-def test_rzut_daje_wartosc_od_1_do_6(self):
-    kosc = Kosc()
-    for _ in range(100):
-        kosc.rzuc()
-        self.assertGreaterEqual(kosc.oczka, 1)
-        self.assertLessEqual(kosc.oczka, 6)
+kosc = Kosc()
+for _ in range(100):
+    kosc.rzuc()
+    self.assertGreaterEqual(kosc.oczka, 1)
+    self.assertLessEqual(kosc.oczka, 6)
 
-def test_zablokowana_kosc_nie_zmienia_wartosci(self):
-    kosc = Kosc(4)
-    kosc.zablokuj()
+kosc = Kosc(4)
+kosc.zablokuj()
+for _ in range(100):
     kosc.rzuc()
     self.assertEqual(kosc.oczka, 4)
 ```
 
 ## Przykład
+
+Plik `kosc.py` to klasa z części konsolowej (ta sama co w karcie o zadaniu, bez programu głównego), w tym samym folderze co test.
 
 ```python kosc.py
 import random
@@ -120,11 +115,11 @@ OK
 
 ## Pułapki
 
-- Dwa przypadki w jednej metodzie (np. `test_kosc`) łamią wymóg „każdy przypadek oddzielną metodą” i nazwę wyrażającą cel (R.4.1, 2026 sty).
-- `Kosc(4)`, a nie `Kosc()`: przy losowej wartości startowej zapamiętaj ją najpierw (`przed = kosc.oczka`) i porównuj z `przed`.
-- Zablokowanie przez `kosc.dostepna = False` też działa, ale arkusz każe mieć metodę `zablokuj()`. Używaj jej, wtedy test sprawdza też ją.
-- Czy test coś łapie? Usuń na chwilę `if self.dostepna:` z `rzuc()`: drugi test musi dać FAIL. Potem przywróć kod.
-- Zrzuty `test1.png`, `test2.png` w folderze `testy`: cały ekran z paskiem zadań i IDE, z widocznym wynikiem testów (R.4.4, R.4.5). Do folderu trafia też spakowany projekt i plik z testami.
+- Dwa przypadki w jednej metodzie (np. `test_kosc`) łamią wymóg arkusza „każdy przypadek oddzielną metodą”, a taka nazwa nie wyraża celu testu (R.4.1, 2026 sty).
+- `Kosc()` zamiast `Kosc(4)` w drugim teście: nie wiesz, ile oczek oczekiwać. Przy losowym starcie trzeba by najpierw zapamiętać `przed = kosc.oczka`.
+- Gdy kopiujesz `kosc.py` z programem głównym, musi on stać pod `if __name__ == "__main__":`. Bez tego import w teście uruchomi program i test stanie na `input()`.
+- Blokuj metodą `zablokuj()`, nie przez `kosc.dostepna = False`: arkusz wymaga tej metody, a test sprawdza ją przy okazji.
+- Do folderu `testy` trafia spakowany projekt testów, plik z testami obok archiwum oraz zrzuty `test1.png`, `test2.png`.
 
 ## Powiązane
 

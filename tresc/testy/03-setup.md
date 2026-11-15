@@ -1,43 +1,30 @@
 ---
 tytul: "setUp: świeży obiekt przed każdym testem"
 dzial: testy
-tagi: [python, unittest, setUp, tearDown, self]
+tagi: [python, unittest, setUp, self]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/library/unittest.html#organizing-test-code
   - https://docs.python.org/3/library/unittest.html#unittest.TestCase.setUp
-  - https://docs.python.org/3/library/unittest.html#unittest.TestCase.tearDown
+  - Arkusz INF.04 2026 sty, część III
 arkusze: [2026 sty]
 ---
 
 ## Po co to jest
 
-Testy jednej klasy zwykle zaczynają się tak samo: utwórz obiekt. Zamiast pisać to w każdej metodzie, piszesz raz w `setUp`. W 2026 sty oba testy kości potrzebują nowej kości, więc to naturalne miejsce na `self.kosc = Kosc(...)`.
+Testy jednej klasy zwykle zaczynają się tak samo: utwórz obiekt. Zamiast pisać to w każdej metodzie, piszesz raz w `setUp`. Nie jest obowiązkowy: w teście kości z 2026 sty możesz równie dobrze tworzyć kość w każdym teście osobno.
 
 ## Jak to działa
 
-`unittest` dla ==każdej metody testowej osobno== tworzy nowy obiekt klasy testowej i woła po kolei: `setUp`, test, `tearDown`. Ślad dla klasy, w której stoją `setUp` (tworzy `self.koszyk`), `tearDown` i testy `test_b`, `test_a`:
-
-| Krok | Wywołanie | Stan `self.koszyk` |
-| --- | --- | --- |
-| 1 | `setUp` | nowy, pusty koszyk |
-| 2 | `test_a` | test go zmienia |
-| 3 | `tearDown` | sprzątanie po teście |
-| 4 | `setUp` | znowu nowy, pusty koszyk |
-| 5 | `test_b` | nie widzi zmian z `test_a` |
-| 6 | `tearDown` | sprzątanie po teście |
-
-Gdy każda z tych metod wypisze swoją nazwę przez `print`, terminal pokazuje (napisy wchodzą między nazwę testu a `ok`):
+`unittest` dla ==każdej metody testowej osobno== tworzy nowy obiekt klasy testowej i woła `setUp`, a zaraz po nim test. Gdy w klasie z `setUp` i testami `test_b`, `test_a` każda metoda wypisze swoją nazwę przez `print`, terminal pokazuje (napisy wchodzą między nazwę testu a `ok`):
 
 ```wynik
 $ python -m unittest -v test_slad
 test_a (test_slad.TestSlad.test_a) ... setUp
 test_a
-tearDown
 ok
 test_b (test_slad.TestSlad.test_b) ... setUp
 test_b
-tearDown
 ok
 
 ----------------------------------------------------------------------
@@ -46,7 +33,7 @@ Ran 2 tests in 0.000s
 OK
 ```
 
-`test_a` idzie pierwszy, choć w pliku stał drugi: kolejność jest alfabetyczna. ==Testy nie mogą zależeć od siebie==. Każdy ma przejść sam, w dowolnej kolejności, także uruchomiony pojedynczo.
+`setUp` rusza przed każdym testem, więc obiekt utworzony w nim jest ==za każdym razem nowy==: `test_b` nie widzi zmian zrobionych w `test_a`. `test_a` idzie pierwszy, choć w pliku stał drugi: kolejność jest alfabetyczna, więc testy nie mogą zależeć od siebie.
 
 ## Składnia do zapamiętania
 
@@ -59,9 +46,6 @@ class TestKosc(unittest.TestCase):
         self.kosc.zablokuj()
         self.kosc.rzuc()
         self.assertEqual(self.kosc.oczka, 4)
-
-    def tearDown(self):
-        self.kosc = None
 ```
 
 ## Przykład
@@ -116,8 +100,6 @@ OK
 
 - `setup` albo `SetUp` to zwykła metoda, nikt jej nie wywoła. Test kończy się wtedy ERROR: `AttributeError: 'TestKoszyk' object has no attribute 'koszyk'`.
 - `koszyk = Koszyk()` w `setUp` bez `self.` tworzy zmienną lokalną, która znika po wyjściu z metody. Ten sam `AttributeError`.
-- Obiekt utworzony raz na poziomie klasy albo modułu jest wspólny dla wszystkich testów. Wtedy wynik zależy od kolejności i drugi test w przykładzie by nie przeszedł.
-- `tearDown` jest potrzebny rzadko (zamknięcie pliku, usunięcie danych). Woła się po każdym teście, także nieudanym, o ile `setUp` się powiódł.
 - Arkusz wymaga, by ==każdy przypadek był w osobnej metodzie== (2026 sty). Wspólne przygotowanie w `setUp` tego nie łamie.
 
 ## Powiązane
