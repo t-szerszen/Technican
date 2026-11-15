@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Ściąga ze składni na egzamin INF.04" />
+    <meta name="theme-color" content="#F3F3EF" />
+    <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <title>kratka — notatki INF.04</title>
+    <script>
+      // Motyw ustawiony przed pierwszym malowaniem, żeby ekran nie mrugał na jasno.
+      try {
+        var motyw = JSON.parse(localStorage.getItem('kratka:motyw'))
+        if (motyw === 'ciemny' || (!motyw && matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('ciemny')
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
