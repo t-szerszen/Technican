@@ -1,10 +1,9 @@
 ---
 tytul: "Liczby pierwsze"
 dzial: konsola
-tagi: [python, liczby pierwsze, dzielniki, pierwiastek, isqrt, bool]
+tagi: [python, liczby pierwsze, dzielniki, pierwiastek, bool]
 status: do-weryfikacji
 zrodla:
-  - https://docs.python.org/3.12/library/math.html#math.isqrt
   - https://docs.python.org/3.12/library/math.html#math.sqrt
   - https://docs.python.org/3/library/functions.html#int
   - Zasady oceniania INF.04 2024 sty (R.2.1, R.2.3) — funkcja sprawdzająca typu logicznego
@@ -13,24 +12,15 @@ arkusze: []
 
 ## Po co to jest
 
-Sprawdzenie „czy n jest pierwsza” to typowa funkcja zwracająca `True` albo `False`. Przydaje się, gdy trzeba ocenić jedną liczbę. Gdy trzeba wypisać wszystkie pierwsze do 100, szybsze jest sito.
+Sprawdzenie „czy n jest pierwsza” to typowa funkcja zwracająca `True` albo `False`. W arkuszach 2021-2026 takiej funkcji nie było. Liczby pierwsze padły raz (2023 cze), ale liczone sitem.
 
 ## Jak to działa
 
-Liczba pierwsza to liczba naturalna większa od 1, która ma ==dokładnie dwa dzielniki==: 1 i samą siebie. 0 i 1 nie są pierwsze. 2 to jedyna parzysta pierwsza.
+Liczba pierwsza to liczba naturalna większa od 1, która ma ==dokładnie dwa dzielniki==: 1 i samą siebie. 0 i 1 nie są pierwsze.
 
-Dzielniki chodzą parami: jeśli `d * e = n`, to jeden z nich jest ≤ √n, a drugi ≥ √n. Pary dla 36:
+Dzielniki chodzą parami: jeśli `d * e = n`, to jeden z nich jest ≤ √n, a drugi ≥ √n. Dla 36 pary to 2 · 18, 3 · 12, 4 · 9, 6 · 6: mniejszy z pary nigdy nie przekracza √36 = 6. Jeśli do √n nie ma dzielnika, ==dalej też go nie ma==. Dlatego `d` idzie od 2 do `int(math.sqrt(n))`.
 
-| mniejszy `d` | większy `e = 36 / d` |
-| --- | --- |
-| 2 | 18 |
-| 3 | 12 |
-| 4 | 9 |
-| 6 | 6 (tu jest √36, dalej te same pary odwrócone) |
-
-Jeśli do √n nie ma dzielnika, ==dalej też go nie ma==. Dlatego `d` idzie od 2 do `math.isqrt(n)`, czyli części całkowitej pierwiastka. `math.sqrt(n)` daje float, więc wtedy `int(math.sqrt(n))`.
-
-Ślad: `n % d` dla 91 i 97 (`math.isqrt` daje dla obu 9):
+Ślad: `n % d` dla 91 i 97 (`int(math.sqrt(...))` daje dla obu 9):
 
 | `d` | `91 % d` | `97 % d` |
 | --- | --- | --- |
@@ -51,7 +41,7 @@ import math
 def czy_pierwsza(n):
     if n < 2:
         return False
-    for d in range(2, math.isqrt(n) + 1):   # albo int(math.sqrt(n)) + 1
+    for d in range(2, int(math.sqrt(n)) + 1):
         if n % d == 0:
             return False
     return True
@@ -65,7 +55,7 @@ import math
 def czy_pierwsza(n):
     if n < 2:
         return False
-    for d in range(2, math.isqrt(n) + 1):
+    for d in range(2, int(math.sqrt(n)) + 1):
         if n % d == 0:
             return False
     return True
@@ -94,9 +84,9 @@ Czy 49 jest pierwsza? False
 
 ## Pułapki
 
-- `range(2, math.isqrt(n))` bez `+ 1` uznaje 4, 9, 25, 49 za pierwsze, bo pomija sam pierwiastek.
+- Bez `+ 1` w `range()` funkcja uznaje za pierwsze m.in. 4, 6, 8, 9, 25 i 49, bo pomija sam pierwiastek.
 - `return True` w `else` wewnątrz pętli decyduje po pierwszym dzielniku: 9 % 2 to 1, więc „9 jest pierwsza”. `True` zwracaj dopiero za pętlą.
-- `range(2, math.sqrt(n))` kończy się `TypeError: 'float' object cannot be interpreted as an integer`. Potrzebne `int()` albo `math.isqrt()`.
+- `range(2, math.sqrt(n))` kończy się `TypeError: 'float' object cannot be interpreted as an integer`, bo `math.sqrt()` daje float. Potrzebne `int()`.
 - Funkcja sprawdzająca ma zwracać `bool` na każdej ścieżce, a nie wypisywać „tak/nie”. Tak oceniano funkcję sprawdzającą PESEL (R.2.1, R.2.3, 2024 sty).
 
 ## Powiązane

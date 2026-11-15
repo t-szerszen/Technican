@@ -1,7 +1,7 @@
 ---
 tytul: "Ciąg Fibonacciego"
 dzial: konsola
-tagi: [python, Fibonacci, przypisanie wielokrotne, lista, rekurencja]
+tagi: [python, Fibonacci, przypisanie wielokrotne, lista]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3.12/tutorial/introduction.html#first-steps-towards-programming
@@ -11,13 +11,13 @@ arkusze: []
 
 ## Po co to jest
 
-Ciąg Fibonacciego to klasyk „następna wartość z dwóch poprzednich”. W arkuszach 2021-2026 go nie było. Uczy jednak przypisania `a, b = b, a + b`, które przydaje się też przy zamianie dwóch zmiennych.
+Ciąg Fibonacciego to klasyk „następna wartość z dwóch poprzednich”. W arkuszach 2021-2026 go nie było. Uczy jednak przypisania `a, b = b, a + b` i tego, że ==kolejność przypisań ma znaczenie==.
 
 ## Jak to działa
 
 F(0) = 0, F(1) = 1, a każdy następny to suma dwóch poprzednich: 0 1 1 2 3 5 8 13 21 ...
 
-`a, b = b, a + b` działa w dwóch krokach. Najpierw Python liczy ==całą prawą stronę na starych wartościach==, potem naraz przypisuje do `a` i `b`. Tak opisuje to tutorial Pythona.
+`a, b = b, a + b` działa w dwóch krokach. Najpierw Python liczy ==całą prawą stronę na starych wartościach==, dopiero potem przypisuje do `a` i `b`.
 
 Ślad pętli dla n = 7, na starcie `a, b = 0, 1`:
 
@@ -59,7 +59,7 @@ b = nowy
 
 ## Przykład
 
-```python fibonacci.py {3,5,6,12}
+```python fibonacci.py {3,5,6}
 def ciag_fibonacciego(n):
     wyrazy = []
     a, b = 0, 1
@@ -68,35 +68,26 @@ def ciag_fibonacciego(n):
         a, b = b, a + b
     return wyrazy
 
-def fib_rekurencyjnie(n):
-    if n < 2:
-        return n
-    return fib_rekurencyjnie(n - 1) + fib_rekurencyjnie(n - 2)
-
 n = int(input("Ile wyrazów ciągu wyświetlić? "))
 wyrazy = ciag_fibonacciego(n)
 print(f"Pierwsze {n} wyrazów:", wyrazy)
-print("Wyraz o indeksie 10 rekurencyjnie:", fib_rekurencyjnie(10))
 ```
 
 ```wynik
 Ile wyrazów ciągu wyświetlić? [[10]]
 Pierwsze 10 wyrazów: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
-Wyraz o indeksie 10 rekurencyjnie: 55
 ```
 
 1. Dwa pierwsze wyrazy ustawione jednym przypisaniem.
 2. Dopisujemy bieżące `a`, zanim się zmieni. Dzięki temu lista zaczyna się od 0.
 3. Przesunięcie o jeden wyraz: nowe `a` to stare `b`, nowe `b` to suma starych.
-4. Rekurencja wprost ze wzoru. Działa, ale ==liczy te same wyrazy wiele razy==.
 
 ## Pułapki
 
-- Rekurencja jest wolna: `fib(5)` liczy `fib(3)` dwa razy, a `fib(2)` trzy razy. `fib(30)` to 2 692 537 wywołań, `fib(40)` ponad 331 milionów. Pętla robi 30 albo 40 obrotów.
 - `a = b` i `b = a + b` w osobnych liniach psują ciąg (tabela wyżej). Albo jedna linia `a, b = b, a + b`, albo zmienna pomocnicza.
 - Sprawdź, od czego zaczyna treść: od 0, 1 czy od 1, 1. Jeden wyraz przesunięcia to inny wynik.
 - `wyrazy.append(b)` zamiast `a` gubi początkowe 0.
-- Rekurencja bez `if n < 2` kończy się `RecursionError`, tak jak przy silni.
+- Wzór F(n) = F(n - 1) + F(n - 2) da się zapisać rekurencyjnie jak silnię, ale wtedy te same wyrazy liczą się wiele razy. Pętla jest prostsza i szybka.
 
 ## Powiązane
 
