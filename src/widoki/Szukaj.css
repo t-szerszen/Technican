@@ -1,0 +1,73 @@
+.szukaj-pole {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 52px;
+  margin-top: env(safe-area-inset-top);
+  padding: 0 4px 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--sheet);
+  box-shadow: var(--shadow);
+  color: var(--text-3);
+}
+
+.szukaj-pole:focus-within {
+  border-color: var(--ink);
+}
+
+.szukaj-pole input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  /* 16px, żeby iOS nie powiększał strony przy fokusie */
+  font-size: 16px;
+}
+
+.szukaj-pole input::placeholder {
+  color: var(--text-3);
+}
+
+.szukaj-pole input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.szukaj-licznik {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.szukaj-tagi {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.szukaj-tagi div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.szukaj-tagi button {
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--code-bg);
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+@media (hover: hover) {
+  .szukaj-tagi button:hover {
+    border-color: var(--line-2);
+    color: var(--text);
+  }
+}
