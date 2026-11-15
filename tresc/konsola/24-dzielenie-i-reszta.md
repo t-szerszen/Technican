@@ -87,6 +87,5 @@ Suma cyfr: 10
 
 ## Powiązane
 
-- [Suma cyfr](#/karta/konsola/41-suma-cyfr)
 - [Walidacja numeru PESEL](#/karta/konsola/43-pesel)
 - [NWD algorytmem Euklidesa](#/karta/konsola/35-nwd-euklides)

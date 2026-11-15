@@ -139,6 +139,5 @@ OK
 
 - [Asercje](#/karta/testy/02-asercje)
 - [Testy klasy Kosc](#/karta/testy/04-test-klasy-kosc)
-- [Wyjątki try/except](#/karta/konsola/12-wyjatki)
 - [Zrzuty ekranu](#/karta/dokumentacja/02-zrzuty-ekranu)
 - [Foldery i pakowanie](#/karta/dokumentacja/04-foldery-i-pakowanie)

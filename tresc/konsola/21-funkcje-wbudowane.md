@@ -100,4 +100,3 @@ sort: [2, 3, 4, 5, 5] | zwraca: None
 
 - [Ręcznie: min, max, suma, liczenie](#/karta/konsola/25-reczne-min-max-suma)
 - [Sortowanie przez wybieranie](#/karta/konsola/29-sortowanie-przez-wybieranie)
-- [Palindrom i odwracanie napisu](#/karta/konsola/38-palindrom-i-odwracanie)

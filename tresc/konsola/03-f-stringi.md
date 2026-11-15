@@ -90,5 +90,4 @@ Suma oczek: 13
 ## Powiązane
 
 - [Zmienne i typy](#/karta/konsola/01-zmienne-i-typy)
-- [enumerate(): indeks i wartość](#/karta/konsola/07-enumerate)
 - [Pętla for i range()](#/karta/konsola/05-petla-for-i-range)

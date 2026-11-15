@@ -89,5 +89,4 @@ Błąd: 'Tablica' object has no attribute '__rozmiar'
 
 - [Klasa i `__init__`](#/karta/konsola/13-klasa-i-init)
 - [Metody i metoda tylko dla klasy](#/karta/konsola/16-metody-i-metoda-prywatna)
-- [Dziedziczenie i super()](#/karta/konsola/17-dziedziczenie-i-super)
 - [Zadanie: klasa z tablicą](#/karta/konsola/44-zadanie-klasa-z-tablica)

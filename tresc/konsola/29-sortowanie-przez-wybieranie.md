@@ -107,5 +107,4 @@ Malejąco: [9, 8, 4, 3, 1]
 
 - [Zadanie: sortowanie w klasie](#/karta/konsola/49-zadanie-sortowanie-w-klasie)
 - [Ręcznie: min, max, suma, liczenie](#/karta/konsola/25-reczne-min-max-suma)
-- [Sortowanie bąbelkowe](#/karta/konsola/30-sortowanie-babelkowe)
 - [Metody i metoda tylko dla klasy](#/karta/konsola/16-metody-i-metoda-prywatna)

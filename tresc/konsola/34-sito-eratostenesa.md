@@ -91,7 +91,6 @@ Liczby pierwsze z przedziału 2..100:
 
 ## Powiązane
 
-- [Liczby pierwsze](#/karta/konsola/33-liczby-pierwsze)
 - [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
 - [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
 - [Komentarz-nagłówek funkcji](#/karta/dokumentacja/01-komentarz-naglowek)

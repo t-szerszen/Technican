@@ -88,6 +88,5 @@ Podaj szukaną liczbę: [[4]]
 ## Powiązane
 
 - [Wyszukiwanie z wartownikiem](#/karta/konsola/27-wyszukiwanie-z-wartownikiem)
-- [Wyszukiwanie binarne](#/karta/konsola/28-wyszukiwanie-binarne)
 - [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
 - [Zadanie: klasa z tablicą](#/karta/konsola/44-zadanie-klasa-z-tablica)

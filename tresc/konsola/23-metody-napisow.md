@@ -102,5 +102,4 @@ Dalej: True
 
 - [Dane z klawiatury: input() i int()](#/karta/konsola/02-input-i-int)
 - [f-stringi i print()](#/karta/konsola/03-f-stringi)
-- [Zliczanie znaków](#/karta/konsola/39-zliczanie-znakow)
 - [Walidacja numeru PESEL](#/karta/konsola/43-pesel)

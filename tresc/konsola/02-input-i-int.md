@@ -78,6 +78,5 @@ Wczytano: 12
 
 ## Powiązane
 
-- [Wyjątki try/except](#/karta/konsola/12-wyjatki)
 - [Pętla while](#/karta/konsola/06-petla-while)
 - [f-stringi i print()](#/karta/konsola/03-f-stringi)

@@ -87,5 +87,4 @@ print()
 ## Powiązane
 
 - [Pętla while](#/karta/konsola/06-petla-while)
-- [enumerate(): indeks i wartość](#/karta/konsola/07-enumerate)
 - [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
