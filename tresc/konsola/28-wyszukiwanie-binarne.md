@@ -5,14 +5,13 @@ tagi: [python, algorytm, wyszukiwanie, binarne, while, dzielenie całkowite]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/reference/expressions.html#binary-arithmetic-operations
-  - https://docs.python.org/3/library/bisect.html#bisect.bisect_left
-  - Zasady oceniania INF.04 2025 sty (R.1.4, R.2.3)
+  - Zasady oceniania INF.04 2025 sty (R.1.4)
 arkusze: []
 ---
 
 ## Po co to jest
 
-Szybkie szukanie w ==posortowanej== liście: każde porównanie wyrzuca połowę kandydatów. W arkuszach 2021-2026 nie padło, ale to klasyczny algorytm, który warto umieć obok liniowego. Inna nazwa: wyszukiwanie połówkowe.
+Szukanie w ==posortowanej== liście: każde porównanie wyrzuca połowę kandydatów. W arkuszach 2021-2026 nie padło; przyda się tylko, gdy treść wprost każe szukać binarnie (połówkowo).
 
 ## Jak to działa
 
@@ -38,8 +37,6 @@ Szukana `7` w tej samej liście:
 | 2 | 0 | 3 | 1 | 5 < 7 | `lewy = 2`: [8, 12] |
 | 3 | 2 | 3 | 2 | 8 > 7 | `prawy = 1`: pusty |
 | koniec | 2 | 1 | — | `lewy > prawy` | `return -1` |
-
-Dziesięć elementów, najwyżej cztery porównania. Liniowe zrobiłoby do dziesięciu.
 
 ## Składnia do zapamiętania
 
@@ -90,18 +87,16 @@ for szukana in [23, 91, 7]:
 7: brak w tablicy
 ```
 
-1. `//` to dzielenie całkowite: `(0 + 9) // 2` daje 4, a nie 4.5. Indeks musi być liczbą całkowitą.
+1. `//` to dzielenie całkowite: `(0 + 9) // 2` daje 4. Indeks musi być liczbą całkowitą.
 2. `srodek + 1` (i niżej `srodek - 1`), bo środek już sprawdzony. Bez tego pętla potrafi kręcić się w nieskończoność.
 3. -1 dopiero po pętli, gdy przedział się opróżnił.
 
 ## Pułapki
 
-- Lista musi być posortowana rosnąco. Na nieposortowanej nie ma błędu, ale wynik może być -1, choć liczba w liście jest. Posortuj ją wcześniej albo użyj liniowego.
+- Lista musi być posortowana rosnąco. Na nieposortowanej nie ma błędu, ale wynik może być -1, choć liczba w liście jest.
 - `while lewy < prawy` gubi przedział z jednym elementem: szukana 91 na ostatnim miejscu nie zostanie znaleziona.
-- `srodek = (lewy + prawy) / 2` daje float, a `liczby[4.5]` kończy się `TypeError`.
-- Przy powtórzeniach zwraca któreś wystąpienie, niekoniecznie pierwsze. Gdy treść chce pierwszego (jak 2025 sty), pisz liniowe.
-- Funkcja zwraca indeks, czyli liczbę całkowitą, na każdej ścieżce (typ zwracany punktowano np. w R.2.3, 2025 sty). Nazwy `lewy`, `prawy`, `srodek` są znaczące, `l`, `p`, `s` mogą kosztować punkt (R.1.4).
-- Gotowiec: `bisect.bisect_left(liczby, szukana)` zwraca miejsce wstawienia, nie -1. Na egzaminie z opisem algorytmu pisz pętlę sam.
+- `srodek = (lewy + prawy) / 2` daje float 4.5, a `liczby[4.5]` kończy się `TypeError`.
+- Zasady odrzucają nazwy, które nic nie znaczą (R.1.4, 2025 sty). `lewy`, `prawy`, `srodek` są bezpieczne, przy jednoliterowych `l`, `p`, `s` ryzykujesz punkt.
 
 ## Powiązane
 

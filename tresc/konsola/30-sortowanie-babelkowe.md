@@ -1,18 +1,17 @@
 ---
 tytul: "Sortowanie bąbelkowe"
 dzial: konsola
-tagi: [python, algorytm, sortowanie, bąbelkowe, zamiana, flaga]
+tagi: [python, algorytm, sortowanie, bąbelkowe, zamiana]
 status: do-weryfikacji
 zrodla:
-  - https://docs.python.org/3/reference/simple_stmts.html#assignment-statements
-  - https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements
-  - Zasady oceniania INF.04 2021 cze (R.2.5, R.2.6)
+  - https://docs.python.org/3/library/stdtypes.html#range
+  - Zasady oceniania INF.04 2021 cze (R.2.3, R.2.6)
 arkusze: []
 ---
 
 ## Po co to jest
 
-Najprostsze ręczne sortowanie: porównujesz sąsiadów i zamieniasz, jeśli stoją źle. W arkuszach 2021-2026 nie padło z nazwy, ale gdy treść każe „posortować bez gotowych funkcji” i nie narzuca metody, to najkrótszy kod do napisania z głowy.
+Ręczne sortowanie przez porównywanie sąsiadów: jeśli stoją źle, zamieniasz je. W arkuszach 2021-2026 nie padło. Przyda się, gdy treść każe posortować bez gotowych funkcji i nie narzuca metody.
 
 ## Jak to działa
 
@@ -27,14 +26,14 @@ Jedno przejście idzie od lewej: porównuje `liczby[j]` z `liczby[j + 1]` i zami
 
 Po każdym przejściu koniec tablicy rośnie o jeden gotowy element, więc następne przejście może być o jeden krótsze: `range(n - 1 - i)`. Zakreślone = element, który właśnie trafił na swoje miejsce:
 
-| Przejście `i` | `j` od 0 do | tablica po przejściu | były zamiany? |
-| --- | --- | --- | --- |
-| 0 | 3 | [3, 5, 1, 4, ==8==] | tak |
-| 1 | 2 | [3, 1, 4, ==5==, 8] | tak |
-| 2 | 1 | [1, 3, ==4==, 5, 8] | tak |
-| 3 | 0 | [1, ==3==, 4, 5, 8] | nie |
+| Przejście `i` | `j` od 0 do | tablica po przejściu |
+| --- | --- | --- |
+| 0 | 3 | [3, 5, 1, 4, ==8==] |
+| 1 | 2 | [3, 1, 4, ==5==, 8] |
+| 2 | 1 | [1, 3, ==4==, 5, 8] |
+| 3 | 0 | [1, ==3==, 4, 5, 8] |
 
-Flaga `zamiana`: jeśli całe przejście nic nie zamieniło, tablica jest już posortowana i można przerwać `break`.
+Po `n - 1` przejściach na miejscu jest też pierwszy element, dlatego pętla zewnętrzna to `range(n - 1)`.
 
 ## Składnia do zapamiętania
 
@@ -42,55 +41,47 @@ Flaga `zamiana`: jeśli całe przejście nic nie zamieniło, tablica jest już p
 def sortuj_babelkowo(liczby):
     n = len(liczby)
     for i in range(n - 1):
-        zamiana = False
         for j in range(n - 1 - i):
             if liczby[j] > liczby[j + 1]:
-                liczby[j], liczby[j + 1] = liczby[j + 1], liczby[j]
-                zamiana = True
-        if not zamiana:
-            break
+                bufor = liczby[j]
+                liczby[j] = liczby[j + 1]
+                liczby[j + 1] = bufor
 ```
 
 ## Przykład
 
-```python babelkowe.py {5,7,10,11}
+```python babelkowe.py {4,5,6}
 def sortuj_babelkowo(liczby):
     n = len(liczby)
     for i in range(n - 1):
-        zamiana = False
         for j in range(n - 1 - i):
             if liczby[j] > liczby[j + 1]:
-                liczby[j], liczby[j + 1] = liczby[j + 1], liczby[j]
-                zamiana = True
-        print(f"Po przejściu {i + 1}: {liczby}")
-        if not zamiana:
-            break
+                bufor = liczby[j]
+                liczby[j] = liczby[j + 1]
+                liczby[j + 1] = bufor
 
 
-liczby = [4, 1, 2, 6, 3, 7]
+liczby = [5, 3, 8, 1, 4]
+print("Przed:", liczby)
 sortuj_babelkowo(liczby)
-print("Posortowana:", liczby)
+print("Po:   ", liczby)
 ```
 
 ```wynik
-Po przejściu 1: [1, 2, 4, 3, 6, 7]
-Po przejściu 2: [1, 2, 3, 4, 6, 7]
-Po przejściu 3: [1, 2, 3, 4, 6, 7]
-Posortowana: [1, 2, 3, 4, 6, 7]
+Przed: [5, 3, 8, 1, 4]
+Po:    [1, 3, 4, 5, 8]
 ```
 
 1. `n - 1 - i`: ostatnie `i` elementów jest już gotowe, a `- 1` pilnuje, żeby `j + 1` nie wyszło poza listę.
-2. Zamiana sąsiadów w jednej linii, bez utraty danych.
-3. Przejście 3 nic nie zamieniło, więc flaga zostaje `False`.
-4. `break` kończy sortowanie po 3 przejściach zamiast 5. `print` w funkcji jest tu tylko po to, żeby zobaczyć ślad.
+2. Porównanie sąsiadów. Rosnąco: zamiana, gdy lewy jest większy.
+3. Bufor odkłada lewy element, a dwie następne linie kończą zamianę bez utraty danych.
 
 ## Pułapki
 
 - `range(n - i)` zamiast `range(n - 1 - i)` daje `IndexError` na `liczby[j + 1]`.
-- `zamiana = False` ustawiaj na początku każdego przejścia, w pętli zewnętrznej. Ustawione raz przed pętlami nigdy nie wraca do `False`.
-- Zamiana przez `liczby[j] = liczby[j + 1]` i potem odwrotnie gubi wartość. Użyj bufora albo przypisania krotki (tak oceniano zamianę w R.2.6, 2021 cze).
-- Malejąco: zmień tylko znak na `<`. Gdy arkusz narzuca metodę (2021 cze: przez wybieranie), bąbelkowe nie da punktów za algorytm.
-- Pętla zewnętrzna `range(n - 1)` to pętla po n-1 elementach, jak chciało R.2.5 w 2021 cze.
+- Zamiana przez `liczby[j] = liczby[j + 1]` i potem odwrotnie gubi wartość: oba miejsca mają tę samą liczbę. Zamiana bez utraty danych to R.2.6 (2021 cze).
+- Malejąco: zmień tylko znak na `<`.
+- Gdy arkusz narzuca metodę (2021 cze: przez wybieranie), bąbelkowe nie da punktu za algorytm (R.2.3).
 
 ## Powiązane
 

@@ -28,9 +28,7 @@ Idziesz od indeksu 0 i porównujesz każdy element z szukaną. Przy pierwszym tr
 
 Drugie `3` pod indeksem 3 nie ma znaczenia: liczy się pierwsze wystąpienie. Dla szukanej `4` `i` przechodzi 0..4, wszędzie „nie”, pętla się kończy i wykonuje się `return -1`.
 
-Dlaczego -1? Pętla zwraca tylko 0, 1, 2, …, więc -1 nie pomyli się z trafieniem. Program główny sprawdza `indeks != -1`. Uwaga: `liczby[-1]` to w Pythonie ostatni element, więc -1 nie wolno potem użyć jako indeksu.
-
-Bez `return` w pętli (np. metoda, która ma jeszcze coś zrobić): ustaw `indeks = -1` przed pętlą, a przy trafieniu `indeks = i` i `break`.
+Dlaczego -1? Pętla zwraca tylko 0, 1, 2, …, więc -1 nie pomyli się z trafieniem. Program główny sprawdza `indeks != -1`.
 
 ## Składnia do zapamiętania
 
@@ -44,8 +42,6 @@ def szukaj(liczby, szukana):
 indeks = szukaj(liczby, szukana)
 if indeks != -1:
     print(f"Znaleziono pod indeksem {indeks}")
-if szukana in liczby:                 # wersja z metodą wbudowaną
-    indeks = liczby.index(szukana)    # bez "in" brak = ValueError
 ```
 
 ## Przykład
@@ -83,10 +79,10 @@ Podaj szukaną liczbę: [[4]]
 ## Pułapki
 
 - `else: return -1` pod `if` w pętli kończy funkcję już po pierwszym elemencie. -1 ma stać za pętlą.
-- `indeks = i` bez `break` daje ostatnie wystąpienie, nie pierwsze, i pętla nie kończy się po znalezieniu (R.2.5, 2025 sty).
-- Gdy nie znaleziono, program główny w 2025 sty ==nic nie wypisuje== (R.2.8). W 2022 cze było odwrotnie: komunikat o braku jest wymagany. Czytaj treść.
-- `if indeks:` jest źle: indeks 0 to w Pythonie fałsz. Sprawdzaj `indeks != -1`.
-- `liczby.index(szukana)` jest dozwolone (R.2.5 przyjmuje metodę wbudowaną), ale bez elementu rzuca `ValueError`. Najpierw `if szukana in liczby`.
+- Jeśli zamiast `return i` piszesz `indeks = i`, dodaj `break`. Bez niego dostajesz ostatnie wystąpienie, a pętla nie kończy się po znalezieniu (R.2.5, 2025 sty).
+- Gdy nie znaleziono, program główny w 2025 sty ==nic nie wypisuje== (R.2.8). W 2022 cze było odwrotnie: komunikat o braku był wymagany. Czytaj treść.
+- `if indeks:` jest źle: indeks 0 to w Pythonie fałsz, a -1 prawda. Sprawdzaj `indeks != -1`.
+- `liczby.index(szukana)` R.2.5 też przyjmuje, ale gdy liczby nie ma, rzuca `ValueError` zamiast zwrócić -1. Pętla jest bezpieczniejsza.
 - Pętla ograniczona długością listy albo polem z liczbą elementów, nie liczbą wpisaną na sztywno (R.2.4, 2025 sty). Funkcja zwraca liczbę całkowitą (R.2.3).
 
 ## Powiązane

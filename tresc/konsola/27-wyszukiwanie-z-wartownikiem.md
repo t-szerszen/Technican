@@ -88,15 +88,15 @@ Liczba 67 jest pod indeksem 7.
 
 1. `randint(1, 100)` losuje z obu końców włącznie. Wypełnianie jest w osobnej funkcji, która zwraca listę.
 2. Wartownik ląduje za ostatnim elementem, pod indeksem 50.
-3. Pętla nie ma `i < n`. To właśnie jest wartownik, a nie zwykłe szukanie.
+3. Pętla bez `i < n`: od pierwszego elementu do trafienia, tak opisano algorytm w R.2.3 (2022 cze).
 4. Po `pop()` lista ma znów 50 elementów, więc `len(liczby)` to stare `n`. 67 stoi też pod 22, ale liczy się pierwsze.
 
 ## Pułapki
 
-- Wartownik ma stanąć ZA ostatnim elementem (`append`), a pętla iść od pierwszego do trafienia, bez `i < n` (R.2.3). `liczby[-1] = szukana` nadpisuje prawdziwy element.
+- Wartownika dopisz przez `append`. `liczby[n] = szukana` kończy się `IndexError` (R.2.8), a `liczby[-1] = szukana` nadpisuje prawdziwy ostatni element.
 - Bez `pop()` wypisana tablica ma 51 liczb, a `len(liczby)` to 51, więc `indeks == len(liczby)` nigdy nie wyjdzie. Komunikat o braku tylko przy indeksie wartownika, indeks tylko w przeciwnym razie (R.2.4, R.2.5).
-- `print(liczby)` wypisze nawiasy kwadratowe. Arkusz chciał liczby oddzielone przecinkami (R.2.7): `print(*liczby, sep=", ")` albo `", ".join(map(str, liczby))`.
-- Python: jawne `int(input())` i `randint` liczy się w R.1.5 (2022 cze). `randrange(1, 100)` nigdy nie da 100.
+- `print(liczby)` wypisze nawiasy kwadratowe. Arkusz chciał liczby oddzielone przecinkami (R.2.7): `print(*liczby, sep=", ")`.
+- Python: jawne `int(input())` i losowanie przez `randint` sprawdzano w R.1.5 (2022 cze).
 - W komentarzu nad funkcją wpisz nazwę algorytmu: „przeszukiwanie tablicy z wartownikiem” (R.4.4, 2022 cze).
 
 ## Powiązane

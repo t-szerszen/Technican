@@ -6,13 +6,13 @@ status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/reference/expressions.html#boolean-operations
   - https://docs.python.org/3/tutorial/controlflow.html#for-statements
-  - Zasady oceniania INF.04 2021 cze (R.2.5, R.2.6)
+  - Zasady oceniania INF.04 2021 cze (R.2.3)
 arkusze: []
 ---
 
 ## Po co to jest
 
-Sortowanie jak układanie kart w ręce: bierzesz kolejną kartę i wsuwasz ją między już ułożone. W arkuszach 2021-2026 nie padło, ale to trzeci klasyczny algorytm obok wybierania i bąbelkowego. Szybki, gdy tablica jest prawie posortowana.
+Sortowanie jak układanie kart w ręce: bierzesz kolejną kartę i wsuwasz ją między już ułożone. W arkuszach 2021-2026 nie padło. Przyda się tylko, gdy treść wprost każe sortować przez wstawianie.
 
 ## Jak to działa
 
@@ -83,15 +83,14 @@ Po:    [1, 2, 3, 4, 5, 6]
 
 1. Start od 1: jednoelementowa część `[5]` jest posortowana sama z siebie.
 2. Klucz trzeba zapamiętać, bo pierwsze przesunięcie nadpisze `liczby[i]`.
-3. `j >= 0` zatrzymuje pętlę na lewym końcu listy. Stoi pierwszy, a `and` przy fałszywym pierwszym warunku nie liczy drugiego.
+3. `j >= 0` zatrzymuje pętlę na lewym końcu listy, gdy klucz jest mniejszy od wszystkich na lewo.
 4. `j + 1`, bo pętla zatrzymała się jedno miejsce przed luką.
 
 ## Pułapki
 
 - Bez `j >= 0` pętla nie stanie na lewym końcu. `liczby[-1]` to w Pythonie ostatni element, więc `j` leci w ujemne indeksy, psuje listę i zwykle kończy się `IndexError`.
 - `liczby[j] = klucz` zamiast `liczby[j + 1] = klucz` wstawia o jedno za daleko w lewo.
-- Bez zapamiętanego klucza przesunięcie zniszczy wartość. Dane nie mogą ginąć, tak jak przy zamianie w R.2.6 (2021 cze).
-- Malejąco: `liczby[j] < klucz`. Gdy treść narzuca inną metodę (2021 cze: przez wybieranie), wstawianie nie da punktów za algorytm.
+- Malejąco: `liczby[j] < klucz`. Gdy treść narzuca inną metodę (2021 cze: przez wybieranie), wstawianie nie da punktu za algorytm (R.2.3).
 
 ## Powiązane
 
