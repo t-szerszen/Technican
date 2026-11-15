@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react'
-import { przejdz, useTrasa } from './hooki/useTrasa'
+import { ostatniKierunek, przejdz, useTrasa } from './hooki/useTrasa'
 import PanelBoczny from './komponenty/PanelBoczny'
 import DolnaNawigacja from './komponenty/DolnaNawigacja'
 import StronaGlowna from './widoki/StronaGlowna'
@@ -28,12 +28,20 @@ function wybierzWidok({ czesci, parametry }) {
   return { widok: <NieZnaleziono />, zakladka: 'dzialy' }
 }
 
+// Ostatnie przewinięcie każdej strony, żeby po powrocie z karty lista była tam, gdzie była
+const przewiniecia = new Map()
+
 export default function App() {
   const trasa = useTrasa()
   const { widok, zakladka } = wybierzWidok(trasa)
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0)
+    const powrot = ostatniKierunek() === 'wstecz'
+    window.scrollTo(0, powrot ? (przewiniecia.get(trasa.sciezka) ?? 0) : 0)
+
+    const zapamietaj = () => przewiniecia.set(trasa.sciezka, window.scrollY)
+    window.addEventListener('scroll', zapamietaj, { passive: true })
+    return () => window.removeEventListener('scroll', zapamietaj)
   }, [trasa.sciezka])
 
   useEffect(() => {
