@@ -1,0 +1,162 @@
+.panel-boczny {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .panel-boczny {
+    position: sticky;
+    top: 0;
+    flex: 0 0 264px;
+    height: 100dvh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 20px 14px 18px;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+  }
+}
+
+.panel-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 8px;
+  color: var(--text);
+}
+
+.panel-logo .disp {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.panel-egzamin {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 7px;
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  color: var(--text-2);
+}
+
+.panel-szukaj {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 0 8px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--sheet);
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+.panel-szukaj span {
+  flex: 1;
+}
+
+.panel-szukaj kbd {
+  font-size: 11px;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--text-3);
+  background: var(--panel);
+}
+
+.panel-dzialy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.panel-etykieta {
+  padding: 0 10px 6px;
+}
+
+.panel-dzial {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  color: var(--text-2);
+  font-weight: 500;
+  font-size: 14.5px;
+}
+
+.panel-dzial.otwarty {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.panel-dzial .ic {
+  color: var(--text-3);
+}
+
+.panel-dzial[aria-current='page'] {
+  background: var(--ink-soft);
+}
+
+.panel-nazwa {
+  flex: 1;
+  min-width: 0;
+}
+
+.panel-karty {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 0 0 4px 14px;
+  padding: 2px 0 4px 10px;
+  border-left: 1px solid var(--line);
+}
+
+.panel-karty a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--text-2);
+}
+
+.panel-numer {
+  font-size: 11.5px;
+  color: var(--text-3);
+  width: 18px;
+  flex: 0 0 auto;
+}
+
+.panel-karty a[aria-current='page'] {
+  color: var(--ink);
+  background: var(--ink-soft);
+  font-weight: 600;
+}
+
+.panel-karty a[aria-current='page'] .panel-numer {
+  color: var(--ink);
+}
+
+@media (hover: hover) {
+  .panel-dzial:hover,
+  .panel-karty a:hover {
+    background: var(--code-bg);
+    color: var(--text);
+  }
+}
+
+.panel-dol {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+}

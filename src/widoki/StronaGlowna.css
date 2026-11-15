@@ -1,0 +1,170 @@
+.glowna-gora {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: env(safe-area-inset-top);
+}
+
+.glowna-nazwa {
+  flex: 1;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Na desktopie logo i motyw są w panelu bocznym */
+@media (min-width: 1024px) {
+  .glowna-gora {
+    display: none;
+  }
+}
+
+.kontynuuj {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  color: var(--text);
+}
+
+@media (hover: hover) {
+  .kontynuuj:hover {
+    color: var(--text);
+  }
+}
+
+.kontynuuj-gora {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kontynuuj-gora .etykieta {
+  flex: 1;
+}
+
+.kontynuuj-tytul {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.kontynuuj-tytul .disp {
+  font-size: 21px;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.kontynuuj-postep {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kontynuuj-postep .mono {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.paski {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+
+.paski span {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.kontynuuj-przycisk {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .kontynuuj:hover .kontynuuj-przycisk {
+    background: var(--ink-hover);
+  }
+}
+
+.kafelki {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .kafelki {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.kafelek {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 82px;
+  padding: 13px 14px;
+  border-radius: 14px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+@media (hover: hover) {
+  .kafelek:hover {
+    color: var(--text);
+    border-color: var(--line-2);
+  }
+}
+
+.kafelek-gora {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kafelek-gora .kwadrat {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.kafelek-gora .mono {
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+.kafelek-opis {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.kafelek-opis strong {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.kafelek-opis span {
+  font-size: 12.5px;
+  color: var(--text-3);
+}
