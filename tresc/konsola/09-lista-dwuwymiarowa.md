@@ -4,10 +4,9 @@ dzial: konsola
 tagi: [python, lista, dwuwymiarowa, tablica, wiersz, kolumna, pętla zagnieżdżona]
 status: do-weryfikacji
 zrodla:
-  - https://docs.python.org/3/tutorial/datastructures.html#nested-list-comprehensions
   - https://docs.python.org/3/library/stdtypes.html#common-sequence-operations
   - https://docs.python.org/3/faq/programming.html#how-do-i-create-a-multidimensional-list
-  - Zasady oceniania INF.04 2025 cze (R.2.1, R.2.2, R.2.4, R.2.5)
+  - Zasady oceniania INF.04 2025 cze (R.2.1, R.2.2, R.2.4, R.2.5, R.2.6)
 arkusze: [2025 cze]
 ---
 
@@ -26,11 +25,7 @@ Tablica dwuwymiarowa n x 6 to w Pythonie lista list: każdy wiersz to osobna lis
 
 `zestawy[1]` to `[8, 25, 11]`, a `zestawy[1][2]` to `11`. `len(zestawy)` to liczba wierszy, `len(zestawy[0])` to liczba kolumn.
 
-Budowanie wiersz po wierszu:
-
-1. `zestawy = []`, zewnętrzna lista jest pusta.
-2. `w = 0`: nowy `wiersz = []`, pętla wewnętrzna dokłada 3, 17, 42, potem `zestawy.append(wiersz)` daje `[[3, 17, 42]]`.
-3. `w = 1`: znowu nowy `wiersz = []`, dokłada 8, 25, 11, po `append` jest `[[3, 17, 42], [8, 25, 11]]`.
+Budowanie wiersz po wierszu: `zestawy = []`, potem w każdym obrocie nowy `wiersz = []`, pętla wewnętrzna go wypełnia, a `zestawy.append(wiersz)` dokłada go na koniec: `[[3, 17, 42]]`, potem `[[3, 17, 42], [8, 25, 11]]`.
 
 Pułapka `[[0] * 3] * 2`: `[0] * 3` tworzy ==jeden== wiersz, a `* 2` wstawia do zewnętrznej listy dwa odwołania do tego samego wiersza. Kopii nie ma.
 
@@ -39,7 +34,7 @@ Pułapka `[[0] * 3] * 2`: `[0] * 3` tworzy ==jeden== wiersz, a `* 2` wstawia do 
 | `plansza = [[0] * 3] * 2` | `[[0, 0, 0], [0, 0, 0]]` |
 | `plansza[0][0] = 7` | `[[7, 0, 0], [7, 0, 0]]` |
 
-Zmianę w „pierwszym” wierszu widać w obu, bo to jedna lista. Samo `[0] * 3` jest bezpieczne: liczby się nie zmieniają, przypisanie wstawia nową liczbę w miejsce starej.
+Zmianę w „pierwszym” wierszu widać w obu, bo to jedna lista. Samo `[0] * 3` jest bezpieczne: przypisanie wstawia nową liczbę w miejsce starej. Dlatego nowy `wiersz` twórz ==w każdym obrocie== pętli zewnętrznej.
 
 ## Składnia do zapamiętania
 
@@ -54,7 +49,6 @@ for w in range(len(zestawy)):
     for k in range(len(zestawy[w])):
         print(zestawy[w][k], end=" ")
     print()
-tablica_zer = [[0] * 6 for w in range(n)]   # też poprawnie
 ```
 
 ## Przykład
@@ -97,19 +91,18 @@ Pierwsza liczba drugiego zestawu: 10
 ```
 
 1. Pętla zewnętrzna robi tyle wierszy, ile podał użytkownik.
-2. `while` losuje, aż wiersz ma 6 różnych liczb; `not in` odrzuca powtórki.
+2. `while` losuje, aż wiersz ma 6 różnych liczb; `not in` odrzuca powtórki (R.2.6, 2025 cze).
 3. Gotowy wiersz trafia do zewnętrznej listy, a cała lista wraca z funkcji.
 4. Pętla zagnieżdżona: `w` to wiersz, `k` to kolumna, `zestawy[w][k]` to jedna liczba.
 5. `zestawy[1][0]`: najpierw drugi wiersz, potem jego pierwszy element.
 
 ## Pułapki
 
-- `[[0] * 6] * n` daje n odwołań do jednego wiersza. Wypełnianie „kolejnych” wierszy nadpisuje wszystkie naraz i na końcu masz n identycznych zestawów.
+- `[[0] * 6] * n` albo `wiersz = []` postawione przed pętlą zewnętrzną dają n odwołań do jednego wiersza: na końcu masz n identycznych zestawów.
 - Lista zbudowana w funkcji musi z niej wyjść przez `return`. Za dane utracone po wyjściu z funkcji losującej albo za zmienną globalną traci się punkt (R.2.1, 2025 cze).
 - Liczba wierszy ma wynikać z wczytanego n, a pętle mają obsłużyć rzeczywistą liczbę losowań (R.2.2, R.2.4, 2025 cze). Pisz `range(len(zestawy))`, nie stałą.
 - Wyświetlanie ma być pętlą po całej kolekcji (R.2.5, 2025 cze). `print(zestawy)` wypisze nawiasy i przecinki zamiast czytelnych wierszy.
-- Kolejność indeksów: najpierw wiersz, potem kolumna. `zestawy[5][1]` przy trzech wierszach kończy się `IndexError`.
-- `wiersz = []` musi stać wewnątrz pętli zewnętrznej. Postawiony przed nią daje jeden wiersz, który `append` wstawia n razy: znowu n odwołań do tej samej listy.
+- Najpierw wiersz, potem kolumna: `zestawy[5][1]` przy trzech wierszach to `IndexError`.
 
 ## Powiązane
 

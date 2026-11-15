@@ -1,18 +1,18 @@
 ---
 tytul: "Dane z klawiatury: input() i int()"
 dzial: konsola
-tagi: [python, input, int, float, konwersja, ValueError]
+tagi: [python, input, int, konwersja, ValueError]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/library/functions.html#input
   - https://docs.python.org/3/library/functions.html#int
-  - Zasady oceniania INF.04 2022 cze (R.1.5) i 2023 sty (R.1.5)
-arkusze: [2022 cze, 2023 sty, 2024 sty, 2024 cze, 2025 cze, 2026 sty]
+  - Zasady oceniania INF.04 2022 cze (R.1.5), 2023 sty (R.1.5), 2024 cze (R.1.7)
+arkusze: [2021 cze, 2022 cze, 2023 sty, 2024 sty, 2024 cze, 2025 cze, 2026 sty]
 ---
 
 ## Po co to jest
 
-Prawie każdy program konsolowy z arkusza coś wczytuje: szukaną liczbę, liczbę kostek, liczbę losowań. Za ==jawną konwersję do int== są osobne punkty w zasadach oceniania.
+Prawie każdy program konsolowy z arkusza coś wczytuje: szukaną liczbę, liczbę kostek, liczbę losowań. ==Jawna konwersja do int== jest częścią kryterium R.1.5 (typy pasujące do problemu).
 
 ## Jak to działa
 
@@ -30,10 +30,9 @@ Po kolei: tekst z klawiatury, potem `int()` próbuje go zamienić na liczbę. Je
 ## Składnia do zapamiętania
 
 ```python
-n = int(input("Podaj liczbę: "))
-srednia = float(input("Podaj średnią: "))
-a, b = map(int, input("Podaj dwie liczby: ").split())
-odpowiedz = input("Jeszcze raz? (t/n) ").strip().lower()
+n = int(input("Podaj liczbę: "))           # liczba: zawsze int()
+pesel = input("Podaj PESEL: ")             # tekst zostaje napisem
+odpowiedz = input("Jeszcze raz? (t/n) ")   # porównasz z "t"
 while True:
     try:
         n = int(input("Podaj liczbę: "))
@@ -72,10 +71,10 @@ Wczytano: 12
 
 ## Pułapki
 
-- Bez `int()` liczysz na napisach: `"5" + "1"` daje `"51"`, a `"5" + 1` kończy się `TypeError`. W Pythonie egzaminator szuka jawnej konwersji (2022 cze, 2023 sty, 2024 sty).
-- Monit ma mówić, co wpisać („Podaj liczbę kostek”), bo zrozumiała komunikacja to osobny punkt (R.1.7).
-- Gdy treść mówi „liczby całkowite dodatnie” (2023 sty), sprawdź warunek `> 0`, bo Python nie ma typu bez znaku.
-- `input()` w funkcji liczącej (np. NWD) łamie wymóg „funkcja nie może zawierać operacji wejścia-wyjścia” (2023 sty). Wczytuj w programie głównym.
+- Bez `int()` liczysz na napisach: `"5" + "1"` daje `"51"`, a `"5" + 1` kończy się `TypeError`. W Pythonie egzaminator szuka jawnej konwersji (R.1.5, 2022 cze, 2023 sty, 2024 sty).
+- Monit ma mówić, co wpisać („Podaj liczbę kostek”), bo zrozumiała komunikacja to osobny punkt (R.1.7, 2024 cze: monit o wprowadzenie danych).
+- Gdy treść mówi „liczby całkowite dodatnie” (2023 sty), sprawdź warunek `> 0`, bo Python nie ma typu bez znaku. Zasady wprost to dopuszczają (R.1.5, 2023 sty). Sam `try` nie wystarczy: `int("-4")` działa bez błędu.
+- Wczytuj w programie głównym, nie w funkcji liczącej (2023 sty: funkcja bez operacji wejścia-wyjścia).
 
 ## Powiązane
 

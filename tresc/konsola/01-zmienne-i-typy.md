@@ -32,12 +32,11 @@ Konwersja tworzy nową wartość innego typu. Zmienna, z której czytasz, się n
 | Wyrażenie | Wynik | Uwaga |
 | --- | --- | --- |
 | `int("42")` | `42` | napis na liczbę |
-| `int("3.5")` | `ValueError` | `int()` nie czyta przecinka dziesiętnego |
+| `int("3.5")` | `ValueError` | `int()` nie czyta ułamka z napisu |
 | `int(3.9)` | `3` | obcina w stronę zera, nie zaokrągla |
 | `str(7)` | `"7"` | do sklejania z tekstem |
 | `int("0123")` | `123` | zero z przodu znika |
 | `7 / 2`, `6 / 2` | `3.5`, `3.0` | `/` ==zawsze daje float== |
-| `bool(0)`, `bool("")` | `False` | zero i pusty napis są fałszem |
 
 ## Składnia do zapamiętania
 
@@ -46,9 +45,7 @@ liczba = 7                    # int
 polowa = liczba / 2           # float: 3.5
 odpowiedz = "t"               # str
 dostepna = True               # bool
-print(type(polowa))           # <class 'float'>
 n = int("42")                 # str -> int
-cena = float("2.5")           # str -> float
 opis = "Wynik: " + str(n)     # int -> str
 cyfra = int(pesel[9])         # znak z napisu -> liczba
 ```
@@ -74,19 +71,17 @@ Liczba 7 podzielona przez 2: 3.5
 7 // 2 = 3, parzysta: False
 ```
 
-1. Jawna konwersja `int(input())`, za którą są punkty w R.1.5.
+1. Jawna konwersja `int(input())`: zasady wymieniają ją w R.1.5 (np. 2022 cze, 2024 cze).
 2. `/` daje `float` nawet dla dwóch `int`. Dla `8 / 2` wyjdzie `4.0`.
 3. Porównanie daje `bool`, więc można je od razu przypisać.
-4. `+` skleja tylko napisy, dlatego liczba przechodzi przez `str()`.
+4. `+` skleja tylko napisy, dlatego liczba przechodzi przez `str()`. Samo `"Liczba " + liczba` daje `TypeError`.
 
 ## Pułapki
 
 - Średnia to `suma / rozmiar` (R.2.10, 2025 sty). `//` obcina część ułamkową, tak samo `int()` na wyniku. Średnia ma być liczbą, nie zaokrągloną w dół.
 - Przypisuj dane właściwego typu: `dostepna = True`, a nie `1` czy `"tak"`; oczka jako `int`, a nie `"5"` (R.1.5, 2026 sty).
-- PESEL trzymaj jako napis (R.1.5, 2024 sty). `int(pesel)` zgubi zero z przodu, a do cyfr i tak potrzebujesz indeksu. Cyfrę zamieniasz osobno: `int(pesel[9])`.
-- `"Suma: " + 5` daje `TypeError`. Użyj `str()` albo f-stringa.
-- `bool("False")` i `bool("n")` dają `True`, bo każdy niepusty napis jest prawdą. Odpowiedź t/n porównuj jako napis: `odpowiedz == "t"`.
-- Python pozwala przypisać tej samej nazwie raz liczbę, raz napis. Nie rób tego: egzaminator patrzy na przypisane dane, a kod robi się mylący.
+- PESEL trzymaj jako napis albo listę cyfr, nie jako jedną liczbę (R.1.5, 2024 sty). `int(pesel)` zgubi zero z przodu. Cyfrę zamieniasz osobno: `int(pesel[9])`.
+- `bool("n")` daje `True`, bo każdy niepusty napis jest prawdą. Odpowiedź t/n trzymaj jako napis i porównuj: `odpowiedz == "t"` (R.1.5, 2024 cze: zmienna znakowa dla zgody).
 
 ## Powiązane
 

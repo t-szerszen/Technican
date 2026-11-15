@@ -36,7 +36,7 @@ Operatory, które trzeba znać:
 | `n < 3 or n > 10` | poza przedziałem, czyli `not (3 <= n <= 10)` |
 | `n % 2 == 0` | parzysta (reszta z dzielenia przez 2 to 0), `!= 0` nieparzysta |
 
-==Warunki komplementarne== (parzysta / nieparzysta) wykluczają się i razem pokrywają wszystko. Drugi warunek zastępuje samo `else` (R.2.2, 2024 sty).
+==Warunki komplementarne== (parzysta / nieparzysta) wykluczają się i razem pokrywają wszystko, więc zamiast drugiego warunku wystarczy samo `else` (R.2.2, 2024 sty).
 
 ## Składnia do zapamiętania
 
@@ -74,15 +74,15 @@ Kobieta
 ```
 
 1. Indeks 9 to 10. cyfra. To znak, więc `int()` przed `%`, inaczej `TypeError` (R.1.5, 2024 sty).
-2. `return` także w `else`, więc każda ścieżka coś zwraca (R.2.1, 2024 sty). Parzysta i nieparzysta to warunki komplementarne, więc wystarcza `else`.
+2. `return` także w `else`, więc każda ścieżka coś zwraca (R.2.1, 2024 sty).
 3. Funkcja zwraca znak, a program główny wypisuje całe słowo „Kobieta” albo „Mężczyzna” (R.1.7, 2024 sty).
 
 ## Pułapki
 
 - Granice: `3 < n < 10` odrzuca 3 i 10, a egzaminator sprawdza właśnie 2, 3, 10, 11 (R.2.7, 2024 cze).
-- Funkcja z `if` bez `else` zwraca `None`, gdy warunek nie zajdzie (R.2.1, 2024 sty).
+- Funkcja z `return` tylko pod `if` zwraca `None`, gdy warunek nie zajdzie (R.2.1, 2024 sty).
 - `if odpowiedz == "t" or "T":` jest zawsze prawdą, bo niepusty napis `"T"` to `True`. Pisz `odpowiedz == "t" or odpowiedz == "T"`.
-- `if a = 5:` to `SyntaxError`. Porównanie to `==`, przypisanie to `=`.
+- `if n = 5:` to `SyntaxError`. Porównanie to `==`, przypisanie to `=`.
 - Kilka osobnych `if` zamiast `elif` może wykonać kilka bloków naraz. W łańcuchu `elif` wykona się najwyżej jeden.
 
 ## Powiązane
