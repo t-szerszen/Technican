@@ -5,97 +5,86 @@ tagi: [dokumentacja, zrzut ekranu, konsola1, interakcje, pasek zadań]
 status: do-weryfikacji
 zrodla:
   - https://support.microsoft.com/pl-pl/windows/skr%C3%B3ty-klawiaturowe-w-systemie-windows-dcc61a57-8ff0-cffe-9796-cb9706c75eec
-  - https://docs.python.org/3/library/functions.html#enumerate
-  - Zasady oceniania INF.04 2021 cze, 2023 sty, 2023 cze (uwaga do R.4, wykadrowane zrzuty)
-  - Zasady oceniania INF.04 2024 cze (R.1.6, R.2.7-R.2.10, R.4.6)
-  - Zasady oceniania INF.04 2026 sty (R.4.4-R.4.6)
+  - Arkusz INF.04 2024 cze (część III, przykładowe interakcje), 2026 sty (miejsce zrzutów)
+  - Zasady oceniania INF.04 2021 cze, 2023 cze (uwaga do R.4, wykadrowane zrzuty)
+  - Zasady oceniania INF.04 2024 cze (R.2.7), 2026 cze (R.1.6, R.2.6, R.4.6)
 arkusze: [2021 cze, 2022 cze, 2023 sty, 2023 cze, 2024 sty, 2024 cze, 2025 sty, 2025 cze, 2026 sty, 2026 cze]
 ---
 
 ## Po co to jest
 
-Zrzut to dowód, że program się uruchomił. Bez niego przepada punkt za próbę uruchomienia (R.1.6), za zrzut w dokumentacji (R.4.6), a w 2024 cze także punkty za działanie programu: R.2.7 wprost wymaga, by uruchomienie ==udokumentować zrzutem==.
+Zrzut to dowód, że program się uruchomił. Bez niego przepada punkt za próbę uruchomienia (R.1.6, w 2023 sty R.1.7), punkt za zrzut w dokumentacji (R.4.6) i kryterium „program uruchamia się w konsoli, co udokumentowano zrzutem” (np. R.2.6 w 2026 cze).
 
 ## Jak to działa
 
 Na każdym zrzucie egzaminator szuka trzech rzeczy:
 
-1. Cały ekran z paskiem zadań. ==Wykadrowanych zrzutów nie sprawdzają== (uwaga do R.4, 2021 cze i 2023 cze; w innych latach „muszą zawierać cały obszar ekranu”).
-2. Środowisko z otwartym projektem (IDE) albo terminal z uruchomieniem, czyli `python gra.py` i wynik.
-3. Jeśli program się nie uruchamia: okno z błędami i otwarte środowisko. W Pythonie to treść błędu (Traceback) w konsoli IDE.
+1. Cały ekran z paskiem zadań. ==Wykadrowanych zrzutów nie sprawdzają== (uwaga do R.4, 2021 cze i 2023 cze; w pozostałych latach zrzuty mają „zawierać cały obszar ekranu”).
+2. Środowisko (IDE) z otwartym projektem i okno z wynikiem programu. Arkusz dopuszcza też terminal, ale R.4.6 zwykle wymaga, by było „widoczne środowisko”, więc najbezpieczniej uruchamiać w IDE.
+3. Gdy program się nie uruchamia: okno z błędami (w Pythonie Traceback w konsoli IDE) i otwarte środowisko.
 
-Zrzutów ma być tyle, ile interakcji (polecenie od 2022 cze). Plan dla gry w kości z 2024 cze, gdzie kryteria każą sprawdzić granice 2 i 11 oraz 3 i 10:
+Zrzutów ma być tyle, ile interakcji, a ==każde `input()` to interakcja==. Zrzut robisz po każdej odpowiedzi programu. Konsola trzyma historię, więc późniejszy zrzut pokazuje też wcześniejsze kroki.
 
-| Zrzut | Co wpisujesz | Co ma być widać | Kryterium |
-| --- | --- | --- | --- |
-| konsola1 | nic | pytanie o liczbę kostek | R.1.6 |
-| konsola2 | `2`, potem `11` | pytanie się powtarza | R.2.7 |
-| konsola3 | `3` | 3 kostki i suma punktów | R.2.7-R.2.9 |
-| konsola4 | `t`, potem `10` | nowe losowanie, 10 kostek | R.2.7, R.2.10 |
-| konsola5 | `n` | koniec programu | R.2.10 |
-
-Konsola trzyma całą historię, więc późniejszy zrzut pokazuje też wcześniejsze kroki. Nazwy plików zmieniały się tak:
-
-| Arkusz | Konsola | Testy | Gdzie |
-| --- | --- | --- | --- |
-| 2021 cze | `konsola.jpg` (jeden) | — | dokumentacja |
-| 2022 cze - 2025 cze, 2026 cze | `konsola1`, `konsola2`, ... | — | dokumentacja |
-| 2026 sty | `konsola1.png`, ... | `test1.png`, ... | konsolowa, testy |
-
-Druga aplikacja analogicznie: `mobile1` (2022, 2024 cze), `desktop1`, `web1`, `mobilna1.png` (2026 sty).
+Zrzuty zwykle idą do folderu `dokumentacja`. W 2026 sty szły do `konsolowa`, `mobilna` i `testy`, więc miejsce sprawdź w poleceniu.
 
 ## Składnia do zapamiętania
 
-```python
-liczba_zrzutow = 3
-for numer in range(1, liczba_zrzutow + 1):
-    print(f"konsola{numer}.png")  # konsola1.png, konsola2.png, ...
-for numer in range(1, liczba_zrzutow + 1):
-    print(f"test{numer}.png")     # 2026 sty: zrzuty testów
-for numer, opis in enumerate(["start", "koniec"], start=1):
-    print(f"konsola{numer}.png - {opis}")
+```tekst
+Windows + PrtScn   cały ekran, plik w Obrazy > Zrzuty ekranu
+PrtScn             Windows 11: zaznaczony obszar do schowka
+Alt + PrtScn       samo aktywne okno (wykadrowany)
+
+konsola1.png, konsola2.png, ...   aplikacja konsolowa
+web1, desktop1, mobile1, ...      druga aplikacja, nazwa z arkusza
+test1.png, test2.png, ...         testy jednostkowe (2026 sty)
 ```
 
 ## Przykład
 
-```python plan_zrzutow.py {9,10,11}
-interakcje = [
-    "start programu, pytanie o liczbę kostek",
-    "wpisane 2 i 11 - pytanie się powtarza",
-    "wpisane 3 - trzy kostki i punkty",
-    "odpowiedź t i 10 kostek - nowe losowanie",
-    "odpowiedź n - koniec programu",
-]
+```python gra.py {2,4,12,13}
+def wczytaj_liczbe_kostek():
+    liczba = int(input("Ile kostek chcesz rzucić? (3 - 10): "))
+    while liczba < 3 or liczba > 10:
+        liczba = int(input("Ile kostek chcesz rzucić? (3 - 10): "))
+    return liczba
 
-for numer, opis in enumerate(interakcje, start=1):
-    print(f"konsola{numer}.png - {opis}")
-print(f"Razem zrzutów: {len(interakcje)}")
+
+odpowiedz = "t"
+while odpowiedz == "t":
+    liczba_kostek = wczytaj_liczbe_kostek()
+    print(f"Rzucasz {liczba_kostek} kostkami")
+    odpowiedz = input("Jeszcze raz? (t/n): ")
+print("Koniec gry")
 ```
 
 ```wynik
-konsola1.png - start programu, pytanie o liczbę kostek
-konsola2.png - wpisane 2 i 11 - pytanie się powtarza
-konsola3.png - wpisane 3 - trzy kostki i punkty
-konsola4.png - odpowiedź t i 10 kostek - nowe losowanie
-konsola5.png - odpowiedź n - koniec programu
-Razem zrzutów: 5
+$ python gra.py
+Ile kostek chcesz rzucić? (3 - 10): [[2]]
+Ile kostek chcesz rzucić? (3 - 10): [[11]]
+Ile kostek chcesz rzucić? (3 - 10): [[3]]
+Rzucasz 3 kostkami
+Jeszcze raz? (t/n): [[t]]
+Ile kostek chcesz rzucić? (3 - 10): [[10]]
+Rzucasz 10 kostkami
+Jeszcze raz? (t/n): [[n]]
+Koniec gry
 ```
 
-1. `enumerate(..., start=1)` numeruje od 1, bo zrzuty zaczynają się od `konsola1`.
-2. Nazwa pliku powstaje z numeru, jak w arkuszu: `konsola1.png`, `konsola2.png`.
-3. Zrzutów jest tyle, ile interakcji na liście.
+1. Program czeka na pierwszą odpowiedź: `konsola1`, stan początkowy.
+2. Po błędnych `2` i `11` pytanie wraca: `konsola2`. Te granice (oraz 3 i 10) sprawdzało R.2.7 w 2024 cze.
+3. Po `3` i `t` program pyta od nowa: `konsola3`, a po `10`: `konsola4`.
+4. Po `n` program się kończy: `konsola5` pokazuje całą historię.
 
 ## Pułapki
 
-- Zrzut samego okna albo zaznaczonego fragmentu to zrzut wykadrowany. `Alt + PrtScn` łapie tylko aktywne okno. Bezpiecznie: `Windows + PrtScn`, który w Windows 11 zapisuje cały ekran w Obrazy > Zrzuty ekranu.
+- `Alt + PrtScn` i samo `PrtScn` w Windows 11 łapią okno albo fragment, czyli zrzut wykadrowany. Bezpiecznie: `Windows + PrtScn`.
 - Plik zapisany automatycznie ma inną nazwę. Przenieś go do właściwego folderu i zmień nazwę na `konsola1.png`.
-- Okno programu nie może zasłaniać paska zadań ani środowiska (R.4.6: „widoczne jest środowisko”). W 2026 sty polecenie wymaga środowiska na każdym zrzucie, sam terminal to ryzyko.
-- Program z błędem też dokumentuj zrzutem z błędami. W 2024 cze błąd w twoim pliku zeruje R.2.7-R.2.10, ale R.1.6 można dostać.
-- W 2026 sty zrzuty konsoli idą do `konsolowa`, a zrzuty testów do `testy`, nie do wspólnego folderu.
+- Okno programu nie może zasłaniać paska zadań ani środowiska.
+- Program z błędem też udokumentuj zrzutem z błędami. Gdy błąd jest w twoim pliku, kryteria z uruchomienia przepadają (np. R.2.6-R.2.7 w 2026 cze), ale R.1.6 zostaje (2026 cze: „lub błędy jego kompilacji / interpretacji”).
 
 ## Powiązane
 
 - [Zadanie: gra w kości](#/karta/konsola/46-zadanie-gra-w-kosci)
-- [enumerate(): indeks i wartość](#/karta/konsola/07-enumerate)
+- [Pętla while](#/karta/konsola/06-petla-while)
 - [Czytanie wyniku testów](#/karta/testy/05-wynik-testow)
 - [Foldery i pakowanie](#/karta/dokumentacja/04-foldery-i-pakowanie)
