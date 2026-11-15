@@ -8,7 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['logo.svg', 'apple-touch-icon.png'],
+      includeManifestIcons: false,
       manifest: {
         name: 'kratka — notatki INF.04',
         short_name: 'kratka',
@@ -27,7 +27,7 @@ export default defineConfig({
       },
       workbox: {
         // Fonty mają też podzbiory cyrylicy, greki itd. Do offline wystarczy łaciński z polskimi znakami.
-        globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}', '**/*latin*.woff2'],
+        globPatterns: ['**/*.{js,css,html,svg,png}', '**/*latin*.woff2'],
       },
     }),
   ],
