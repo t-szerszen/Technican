@@ -41,7 +41,7 @@ export default function Szukaj({ zapytanie: zapytanieZAdresu, filtr }) {
   const widoczne = wyniki?.filter((w) => pasujeDoFiltra(w.karta, aktywnyFiltr, oznaczenia))
 
   return (
-    <main className="strona kratka">
+    <main className="strona kratka od-gory">
       <h1 className="ukryte">Szukaj</h1>
       <form className="szukaj-pole" role="search" onSubmit={(e) => e.preventDefault()}>
         <Ikona nazwa="szukaj" rozmiar={19} />

@@ -13,7 +13,7 @@ export default function Powtorki({ filtr }) {
   const widoczne = karty.filter((k) => pasujeDoFiltra(k, aktywnyFiltr, oznaczenia))
 
   return (
-    <main className="strona kratka">
+    <main className="strona kratka od-gory">
       <div className="powitanie">
         <h1>Powtórki</h1>
         <div className="podtytul">

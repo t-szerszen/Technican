@@ -60,7 +60,7 @@ export default function StronaGlowna() {
   const umiemWszystkie = karty.filter((k) => oznaczenia[k.id] === 'umiem').length
 
   return (
-    <main className="strona kratka">
+    <main className="strona kratka od-gory">
       <div className="glowna-gora">
         <Logo />
         <span className="disp glowna-nazwa">kratka</span>

@@ -59,12 +59,6 @@ const ksztalty = {
       <path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1 1.2 1 2V16h5.2v-.2c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z" />
     </>
   ),
-  kalendarz: (
-    <>
-      <rect x="3.5" y="5" width="17" height="15" rx="2.5" />
-      <path d="M3.5 10h17M8 3v4M16 3v4" />
-    </>
-  ),
 }
 
 export default function Ikona({ nazwa, rozmiar = 20, wypelniona = false, ...reszta }) {

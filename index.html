@@ -10,12 +10,13 @@
     <title>kratka — notatki INF.04</title>
     <script>
       // Motyw ustawiony przed pierwszym malowaniem, żeby ekran nie mrugał na jasno.
+      var motyw = null
       try {
-        var motyw = JSON.parse(localStorage.getItem('kratka:motyw'))
-        if (motyw === 'ciemny' || (!motyw && matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('ciemny')
-        }
+        motyw = JSON.parse(localStorage.getItem('kratka:motyw'))
       } catch (e) {}
+      if (motyw === 'ciemny' || (!motyw && matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('ciemny')
+      }
     </script>
   </head>
   <body>
