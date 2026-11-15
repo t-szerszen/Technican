@@ -14,6 +14,10 @@ const JEZYKI = {
   jsx: { prism: 'jsx', nazwa: 'JSX', kolor: 'var(--t-re)' },
   css: { prism: 'css', nazwa: 'CSS', kolor: 'var(--t-bs)' },
   sql: { prism: 'sql', nazwa: 'SQL', kolor: 'var(--t-and)' },
+  cpp: { prism: 'cpp', nazwa: 'C++', kolor: 'var(--t-qt)' },
+  json: { prism: 'json', nazwa: 'JSON', kolor: 'var(--text-3)' },
+  ts: { prism: 'typescript', nazwa: 'TypeScript', kolor: 'var(--t-re)' },
+  tsx: { prism: 'tsx', nazwa: 'TSX', kolor: 'var(--t-re)' },
 }
 
 // Typy tokenów Prisma na klasy palety z designu (słowo kluczowe, funkcja, napis...)
@@ -30,6 +34,7 @@ const KLASY = {
   url: 's',
   number: 'n',
   boolean: 'n',
+  hexcode: 'n',
   comment: 'c',
   prolog: 'c',
   doctype: 'c',
@@ -48,10 +53,15 @@ const KLASY = {
 }
 
 // Bierzemy najbardziej szczegółowy typ, ale interpunkcję tylko wtedy, gdy nic innego nie pasuje,
-// żeby np. nawiasy ostre znacznika XML miały kolor znacznika.
-function klasaTokenu(typy) {
+// żeby np. nawiasy ostre znacznika XML miały kolor znacznika. Na granicy wstawki z innym kodem
+// (${...} w napisie JS, {...} w atrybucie JSX) się zatrzymujemy, żeby nie dziedziczyć koloru napisu czy znacznika.
+function klasaTokenu(typy, tresc) {
+  // Prism liczy print jako słowo kluczowe (zaszłość po Pythonie 2), a w designie to funkcja wbudowana
+  if (tresc === 'print' && typy.includes('keyword')) return 'b'
   for (let i = typy.length - 1; i >= 0; i--) {
-    if (typy[i] !== 'punctuation' && KLASY[typy[i]]) return KLASY[typy[i]]
+    const typ = typy[i]
+    if (typ === 'interpolation' || typ === 'script' || typ.startsWith('language-')) break
+    if (typ !== 'punctuation' && KLASY[typ]) return KLASY[typ]
   }
   return typy.includes('punctuation') ? 'o' : undefined
 }
@@ -133,7 +143,7 @@ export default function BlokKodu({ kod, jezyk, meta = '' }) {
                     </span>
                     <code className="cx">
                       {linia.map((token, j) => (
-                        <span key={j} className={klasaTokenu(token.types)}>
+                        <span key={j} className={klasaTokenu(token.types, token.content)}>
                           {token.content}
                         </span>
                       ))}
