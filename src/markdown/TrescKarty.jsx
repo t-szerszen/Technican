@@ -4,7 +4,6 @@ import wtyczkaKratki from './wtyczkaKratki'
 import BlokKodu from './BlokKodu'
 import BlokWyniku from './BlokWyniku'
 import Ikona from '../komponenty/Ikona'
-import { kotwica } from '../dane/karty'
 import './TrescKarty.css'
 
 function tekstWezla(wezel) {
@@ -27,11 +26,8 @@ const komponenty = {
     if (jezyk === 'wynik') return <BlokWyniku tekst={tekst} />
     return <BlokKodu kod={tekst} jezyk={jezyk} meta={kod.data?.meta ?? ''} />
   },
-  h1({ node, ...reszta }) {
-    return <h2 id={kotwica(tekstWezla(node))} {...reszta} />
-  },
-  h2({ node, ...reszta }) {
-    return <h2 id={kotwica(tekstWezla(node))} {...reszta} />
+  h1({ node: _node, ...reszta }) {
+    return <h2 {...reszta} />
   },
   table({ node: _node, ...reszta }) {
     return (
@@ -47,12 +43,13 @@ const komponenty = {
   aside({ node, children }) {
     const rodzaj = node.properties?.dataRamka
     const ramka = RAMKI[rodzaj]
-    if (!ramka) return <aside>{children}</aside>
+    // Nieznany rodzaj, np. literówka w [!egzmain], zostaje zwykłym cytatem
+    if (!ramka) return <blockquote>{children}</blockquote>
     return (
       <aside className={`ramka ramka-${rodzaj}`} aria-label={ramka.tytul}>
         <Ikona nazwa={ramka.ikona} rozmiar={19} />
         <div>
-          <strong>{ramka.tytul}</strong>
+          <strong className="ramka-tytul">{ramka.tytul}</strong>
           {children}
         </div>
       </aside>

@@ -148,7 +148,7 @@
   gap: 3px;
 }
 
-.ramka strong:first-child {
+.ramka-tytul {
   font-size: 13.5px;
 }
 
@@ -164,7 +164,7 @@
 }
 
 .ramka-egzamin > .ic,
-.ramka-egzamin strong:first-child {
+.ramka-egzamin .ramka-tytul {
   color: var(--warn);
 }
 
@@ -173,7 +173,7 @@
 }
 
 .ramka-blad > .ic,
-.ramka-blad strong:first-child {
+.ramka-blad .ramka-tytul {
   color: var(--bad);
 }
 
@@ -182,7 +182,7 @@
 }
 
 .ramka-wskazowka > .ic,
-.ramka-wskazowka strong:first-child {
+.ramka-wskazowka .ramka-tytul {
   color: var(--ink);
 }
 
@@ -400,9 +400,13 @@
 }
 
 .kod + .wynik {
-  margin-top: -16px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* Ujemny margines znosi odstęp między blokami treści karty */
+.tresc-karty > .kod + .wynik {
+  margin-top: -16px;
 }
 
 @media (min-width: 1024px) {
@@ -441,7 +445,33 @@
     padding-right: 18px;
   }
 
-  .kod + .wynik {
+  .tresc-karty > .kod + .wynik {
     margin-top: -20px;
+  }
+
+  .ramka {
+    gap: 14px;
+    padding: 16px 20px;
+  }
+
+  .ramka-tytul {
+    font-size: 14px;
+  }
+
+  .ramka p {
+    font-size: 15.5px;
+  }
+
+  .wynik-pasek {
+    height: 36px;
+    padding: 0 16px;
+  }
+
+  .wynik-pasek .mono {
+    font-size: 11px;
+  }
+
+  .wynik-linie {
+    padding: 12px 16px 16px;
   }
 }

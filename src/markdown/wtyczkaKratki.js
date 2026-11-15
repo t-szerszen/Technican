@@ -1,20 +1,20 @@
 // Wtyczka remark z dwoma dodatkami do zwykłego Markdowna:
-// ==tekst== to zakreślacz, a > [!egzamin] / [!blad] / [!wskazowka] to ramka z designu.
+// ==tekst== to zakreślacz, a > [!egzamin] na początku cytatu robi z niego ramkę.
 
-const RODZAJE_RAMEK = ['egzamin', 'blad', 'wskazowka']
+// Zakreślony tekst nie może zaczynać się ani kończyć spacją, więc "a == b oraz c == d" zostaje w spokoju.
+const ZAKRESLENIE = /==(?=\S)([^=\n]*?\S)==/
 
 function zakreslacz(rodzic) {
   if (!rodzic.children) return
-  if (rodzic.type === 'code' || rodzic.type === 'inlineCode') return
 
   const nowe = []
   for (const dziecko of rodzic.children) {
-    if (dziecko.type !== 'text' || !dziecko.value.includes('==')) {
+    if (dziecko.type !== 'text' || !ZAKRESLENIE.test(dziecko.value)) {
       zakreslacz(dziecko)
       nowe.push(dziecko)
       continue
     }
-    const kawalki = dziecko.value.split(/==([^=\n]+)==/)
+    const kawalki = dziecko.value.split(new RegExp(ZAKRESLENIE.source))
     kawalki.forEach((kawalek, i) => {
       if (!kawalek) return
       if (i % 2 === 0) nowe.push({ type: 'text', value: kawalek })
@@ -33,10 +33,12 @@ function ramki(rodzic) {
     const akapit = dziecko.children[0]
     const tekst = akapit?.type === 'paragraph' ? akapit.children[0] : null
     const dopasowanie = tekst?.type === 'text' && tekst.value.match(/^\[!(\w+)\][ \t]*\n?/)
-    if (!dopasowanie || !RODZAJE_RAMEK.includes(dopasowanie[1])) continue
+    if (!dopasowanie) continue
 
     tekst.value = tekst.value.slice(dopasowanie[0].length)
     if (!tekst.value) akapit.children.shift()
+    // Twarde łamanie (dwie spacje) po znaczniku zostawiłoby pustą linię pod tytułem ramki
+    if (akapit.children[0]?.type === 'break') akapit.children.shift()
     if (akapit.children.length === 0) dziecko.children.shift()
     dziecko.data = { hName: 'aside', hProperties: { dataRamka: dopasowanie[1] } }
   }
