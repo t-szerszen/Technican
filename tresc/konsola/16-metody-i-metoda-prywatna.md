@@ -1,7 +1,7 @@
 ---
 tytul: "Metody i metoda tylko dla klasy"
 dzial: konsola
-tagi: [python, klasa, metoda, self, return, prywatna, private, AttributeError]
+tagi: [python, klasa, metoda, self, return, prywatna, private]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/tutorial/classes.html#method-objects
@@ -25,7 +25,7 @@ Python nie deklaruje typu zwracanego. O „typie” metody decyduje jej `return`
 | wyświetlająca nieparzyste | `print` i liczy | ich liczba | całkowity |
 | licząca średnią | liczy | `suma / rozmiar` | liczbowy |
 
-Metoda prywatna to nazwa z `__` na początku. Wewnątrz klasy Python zamienia `self.__szukaj_max()` na `self._Wyniki__szukaj_max()` i ją znajduje. Poza klasą nazwy nie zmienia, więc `wyniki.__szukaj_max()` kończy się `AttributeError`.
+Metoda prywatna to nazwa z ==dwoma podkreślnikami na początku==, tak samo jak pole prywatne i z tego samego powodu: Python zmienia tę nazwę tylko w kodzie klasy. W metodach klasy `self.__szukaj_max()` działa, a poza klasą `wyniki.__szukaj_max()` kończy się `AttributeError`.
 
 ## Składnia do zapamiętania
 
@@ -46,7 +46,7 @@ class Wyniki:
 
 ## Przykład
 
-```python wyniki.py {6,20,23,31}
+```python wyniki.py {6,20,23}
 class Wyniki:
     def __init__(self, punkty):
         self.__punkty = punkty
@@ -76,30 +76,24 @@ wyniki = Wyniki([12, 7, 31, 18])
 ile = wyniki.wyswietl_nieparzyste()
 print("Nieparzystych:", ile)
 print("Najwyższy wynik:", wyniki.najwyzszy())
-try:
-    wyniki.__szukaj_max()
-except AttributeError as blad:
-    print("Błąd:", blad)
 ```
 
 ```wynik
 7 31
 Nieparzystych: 2
 Najwyższy wynik: 31
-Błąd: 'Wyniki' object has no attribute '__szukaj_max'
 ```
 
 1. Metoda prywatna: dwa podkreślniki, `self` jako parametr, zwraca indeks maksimum.
 2. Wyświetla i zwraca: wypisuje liczby, a wynik (ich liczbę) oddaje programowi głównemu.
-3. Wewnątrz klasy prywatną wołasz zwyczajnie, przez `self.`.
-4. Z zewnątrz metody prywatnej nie widać.
+3. Wewnątrz klasy prywatną wołasz zwyczajnie, przez `self.`. Program główny korzysta tylko z metod publicznych.
 
 ## Pułapki
 
 - Metoda wyświetlająca z `return` albo licząca bez `return` to zły typ (R.2.3, 2025 sty). `print(obiekt.wyswietl())` wypisze na końcu `None`.
 - `__szukaj_max()` bez `self.` w środku klasy to `NameError`. Metodę zawsze wołasz przez `self.`.
 - W 2021 cze zasady dopuszczały „prywatny lub protected” (R.2.4). W Pythonie protected to tylko umowne `_szukaj`; pewniejsze jest `__szukaj_max`.
-- `self` nie liczy się do parametrów (2025 sty, 2026 sty). „Metoda bezparametrowa” z 2026 sty to `def zablokuj(self)`.
+- Zasady 2025 sty i 2026 sty nie liczą `self` do parametrów. „Metoda bezparametrowa” z 2026 sty to `def zablokuj(self)`.
 
 ## Powiązane
 

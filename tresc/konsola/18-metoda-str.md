@@ -1,7 +1,7 @@
 ---
 tytul: "__str__"
 dzial: konsola
-tagi: [python, klasa, __str__, print, str, f-string, repr]
+tagi: [python, klasa, __str__, print, str, f-string]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/reference/datamodel.html#object.__str__
@@ -13,7 +13,7 @@ arkusze: []
 
 ## Po co to jest
 
-Żaden arkusz nie wymaga `__str__`, ale przydaje się przy sprawdzaniu klasy: `print(kosc)` od razu pokazuje stan obiektu zamiast adresu w pamięci. Metodę, która ma ==zwracać napis== (np. słownie z 2026 sty), pisze się tak samo.
+Żaden arkusz nie wymaga `__str__`. Przydaje się przy sprawdzaniu klasy: `print(kosc)` pokazuje stan obiektu zamiast adresu w pamięci. Metodę, która ma ==zwracać napis== (np. słownie z 2026 sty), pisze się tak samo: `return`, nie `print`.
 
 ## Jak to działa
 
@@ -23,15 +23,14 @@ arkusze: []
 2. `str` szuka metody `__str__` w klasie obiektu i uruchamia ją z `self = pierwsza`.
 3. `__str__` ==zwraca napis==, a `print` go wypisuje.
 
-Bez własnego `__str__` Python bierze domyślny z klasy `object`. Wtedy `print(pierwsza)` wypisuje coś w rodzaju `<__main__.Kosc object at 0x10479a7b0>`: nazwę klasy i adres w pamięci, przy każdym uruchomieniu inny.
+Bez własnego `__str__` Python bierze domyślny z klasy `object` i wypisuje coś w rodzaju `<__main__.Kosc object at 0x10479a7b0>`: nazwę klasy i adres w pamięci.
 
 | Zapis | Czy woła `__str__` | Co wychodzi |
 | --- | --- | --- |
 | `print(pierwsza)` | tak | `Kość z 3 oczkami` |
-| `str(pierwsza)` | tak | napis, można go dalej obrabiać |
 | `f"Rzut: {pierwsza}"` | tak | `Rzut: Kość z 3 oczkami` |
 | `"Rzut: " + pierwsza` | nie | `TypeError`, trzeba `str(pierwsza)` |
-| `print(kosci)` (lista obiektów) | nie, lista używa `repr()` | każdy element jak bez `__str__` |
+| `print(kosci)` (lista obiektów) | nie, lista używa `repr()` | `[<__main__.Kosc object at ...>, ...]` |
 
 ## Składnia do zapamiętania
 
@@ -49,7 +48,7 @@ print(Kosc(3))
 
 ## Przykład
 
-```python napis.py {5,6,12,14,17}
+```python napis.py {5,6,12,15}
 class Kosc:
     def __init__(self, oczka):
         self.oczka = oczka
@@ -61,9 +60,7 @@ class Kosc:
 pierwsza = Kosc(3)
 druga = Kosc(6)
 print(pierwsza)
-opis = str(druga)
-print(opis.upper())
-print(f"Rzut: {pierwsza}")
+print(f"Rzut: {druga}")
 kosci = [pierwsza, druga]
 for kosc in kosci:
     print(kosc)
@@ -71,24 +68,20 @@ for kosc in kosci:
 
 ```wynik
 Kość z 3 oczkami
-KOŚĆ Z 6 OCZKAMI
-Rzut: Kość z 3 oczkami
+Rzut: Kość z 6 oczkami
 Kość z 3 oczkami
 Kość z 6 oczkami
 ```
 
 1. Dokładnie dwa podkreślniki z obu stron i tylko `self`.
 2. `return`, nie `print`. Napis składa f-string z pól obiektu.
-3. `str()` daje zwykły napis, więc działa na nim np. `upper()`.
-4. f-string też korzysta z `__str__`.
-5. Listę obiektów wypisuj w pętli, wtedy każdy element idzie przez `__str__`.
+3. f-string też korzysta z `__str__`.
+4. Listę obiektów wypisuj w pętli, wtedy każdy element idzie przez `__str__`.
 
 ## Pułapki
 
 - `print` zamiast `return` w `__str__` wypisze tekst, a potem rzuci `TypeError: __str__ returned non-string (type NoneType)`.
-- `str()` woła `__str__` bez argumentów, więc poza `self` nie dawaj parametrów. Metoda ma tylko złożyć opis, niczego w obiekcie nie zmieniać.
-- `print(kosci)` na całej liście daje `[<__main__.Kosc object at ...>, ...]`, bo lista pokazuje elementy przez `repr()`, a nie `__str__`.
-- W 2026 sty po utworzeniu obiektu trzeba było wypisać oczka liczbowo i słownie oraz nazwę pliku (R.2.9). `__str__` musiałaby to wszystko zawierać, więc prościej wypisać pola jawnie w programie głównym.
+- W 2026 sty po utworzeniu obiektu trzeba było wypisać oczka liczbowo i słownie oraz nazwę pliku (R.2.9). Prościej wypisać pola jawnie w programie głównym niż upychać to w `__str__`.
 
 ## Powiązane
 

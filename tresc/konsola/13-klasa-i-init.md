@@ -13,7 +13,7 @@ arkusze: [2021 cze, 2025 sty, 2026 sty]
 
 ## Po co to jest
 
-Klasę trzeba było napisać w 2021 cze (tablica jako pole klasy), 2025 sty (klasa z tablicą) i 2026 sty (klasa `Kosc`). Wszystko zaczyna się od `class`, `__init__` i `self`. Zasady 2026 sty mówią wprost: pola deklaruj ==w konstruktorze przez self.pole==.
+Klasę trzeba było napisać w 2021 cze (tablica jako pole klasy), 2025 sty (klasa z tablicą) i 2026 sty (klasa `Kosc`). Wszystko zaczyna się od `class`, `__init__` i `self`. Zasady 2026 sty mówią wprost, że w Pythonie pola deklaruje się ==w konstruktorze przez self.pole==.
 
 ## Jak to działa
 
@@ -52,7 +52,7 @@ print(anna.imie, anna.zdal())
 
 ## Przykład
 
-```python uczniowie.py {3,10,12,14,15}
+```python uczniowie.py {3,6,10,12}
 class Uczen:
     def __init__(self, imie, punkty):
         self.imie = imie
@@ -66,30 +66,27 @@ anna = Uczen("Anna", 34)
 jan = Uczen("Jan", 21)
 jan.punkty = 25
 anna.przedstaw_sie()
-Uczen.przedstaw_sie(jan)
-print(jan.__dict__)
+jan.przedstaw_sie()
 ```
 
 ```wynik
 Anna: 34 pkt
 Jan: 25 pkt
-{'imie': 'Jan', 'punkty': 25}
 ```
 
 1. `self.imie = imie` zapisuje parametr w polu obiektu. Samo `imie` to zmienna lokalna, która znika po wyjściu z `__init__`.
-2. Dwa argumenty, choć `__init__` ma trzy parametry: `self` wstawia Python.
-3. Zmiana pola jednego obiektu nie rusza drugiego.
-4. Jawny zapis tego, co robi `jan.przedstaw_sie()`: obiekt idzie jako `self`.
-5. `__dict__` pokazuje pola obiektu jako słownik: `punkty` już 25, `anna` ma swoje 34. Tylko do podglądu, na egzaminie niepotrzebne.
+2. `self` jest pierwszym parametrem każdej metody, także tej bez innych parametrów.
+3. Dwa argumenty, choć `__init__` ma trzy parametry: `self` wstawia Python.
+4. Zmiana pola jednego obiektu nie rusza drugiego: `anna` dalej ma 34.
 
 ## Pułapki
 
 - `def przedstaw_sie():` bez `self` daje `TypeError: ... takes 0 positional arguments but 1 was given`, bo Python i tak przekazuje obiekt.
 - `imie = imie` zamiast `self.imie = imie` niczego nie zapisuje w obiekcie. Później `anna.imie` kończy się `AttributeError`.
 - Zła liczba podkreślników (`_init_`, `__init`) to zwykła metoda, której nikt nie wywoła. `Uczen("Anna", 34)` daje wtedy `TypeError: Uczen() takes no arguments`.
-- Zmienna wpisana pod `class`, poza metodą, to atrybut klasy, wspólny dla wszystkich obiektów. Zwykłe pola zakładaj w `__init__` przez `self.` (R.2, 2026 sty).
-- `self` nie liczy się do parametrów (2025 sty, 2026 sty). „Konstruktor z jednym parametrem” to `def __init__(self, rozmiar)` (R.2.2, 2025 sty).
-- Metody nie możesz zostawić pustej, bo to błąd składni. Na szkielet wpisz `pass` albo prosty `return`: niedokończona metoda wciąż może dać punkty.
+- Zmienna wpisana pod `class`, poza metodą, to atrybut klasy, wspólny dla wszystkich obiektów, a nie pole każdego z nich.
+- Zasady 2025 sty i 2026 sty nie liczą `self` do parametrów. „Konstruktor z jednym parametrem” to `def __init__(self, rozmiar)` (R.2.2, 2025 sty).
+- Metoda bez ciała to błąd składni (`IndentationError`). Gdy brakuje czasu, wpisz choć `pass` albo prosty `return`, żeby program się uruchomił.
 
 ## Powiązane
 
