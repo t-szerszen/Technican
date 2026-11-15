@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { znajdzDzial } from '../dane/dzialy'
-import { kartyDzialu, kotwica, znajdzKarte } from '../dane/karty'
+import { kartyDzialu, znajdzKarte } from '../dane/karty'
 import { zapiszWPamieci } from '../hooki/pamiec'
 import { przelaczOznaczenie, useOznaczenia } from '../hooki/useOznaczenia'
 import { adresKarty } from '../hooki/useTrasa'
@@ -26,6 +26,10 @@ function useCzytanie() {
     }
   }, [])
   return postep
+}
+
+function przewinDoSekcji(indeks) {
+  document.querySelectorAll('.tresc-karty h2')[indeks]?.scrollIntoView({ behavior: 'smooth' })
 }
 
 function linkZrodla(zrodlo) {
@@ -63,6 +67,7 @@ export default function WidokKarty({ idKarty }) {
         adresRodzica={`/dzial/${dzial.id}`}
         maly={`${dzial.nazwa} · ${karta.numer}`}
         tytul={karta.tytul}
+        postep={postep}
         sciezka={[
           { nazwa: dzial.nazwa, adres: `#/dzial/${dzial.id}` },
           { nazwa: karta.tytul },
@@ -88,9 +93,6 @@ export default function WidokKarty({ idKarty }) {
           Umiem
         </button>
       </Naglowek>
-      <div className="postep-czytania" aria-hidden="true">
-        <div style={{ transform: `scaleX(${postep})` }} />
-      </div>
 
       <div className="karta-tlo">
         <article className="karta">
@@ -184,15 +186,11 @@ export default function WidokKarty({ idKarty }) {
           <aside className="karta-spis" aria-label="Na tej stronie">
             <span className="etykieta">Na tej stronie</span>
             {karta.sekcje.map((sekcja, i) => (
-              <button
-                key={sekcja}
-                type="button"
-                onClick={() => document.getElementById(kotwica(sekcja))?.scrollIntoView({ behavior: 'smooth' })}
-              >
+              <button key={i} type="button" onClick={() => przewinDoSekcji(i)}>
                 <span className="mono">
                   {nrRozdzialu}.{i + 1}
                 </span>
-                {sekcja.replace(/`|\*\*|==/g, '')}
+                {sekcja}
               </button>
             ))}
           </aside>

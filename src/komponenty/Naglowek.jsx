@@ -4,7 +4,7 @@ import { wroc } from '../hooki/useTrasa'
 import Ikona from './Ikona'
 
 // Na telefonie: wstecz, tytuł i przyciski. Na desktopie ścieżka okruszków jak w designie.
-export default function Naglowek({ adresRodzica, maly, tytul, sciezka, children }) {
+export default function Naglowek({ adresRodzica, maly, tytul, sciezka, postep, children }) {
   const motyw = useMotyw()
   return (
     <header className="naglowek">
@@ -32,6 +32,11 @@ export default function Naglowek({ adresRodzica, maly, tytul, sciezka, children 
         <Ikona nazwa={motyw === 'ciemny' ? 'slonce' : 'ksiezyc'} />
       </button>
       {children}
+      {postep !== undefined && (
+        <div className="postep-czytania" aria-hidden="true">
+          <div style={{ transform: `scaleX(${postep})` }} />
+        </div>
+      )}
     </header>
   )
 }

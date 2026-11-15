@@ -6,11 +6,11 @@
 }
 
 .postep-czytania {
-  position: sticky;
-  top: calc(57px + env(safe-area-inset-top));
-  z-index: 10;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
   height: 3px;
-  margin-top: -1px;
   background: var(--line);
 }
 
@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 22px 16px calc(96px + env(safe-area-inset-bottom));
+  padding: 22px max(16px, env(safe-area-inset-right)) calc(96px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
 }
 
 .karta-plakietki {
@@ -106,7 +106,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  padding: 10px max(12px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   background: var(--panel);
   border-top: 1px solid var(--line);
 }
@@ -165,10 +165,6 @@
 @media (min-width: 1024px) {
   .karta-uklad {
     background: var(--bg);
-  }
-
-  .postep-czytania {
-    top: 64px;
   }
 
   .karta-tlo {
