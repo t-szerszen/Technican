@@ -87,4 +87,4 @@ Liczba 7 podzielona przez 2: 3.5
 
 - [Dane z klawiatury: input() i int()](#/karta/konsola/02-input-i-int)
 - [f-stringi i print()](#/karta/konsola/03-f-stringi)
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)

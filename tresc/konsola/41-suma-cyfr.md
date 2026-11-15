@@ -89,7 +89,7 @@ Sprawdzenie przez napis: 21
 
 ## Powiązane
 
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)
 - [Zamiana na system dwójkowy](#/karta/konsola/40-system-dwojkowy)
 - [Pętla while](#/karta/konsola/06-petla-while)
 - [Dane z klawiatury: input() i int()](#/karta/konsola/02-input-i-int)

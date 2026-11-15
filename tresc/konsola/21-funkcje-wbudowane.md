@@ -1,5 +1,5 @@
 ---
-tytul: "sum, len, min, max, sorted, reversed, zip"
+tytul: "sum, len, min, max, count, index, sorted"
 dzial: konsola
 tagi: [python, sum, len, min, max, sorted, sort, count, index, funkcje wbudowane]
 status: do-weryfikacji
@@ -39,8 +39,6 @@ Kiedy wolno ich użyć:
 | 2025 sty | `index`, `in` do wyszukiwania | tak, R.2.5 dopuszcza wbudowaną metodę |
 | 2025 sty | `sum(...) / len(...)` | tak, R.2.10 chce suma / rozmiar |
 | 2024 cze | `count` do punktów | treść tego nie zabrania |
-
-Żadne zadanie z arkuszy 2021-2026 nie wymaga `reversed` ani `zip` z tytułu karty. Napis odwracasz wycinkiem `[::-1]` (karta o palindromie).
 
 ## Składnia do zapamiętania
 

@@ -102,5 +102,5 @@ for szukana in [23, 91, 7]:
 
 - [Wyszukiwanie liniowe z -1](#/karta/konsola/26-wyszukiwanie-liniowe)
 - [Sortowanie przez wybieranie](#/karta/konsola/29-sortowanie-przez-wybieranie)
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)
 - [Pętla while](#/karta/konsola/06-petla-while)

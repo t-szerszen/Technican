@@ -1,11 +1,10 @@
 ---
-tytul: "//, % i divmod"
+tytul: "Dzielenie całkowite // i reszta %"
 dzial: konsola
 tagi: [python, dzielenie, modulo, reszta, parzystość, podzielność, cyfry]
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/reference/expressions.html#binary-arithmetic-operations
-  - https://docs.python.org/3/library/functions.html#divmod
   - Zasady oceniania INF.04 2023 sty (R.2.3), 2024 sty (R.2.2, R.2.6), 2025 sty (R.2.9)
 arkusze: [2024 sty, 2025 sty]
 ---
@@ -23,8 +22,6 @@ Dla liczb całkowitych zawsze zachodzi ==a = b · (a // b) + a % b==. `//` to wy
 | 17 | 5 | 3.4 | 3 | 2 | 5 · 3 + 2 = 17 |
 | 6 | 2 | 3.0 | 3 | 0 | reszta 0, więc parzysta |
 | 7 | 2 | 3.5 | 3 | 1 | reszta 1, więc nieparzysta |
-
-`divmod(17, 5)` zwraca obie wartości naraz, `(3, 2)`. Na egzaminie wystarczą `//` i `%`.
 
 Cyfry liczby 1234 bierzesz od końca: `% 10` daje ostatnią cyfrę, `// 10` ją obcina.
 
@@ -57,7 +54,6 @@ def suma_cyfr(liczba):
         suma = suma + liczba % 10
         liczba = liczba // 10
     return suma
-
 
 n = int(input("Podaj liczbę: "))
 if n % 2 == 0:

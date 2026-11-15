@@ -92,5 +92,5 @@ Czy 49 jest pierwsza? False
 ## Powiązane
 
 - [Sito Eratostenesa](#/karta/konsola/34-sito-eratostenesa)
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)
 - [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)

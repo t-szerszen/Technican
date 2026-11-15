@@ -87,6 +87,6 @@ Liczba nieparzystych: 3
 
 ## Powiązane
 
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)
 - [Ręcznie: min, max, suma, liczenie](#/karta/konsola/25-reczne-min-max-suma)
 - [Zadanie: klasa z tablicą](#/karta/konsola/44-zadanie-klasa-z-tablica)

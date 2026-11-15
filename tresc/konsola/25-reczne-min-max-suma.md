@@ -98,7 +98,7 @@ Dni z temperaturą -5 lub niższą: 2
 
 ## Powiązane
 
-- [sum, len, min, max, sorted, reversed, zip](#/karta/konsola/21-funkcje-wbudowane)
+- [sum, len, min, max, count, index, sorted](#/karta/konsola/21-funkcje-wbudowane)
 - [Sortowanie przez wybieranie](#/karta/konsola/29-sortowanie-przez-wybieranie)
 - [Średnia i liczby nieparzyste](#/karta/konsola/32-srednia-i-nieparzyste)
 - [Metody i metoda tylko dla klasy](#/karta/konsola/16-metody-i-metoda-prywatna)

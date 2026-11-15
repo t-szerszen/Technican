@@ -88,5 +88,5 @@ Kobieta
 ## Powiązane
 
 - [Pętla while](#/karta/konsola/06-petla-while)
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)
 - [Walidacja numeru PESEL](#/karta/konsola/43-pesel)

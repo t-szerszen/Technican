@@ -111,5 +111,5 @@ Suma kontrolna jest zgodna.
 
 - [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
 - [Pętla for i range()](#/karta/konsola/05-petla-for-i-range)
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)
 - [Suma cyfr](#/karta/konsola/41-suma-cyfr)

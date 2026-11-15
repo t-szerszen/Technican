@@ -81,6 +81,6 @@ Sprawdzenie bin(): 1101
 
 ## Powiązane
 
-- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
+- [Dzielenie całkowite // i reszta %](#/karta/konsola/24-dzielenie-i-reszta)
 - [Pętla while](#/karta/konsola/06-petla-while)
 - [Suma cyfr](#/karta/konsola/41-suma-cyfr)
