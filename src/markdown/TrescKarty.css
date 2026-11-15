@@ -1,0 +1,447 @@
+.tresc-karty {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  counter-reset: sekcja;
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+
+.tresc-karty > * {
+  margin: 0;
+  min-width: 0;
+}
+
+/* Pierwszy akapit to wstęp, jak pod tytułem w designie */
+.tresc-karty > p:first-child {
+  font-size: 16.5px;
+  color: var(--text-2);
+}
+
+.tresc-karty h2 {
+  margin-top: 14px;
+  font-size: 23px;
+  line-height: 1.2;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  scroll-margin-top: 80px;
+  counter-increment: sekcja;
+}
+
+.tresc-karty h2::before {
+  content: var(--rozdzial) "." counter(sekcja);
+  margin-right: 10px;
+  font-family: var(--font-kod);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-3);
+  vertical-align: 0.18em;
+}
+
+.tresc-karty h3 {
+  margin-top: 6px;
+  font-size: 18px;
+  line-height: 1.3;
+  font-weight: 620;
+}
+
+.tresc-karty code {
+  font-size: .86em;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: .08em .36em;
+  color: var(--text);
+}
+
+.tresc-karty strong {
+  font-weight: 600;
+}
+
+.tresc-karty img {
+  max-width: 100%;
+  height: auto;
+}
+
+.tresc-karty hr {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* Listy numerowane mają pinezki jak wyjaśnienia pod kodem w designie */
+.tresc-karty ol,
+.tresc-karty ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tresc-karty li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.tresc-karty li > ol,
+.tresc-karty li > ul {
+  margin-top: 8px;
+}
+
+.tresc-karty ol > li::before {
+  content: counter(list-item);
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: var(--ink);
+  color: var(--on-ink);
+  font: 600 10.5px/1 var(--font-kod);
+}
+
+.tresc-karty ul > li::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: .62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--line-2);
+}
+
+.tresc-karty blockquote {
+  padding: 2px 0 2px 14px;
+  border-left: 3px solid var(--line-2);
+  color: var(--text-2);
+}
+
+/* Ramki: na egzaminie, częsty błąd, wskazówka */
+.ramka {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.ramka > .ic {
+  margin-top: 2px;
+}
+
+.ramka > div {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ramka strong:first-child {
+  font-size: 13.5px;
+}
+
+.ramka p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.ramka-egzamin {
+  background: var(--warn-soft);
+  border-color: var(--warn-line);
+}
+
+.ramka-egzamin > .ic,
+.ramka-egzamin strong:first-child {
+  color: var(--warn);
+}
+
+.ramka-blad {
+  background: var(--bad-soft);
+}
+
+.ramka-blad > .ic,
+.ramka-blad strong:first-child {
+  color: var(--bad);
+}
+
+.ramka-wskazowka {
+  background: var(--ink-soft);
+}
+
+.ramka-wskazowka > .ic,
+.ramka-wskazowka strong:first-child {
+  color: var(--ink);
+}
+
+/* Tabela przewija się w swoim pudełku, nigdy cała strona */
+.tabela {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.tabela table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tabela th {
+  padding: 10px 14px;
+  text-align: left;
+  font-family: var(--font-kod);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: var(--code-bg);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.tabela td {
+  padding: 11px 14px;
+  vertical-align: top;
+  border-top: 1px solid var(--line);
+  color: var(--text-2);
+}
+
+.tabela tr:first-child td {
+  border-top: 0;
+}
+
+/* Blok kodu */
+.kod {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--code-bg);
+}
+
+.kod-pasek {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 2px 0 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.kod-plik {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kod-skopiowano {
+  font-size: 12px;
+  color: var(--ok);
+}
+
+.kod-pasek .przycisk-ikona {
+  color: var(--text-3);
+  border-radius: 10px;
+}
+
+.kod-przewijany {
+  overflow-x: auto;
+  font-size: 13px;
+  color: var(--text);
+  -webkit-overflow-scrolling: touch;
+}
+
+.kod-linie {
+  margin: 0;
+  min-width: 100%;
+  width: max-content;
+  padding: 10px 0;
+  font: inherit;
+  tab-size: 4;
+}
+
+.cl {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+  line-height: 22px;
+  white-space: pre;
+  padding-right: 10px;
+}
+
+.cl > .no {
+  flex: 0 0 34px;
+  text-align: right;
+  padding-right: 12px;
+  color: var(--gutter);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Kod w kodzie: zerujemy styl kodu w tekście */
+.tresc-karty .cl > .cx {
+  padding: 0 12px 0 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-size: inherit;
+  color: inherit;
+}
+
+.cl.hl {
+  background: var(--code-hl);
+}
+
+.cl.hl > .no {
+  color: var(--ink);
+}
+
+.cl > .pin {
+  margin-left: auto;
+}
+
+.k { color: var(--s-kw); }
+.f { color: var(--s-fn); }
+.s { color: var(--s-str); }
+.n { color: var(--s-num); }
+.c { color: var(--s-com); font-style: italic; }
+.b { color: var(--s-type); }
+.o { color: var(--s-op); }
+.at { color: var(--s-attr); }
+.tg { color: var(--s-tag); }
+
+/* Wynik: zawsze ciemny, w obu motywach */
+.wynik {
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--term-bg);
+  color: var(--term-text);
+}
+
+.wynik-pasek {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--term-line);
+}
+
+.wynik-pasek .ic {
+  color: var(--term-ok);
+}
+
+.wynik-pasek .mono {
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  color: var(--term-dim);
+}
+
+.wynik-legenda {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--term-dim);
+}
+
+.wynik-legenda .kwadrat {
+  width: 9px;
+  height: 9px;
+  background: var(--term-in);
+}
+
+.wynik-linie {
+  overflow-x: auto;
+  padding: 10px 14px 14px;
+  font-size: 13px;
+}
+
+.tl {
+  white-space: pre;
+  line-height: 22px;
+  min-height: 22px;
+  width: max-content;
+  min-width: 100%;
+}
+
+.tin {
+  color: var(--term-in);
+  box-shadow: inset 0 -2px 0 rgba(255, 216, 102, .45);
+}
+
+.tdim {
+  color: var(--term-dim);
+}
+
+/* Wynik zaraz pod kodem dokleja się do niego, jak w designie */
+.kod:has(+ .wynik) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
+}
+
+.kod + .wynik {
+  margin-top: -16px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+@media (min-width: 1024px) {
+  .tresc-karty {
+    gap: 20px;
+    font-size: 16.5px;
+    line-height: 1.7;
+  }
+
+  .tresc-karty > p:first-child {
+    font-size: 18px;
+    line-height: 1.65;
+  }
+
+  .tresc-karty h2 {
+    margin-top: 24px;
+    font-size: 27px;
+  }
+
+  .tresc-karty h2::before {
+    margin-right: 12px;
+    font-size: 13px;
+  }
+
+  .tresc-karty li {
+    font-size: 15.5px;
+  }
+
+  .kod-przewijany,
+  .wynik-linie {
+    font-size: 14px;
+  }
+
+  .cl > .no {
+    flex-basis: 46px;
+    padding-right: 18px;
+  }
+
+  .kod + .wynik {
+    margin-top: -20px;
+  }
+}
