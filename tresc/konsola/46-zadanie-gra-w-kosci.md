@@ -22,7 +22,7 @@ Plan rozwiązania:
 1. `rzuc_kostkami(liczba_kostek)`: pętla `append(random.randint(1, 6))`, zwraca listę. Liczba kostek przychodzi parametrem, nie ze zmiennej globalnej (R.2.5).
 2. `policz_punkty(wyniki)`: dodaje oczka tych wartości, które są w liście co najmniej 2 razy, i ==zwraca int== (R.2.2, R.2.6).
 3. Wczytanie liczby kostek w `while` do skutku, aż wpadnie w 3..10 (R.2.4, R.2.7).
-4. Pętla gry `while odpowiedz == "t"`: rzut, `Kostka <nr>: <oczka>` w pętli, punkty, pytanie t/n (R.2.3, R.2.8-R.2.10).
+4. Pętla gry `while odpowiedz == "t"`: rzut, `Kostka <nr>: <oczka>` w pętli, punkty, pytanie t/n na końcu obrotu (R.2.3, R.2.8-R.2.10).
 5. Po `t` gra wraca do rzutu z tą samą liczbą kostek, nie pyta o nią od nowa.
 
 Reguła punktów: idź po każdej kostce i dodaj jej oczka, jeśli ta sama wartość występuje w liście 2 lub więcej razy. Ślad dla `[1, 5, 2, 2, 5]`:
@@ -35,17 +35,7 @@ Reguła punktów: idź po każdej kostce i dodaj jej oczka, jeśli ta sama warto
 | 4 | 2 | 2 | 2 | 9 |
 | 5 | 5 | 2 | 5 | 14 |
 
-Ślad dla `[2, 1, 2, 3, 2]`:
-
-| Kostka | Oczka | `wyniki.count(oczka)` | Dodane | `punkty` |
-| --- | --- | --- | --- | --- |
-| 1 | 2 | 3 | 2 | 2 |
-| 2 | 1 | 1 | 0 | 2 |
-| 3 | 2 | 3 | 2 | 4 |
-| 4 | 3 | 1 | 0 | 4 |
-| 5 | 2 | 3 | 2 | 6 |
-
-Wychodzi 14 i 6, tak jak w przykładach z treści.
+Wychodzi 14, jak w treści. Dla `[2, 1, 2, 3, 2]` wartość 2 ma `count` równe 3, więc dodaje się trzy razy: 2 + 2 + 2 = 6. Jedynka i trójka są pomijane.
 
 ## Składnia do zapamiętania
 
@@ -58,16 +48,14 @@ odpowiedz = "t"
 while odpowiedz == "t":
     wyniki = rzuc_kostkami(liczba_kostek)
     print(f"Liczba uzyskanych punktów: {policz_punkty(wyniki)}")
-    odpowiedz = ""
-    while odpowiedz != "t" and odpowiedz != "n":
-        odpowiedz = input("Jeszcze raz? (t/n) ")
+    odpowiedz = input("Jeszcze raz? (t/n) ")
 ```
 
 ## Przykład
 
 `random.seed(9038)` jest tylko po to, żeby wynik na karcie był zawsze ten sam (pierwszy rzut daje oczka z przykładu w treści). Na egzaminie go nie pisz.
 
-```python kosci.py {4,14,16,21,28,31}
+```python kosci.py {4,14,16,21,28,30}
 import random
 
 
@@ -97,9 +85,7 @@ while odpowiedz == "t":
     for i in range(liczba_kostek):
         print(f"Kostka {i + 1}: {wyniki[i]}")
     print(f"Liczba uzyskanych punktów: {policz_punkty(wyniki)}")
-    odpowiedz = ""
-    while odpowiedz != "t" and odpowiedz != "n":
-        odpowiedz = input("Jeszcze raz? (t/n) ")
+    odpowiedz = input("Jeszcze raz? (t/n) ")
 ```
 
 ```wynik
@@ -128,18 +114,17 @@ Jeszcze raz? (t/n) [[n]]
 3. Funkcja zwraca sumę, a wypisuje ją program główny.
 4. Warunek „poza zakresem” to `< 3 or > 10`. Pętla pyta, dopóki jest prawdziwy.
 5. Numer kostki to `i + 1`, bo indeksy liczą się od 0.
-6. Pytanie się powtarza przy literze innej niż `t` i `n`. Po `n` obie pętle się kończą.
+6. Po `t` pętla gry rusza od nowa. Po `n` warunek `odpowiedz == "t"` jest fałszywy i program się kończy.
 
 ## Pułapki
 
-- Egzaminator sprawdza granice: 2 i 11 mają być odrzucone, 3 i 10 przyjęte (R.2.7). Warunek `<= 3` albo `and` zamiast `or` psuje któryś koniec. Zrób zrzut dla każdej z tych prób.
+- Egzaminator sprawdza granice: 2 i 11 mają być odrzucone, 3 i 10 przyjęte (R.2.7). Warunek `<= 3` albo `and` zamiast `or` psuje któryś koniec. Arkusz każe zrobić zrzuty m.in. błędnej i poprawnej liczby kostek, kilku losowań, `t` i na końcu `n`.
 - Funkcja czytająca `liczba_kostek` z programu głównego bez parametru używa zmiennej globalnej i traci R.2.5.
 - `policz_punkty` musi mieć `return`. Samo `print` w środku nie daje R.2.2.
 - Dodawanie samej wartości raz (2 + 5 = 7 zamiast 14) to błąd reguły. Dodaje się oczka z każdej kostki w parze (R.2.6).
 - `input()` zwraca napis: bez `int()` porównanie `"5" < 3` rzuca `TypeError` (R.1.5).
-- Zamiast `count()` można liczyć w liście `ile = [0] * 7`, gdzie `ile[oczka] += 1`. Oba sposoby są w porządku.
-- Nazwa `tab` dla listy wyników nie spełnia R.1.4 w tym arkuszu. Pisz `wyniki`, `oczka`.
-- Nie zapomnij komentarza-nagłówka do wybranej funkcji według wzoru z części III.
+- Nazwy `tab`, `tablica` zasady z tego arkusza podają jako nieznaczące (R.1.4). Pisz `wyniki`, `oczka`.
+- Komentarz-nagłówek do wybranej funkcji według wzoru z części III.
 
 ## Powiązane
 

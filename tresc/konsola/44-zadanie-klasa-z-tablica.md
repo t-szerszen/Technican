@@ -13,20 +13,17 @@ arkusze: [2025 sty]
 
 ## Po co to jest
 
-Typ zadania: jedna klasa trzyma listę losowych liczb i jej rozmiar w polach prywatnych, a metody robią na niej typowe operacje: wypisanie, wyszukanie, nieparzyste, średnia. Program główny tworzy obiekt i wywołuje każdą metodę. To gotowy wzór, który zbiera wszystkie punkty R.1 i R.2.
+Typ zadania: jedna klasa trzyma listę losowych liczb i jej rozmiar w polach prywatnych, a metody robią na niej typowe operacje: wypisanie, wyszukanie, nieparzyste, średnia. Program główny tworzy obiekt i wywołuje każdą metodę. Poniżej pełny program, który spełnia w kodzie wszystkie kryteria R.1 i R.2 (zrzuty ekranu do R.1.6 i R.2.6 robisz osobno).
 
 ## Jak to działa
 
 Plan rozwiązania, w tej kolejności pisania:
 
-1. Klasa z dwoma polami `self.__liczby` i `self.__rozmiar`. Dwa podkreślniki to w Pythonie pole prywatne (R.2.1).
-2. `__init__(self, rozmiar)`: jeden parametr, zapis rozmiaru do pola, pętla `append(random.randint(1, 1000))` (R.2.2).
-3. Każda pętla idzie po `range(self.__rozmiar)`, nie po stałej liczbie (R.2.4).
-4. `wyswietl()` drukuje `f"{i}: {wartość}"` i niczego nie zwraca (R.2.3, R.2.7).
-5. `szukaj(szukana)` robi `return i` przy pierwszym trafieniu, a `return -1` dopiero za pętlą (R.2.5).
-6. `nieparzyste()` drukuje liczby z `% 2 != 0` i zwraca ich licznik (R.2.9).
-7. `srednia()` zwraca `suma / self.__rozmiar` (R.2.10).
-8. Program główny: obiekt z rozmiarem większym niż 20, wywołanie wszystkich metod, opisane wyniki. Gdy `szukaj` zwróci -1, ==nic nie wypisuje== (R.2.8).
+1. Pola `self.__liczby` i `self.__rozmiar`: dwa podkreślniki to w Pythonie pole prywatne (R.2.1).
+2. `__init__(self, rozmiar)`: jeden parametr, zapis do pola, losowanie `randint(1, 1000)` (R.2.2).
+3. Każda pętla idzie po `range(self.__rozmiar)` (R.2.4).
+4. `wyswietl()` nic nie zwraca, `szukaj()` zwraca indeks albo -1, `nieparzyste()` zwraca licznik, `srednia()` zwraca liczbę (R.2.3).
+5. Program główny: obiekt z rozmiarem większym niż 20 i wywołanie wszystkich metod z opisem wyników (R.2.7-R.2.10).
 
 Ślad `szukaj(12)` dla listy `[7, 12, 5, 12]`:
 
@@ -36,7 +33,7 @@ Plan rozwiązania, w tej kolejności pisania:
 | 1 | 12 | tak | `return 1`, koniec metody |
 | 2, 3 | — | — | nie są już sprawdzane |
 
-Drugie 12 (indeks 3) nie ma znaczenia: liczy się pierwsze wystąpienie. Gdyby żadne nie pasowało, pętla skończy się sama i wykona się `return -1`.
+Liczy się pierwsze wystąpienie. Gdyby żadna liczba nie pasowała, pętla skończy się sama i wykona się `return -1`.
 
 ## Składnia do zapamiętania
 
@@ -106,7 +103,7 @@ if indeks != -1:
     print(f"Liczba {szukana} jest pod indeksem {indeks}")
 ile_nieparzystych = tablica_liczb.nieparzyste()
 print(f"Razem nieparzystych: {ile_nieparzystych}")
-print(f"Średnia wszystkich elementów: {tablica_liczb.srednia():.2f}")
+print(f"Średnia wszystkich elementów: {tablica_liczb.srednia()}")
 ```
 
 ```wynik
@@ -136,26 +133,26 @@ Podaj szukaną liczbę: [[75]]
 Liczba 75 jest pod indeksem 6
 Liczby nieparzyste: 971 155 405 667 75 841 549 97 375 597 39 89 445 429
 Razem nieparzystych: 14
-Średnia wszystkich elementów: 377.14
+Średnia wszystkich elementów: 377.14285714285717
 ```
 
-1. Pole prywatne z rozmiarem. Wszystkie pętle w klasie liczą się od niego.
-2. Format „indeks: wartość”, jeden element w linii.
-3. `return` w środku pętli kończy metodę przy pierwszym trafieniu.
-4. Metoda drukuje nieparzyste, ale ==zwraca ich liczbę==, a komentarz do niej dopisuje program główny.
-5. Średnia to suma przez rozmiar, wynik jest typu `float`.
-6. Dla -1 nie ma `else`: przy braku liczby program milczy, tak każe treść.
+1. Pole z rozmiarem ustawione z parametru. Od niego liczą się wszystkie pętle.
+2. Format `<indeks>: <wartość>`, jeden element w linii (R.2.7).
+3. `return` w środku pętli kończy metodę przy pierwszym trafieniu (R.2.5).
+4. Metoda drukuje nieparzyste, ale ==zwraca ich liczbę==. Opis do tej liczby wypisuje program główny (R.2.9).
+5. Średnia to suma przez rozmiar, wynik jest typu `float` (R.2.10).
+6. Dla -1 nie ma `else`: przy braku liczby program ==nic nie wypisuje==, tak każe treść (R.2.8).
 
 ## Pułapki
 
-- Jeden podkreślnik (`_liczby`) to w Pythonie tylko umowa, a nie pole prywatne. Zasady wprost wymagają dwóch (R.2.1, 2025 sty).
-- Rozmiar 20 to za mało: obiekt ma mieć więcej niż 20 elementów (R.2.1). Bezpiecznie: 21 albo 50.
-- `for i in range(21)` zamiast `range(self.__rozmiar)` zrywa związek z polem i kosztuje R.2.4.
-- Szukanie bez `return`/`break` w pętli (z samą flagą do końca listy) nie daje R.2.5. Gotowe `liczby.index()` też jest dozwolone, ale rzuca `ValueError` przy braku, więc i tak trzeba ją obsłużyć.
-- Wypisanie „nie znaleziono” łamie R.2.8, bo treść każe przy braku nic nie wyświetlać.
-- `obiekt.__liczby` poza klasą kończy się `AttributeError`. Dane czytasz tylko przez metody.
-- Nazwa obiektu `x` czy `t` kosztuje R.1.4. Ogólna nazwa jest dozwolona tylko dla klasy i pola tablicowego.
-- Nie zapomnij komentarza-nagłówka do jednej, dowolnej metody według wzoru z części III.
+- Jeden podkreślnik (`_liczby`) to w Pythonie tylko umowa. Zasady wprost wymagają dwóch (R.2.1).
+- Rozmiar 20 to za mało: obiekt ma mieć więcej niż 20 elementów (R.2.1). Bezpiecznie: 21.
+- `range(21)` zamiast `range(self.__rozmiar)` zrywa związek z polem. Treść każe ograniczać polem wszystkie operacje, a R.2.4 sprawdza co najmniej jedną pętlę.
+- Szukanie z samą flagą, bez `return` w pętli, idzie do końca listy i nie spełnia R.2.5.
+- Wypisanie „nie znaleziono” łamie R.2.8.
+- `tablica_liczb.__liczby` poza klasą kończy się `AttributeError`. Dane czytasz tylko przez metody.
+- Nazwy w rodzaju `x`, `foo` nie spełniają R.1.4. Ogólną nazwę (`tab`, `tablica`) treść dopuszcza tylko dla klasy i pola tablicowego.
+- Komentarz-nagłówek do jednej, dowolnej metody według wzoru z części III (R.4.1-R.4.5).
 
 ## Powiązane
 

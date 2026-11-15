@@ -5,8 +5,6 @@ tagi: [python, zadanie, funkcje, lista dwuwymiarowa, random, bez powtórzeń, zl
 status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/library/random.html#random.randint
-  - https://docs.python.org/3/library/random.html#random.sample
-  - https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists
   - Arkusz INF.04 2025 cze, część I
   - Zasady oceniania INF.04 2025 cze (R.1.1-R.1.7, R.2.1-R.2.8)
 arkusze: [2025 cze]
@@ -39,8 +37,6 @@ Plan rozwiązania:
 
 Dlatego `while`, a nie `for i in range(6)`: przy powtórce trzeba losować jeszcze raz, więc nie wiadomo z góry, ile będzie obrotów.
 
-Gotowiec `random.sample(range(1, 50), 6)` też daje 6 różnych liczb. Ręczna pętla jest jednak bezpieczna, bo kryterium mówi o zaimplementowaniu losowania bez powtórzeń.
-
 ## Składnia do zapamiętania
 
 ```python
@@ -60,7 +56,7 @@ def losuj_zestawy(liczba_zestawow):
 
 `random.seed(6729)` jest tylko po to, żeby wynik na karcie był zawsze ten sam. Na egzaminie go nie pisz.
 
-```python loteria.py {10,13,19,26,32}
+```python loteria.py {10,13,19,29,35}
 import random
 
 
@@ -79,7 +75,10 @@ def losuj_zestawy(liczba_zestawow):
 def wyswietl_zestawy(zestawy):
     print("Zestawy wylosowanych liczb:")
     for i in range(len(zestawy)):
-        print(f"Losowanie {i + 1}:", *zestawy[i])
+        print(f"Losowanie {i + 1}:", end=" ")
+        for liczba in zestawy[i]:
+            print(liczba, end=" ")
+        print()
 
 
 def policz_wystapienia(zestawy):
@@ -121,19 +120,17 @@ Wystąpienia liczby 49: 3
 
 1. Bez powtórzeń: liczba, która już jest w zestawie, nie wchodzi drugi raz.
 2. `return` oddaje całą listę do programu głównego.
-3. `*zestawy[i]` rozpakowuje zestaw, więc `print` wypisze liczby rozdzielone spacją.
+3. `end=" "` zostawia kursor w tej samej linii, więc cały zestaw trafia do jednego wiersza.
 4. Licznik dla liczby 30 to `wystapienia[30]`, bez przeliczania indeksów.
 5. Wynik funkcji trzeba przypisać do zmiennej, inaczej przepada.
 
 ## Pułapki
 
-- Funkcja, która tworzy listę w środku i nic nie zwraca, gubi dane po wyjściu (R.2.1). Albo `return`, albo lista utworzona w programie głównym i przekazana parametrem.
-- Lista zestawów poza funkcjami, z której funkcje korzystają bez parametru, to zmienna globalna. To też kosztuje R.2.1.
-- `random.randint(1, 49)` obejmuje oba końce. `randrange(1, 49)` nigdy nie da 49.
-- `[[0] * 6] * n` tworzy n odwołań do ==tej samej== listy: zmiana jednego wiersza zmienia wszystkie. Buduj wiersze w pętli przez `append`.
+- Funkcja, która tworzy listę w środku i nic nie zwraca, gubi dane po wyjściu (R.2.1). Lista spoza funkcji używana w niej bez parametru to zmienna globalna, której treść zabrania. Oddawaj dane przez `return`, przyjmuj przez parametr.
+- Gotowa tablica `[[0] * 6] * n` to n odwołań do ==tej samej== listy: zmiana jednego wiersza zmienia wszystkie. Buduj wiersze w pętli przez `append`.
 - Wystarczy wypisać liczby, które wypadły choć raz (R.2.7), ale zliczanie ma objąć wszystkie liczby 1..49.
-- Nazwy `tab`, `tablica`, `kolekcja` nie spełniają R.1.4 w tym arkuszu.
-- Nie zapomnij komentarza-nagłówka do jednej, dowolnej funkcji według wzoru z części III.
+- Nazwy `tab`, `tablica`, `kolekcja` zasady z tego arkusza podają jako nieznaczące (R.1.4).
+- Komentarz-nagłówek do jednej, dowolnej funkcji według wzoru z części III.
 
 ## Powiązane
 

@@ -55,7 +55,9 @@ def __indeks_maksimum(self, start):
 def sortuj(self):
     for i in range(len(self.liczby) - 1):
         indeks_max = self.__indeks_maksimum(i)
-        self.liczby[i], self.liczby[indeks_max] = self.liczby[indeks_max], self.liczby[i]
+        bufor = self.liczby[i]
+        self.liczby[i] = self.liczby[indeks_max]
+        self.liczby[indeks_max] = bufor
 ```
 
 ## Przykład
@@ -114,18 +116,18 @@ Liczby posortowane malejąco: 15 12 9 8 8 6 4 3 0 -1
 ```
 
 1. Lista jest polem obiektu, a nie zmienną programu głównego.
-2. Dwa podkreślniki: metoda prywatna, wywołasz ją tylko przez `self.` wewnątrz klasy.
+2. Dwa podkreślniki: metoda widoczna tylko w klasie (R.2.4).
 3. Znak `>` daje kolejność malejącą. Przy `<` ta sama metoda szukałaby minimum.
-4. Wywołanie metody prywatnej z wnętrza klasy działa normalnie.
-5. Zamiana przez zmienną `bufor`: żadna wartość nie ginie.
+4. Metodę prywatną wołasz przez `self.` wewnątrz klasy. Spoza klasy `sortowanie.__indeks_maksimum(0)` daje `AttributeError`.
+5. Zamiana przez zmienną `bufor`: żadna wartość nie ginie (R.2.6).
 
 ## Pułapki
 
-- Zamiana bez bufora (`liczby[i] = liczby[k]`, potem `liczby[k] = liczby[i]`) kopiuje tę samą liczbę dwa razy, a druga przepada (R.2.6). Zapis krotkowy `a, b = b, a` z karty składni też jest dobry.
+- Zamiana bez bufora (`liczby[i] = liczby[k]`, potem `liczby[k] = liczby[i]`) kopiuje tę samą liczbę dwa razy, a druga przepada (R.2.6).
 - `max()`, `sorted()`, `sort()` i `index(max(...))` łamią treść zadania. Maksimum szukasz pętlą.
 - Szukanie maksimum od 0 zamiast od `start` za każdym razem znajduje tę samą, już ustawioną liczbę.
-- Metoda szukająca bez dwóch podkreślników jest publiczna i nie spełnia R.2.4.
-- Zwracaj indeks, a nie samą wartość: do zamiany i tak potrzebna jest pozycja maksimum.
+- Metoda szukająca bez dwóch podkreślników jest publiczna, a R.2.4 wymaga zasięgu prywatnego.
+- Treść pozwala zwrócić wartość albo indeks maksimum (R.2.2). Zwracaj indeks: do zamiany i tak potrzebna jest pozycja.
 - Komunikat przed wczytaniem jest wymagany (R.1.7). Nazwy `tab` czy `a` dla listy nie spełniają R.1.4 w tym arkuszu.
 - Nagłówki-komentarze w tym arkuszu dotyczą metody sortującej i szukającej (część III).
 

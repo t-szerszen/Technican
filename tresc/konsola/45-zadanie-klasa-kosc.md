@@ -14,7 +14,7 @@ arkusze: [2026 sty]
 
 ## Po co to jest
 
-Typ zadania: klasa opisująca jedną kość do gry. Ma licznik wszystkich utworzonych kości, publiczne pola (nazwy obrazków, oczka, numer obrazka, dostępność), konstruktor z argumentem albo bez, rzut, blokadę i zamianę oczek na słowo. Ta sama klasa wraca potem w testach jednostkowych, dlatego plik ma się nazywać `kosc.py`.
+Typ zadania: klasa opisująca jedną kość do gry. Ma licznik wszystkich utworzonych kości, publiczne pola (nazwy obrazków, oczka, numer obrazka, dostępność), konstruktor z argumentem albo bez, rzut, blokadę i zamianę oczek na słowo. W tym arkuszu tę samą klasę sprawdzają potem testy jednostkowe. Treść nie narzuca nazwy pliku. Tu jest to `kosc.py`, więc test robi `from kosc import Kosc`.
 
 ## Jak to działa
 
@@ -36,7 +36,7 @@ Co robi jeden konstruktor zależnie od argumentu:
 | `Kosc(4)` | 4 | 4 |
 | `Kosc(8)` | 8 | 0 (spoza 1..6) |
 
-Po co `if __name__ == "__main__":`? Gdy test robi `from kosc import Kosc`, Python wykonuje cały plik `kosc.py`. Bez tego warunku program główny ruszyłby w środku testów i czekałby na `input()`. Uruchomiony wprost (`python kosc.py`) plik ma `__name__` równe `"__main__"`, a zaimportowany ma `"kosc"`, więc blok wykona się tylko przy uruchomieniu.
+Po co `if __name__ == "__main__":`? Import w teście wykonuje cały plik `kosc.py`. Bez tego warunku program główny ruszyłby w środku testów i czekał na `input()`. Uruchomiony wprost plik ma `__name__` równe `"__main__"`, a zaimportowany ma `"kosc"`, więc blok rusza tylko przy uruchomieniu.
 
 ## Składnia do zapamiętania
 
@@ -128,10 +128,9 @@ Plik obrazu: kosc0.png
 - `self.liczba_instancji += 1` tworzy osobne pole w obiekcie i licznik klasy dalej ma 0. Pisz `Kosc.liczba_instancji` (R.2.4).
 - Dwa `def __init__` w jednej klasie nie dają dwóch konstruktorów: drugi zastępuje pierwszy. Zasady wprost wymagają w Pythonie jednego z `None` (R.2.3, 2026 sty).
 - `if not wartosc:` zamiast `if wartosc is None:` potraktuje 0 jak brak argumentu i wylosuje oczka, a 0 ma dać 0.
-- Liczbę z klawiatury zamień przez `int()`, inaczej `1 <= "4"` rzuca `TypeError`.
+- Liczbę z klawiatury zamień przez `int()`, inaczej `1 <= "4"` rzuca `TypeError` (R.1.5).
 - `id_obrazu` też musi się zmieniać w `rzuc()`, bo inaczej nazwa pliku nie pasuje do oczek (R.2.5).
 - Wypisz liczbę instancji ==po każdym== obiekcie, a nie raz na końcu (R.2.9).
-- `zablokuj()` nie przyjmuje parametru i nic nie zwraca (R.2.6). Odblokowanie nie jest potrzebne.
 
 ## Powiązane
 

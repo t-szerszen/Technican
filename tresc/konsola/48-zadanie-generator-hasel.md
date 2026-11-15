@@ -6,7 +6,6 @@ status: do-weryfikacji
 zrodla:
   - https://docs.python.org/3/library/random.html#random.choice
   - https://docs.python.org/3/library/random.html#random.randint
-  - https://docs.python.org/3/library/random.html#random.shuffle
   - https://docs.python.org/3/library/stdtypes.html#common-sequence-operations
   - Arkusz INF.04 2026 cze, część I
   - Zasady oceniania INF.04 2026 cze (R.1.1-R.1.7, R.2.1-R.2.7)
@@ -38,8 +37,6 @@ Wstawianie w losowe miejsce: `random.randint(0, len(haslo))` daje numer szczelin
 | 5 | `ż` | 4 | 2 | `R7żk#` |
 
 Znaki są dobierane po kolei zestawami, ale pozycje są losowe, więc w gotowym haśle nie widać kolejności zestawów.
-
-Druga, też poprawna droga: zbierz 12 znaków w liście, wymieszaj ją `random.shuffle(znaki)` i złącz przez `"".join(znaki)`. Wynik to napis.
 
 ## Składnia do zapamiętania
 
@@ -109,12 +106,10 @@ Hasło 5: LLŁ#7w(iQ2bŻ
 ## Pułapki
 
 - Doklejanie znaków zawsze na koniec (`haslo += znak`) daje stały układ: najpierw małe, potem wielkie i tak dalej. Brak losowych miejsc kosztuje R.2.4.
-- Napisy w Pythonie są niezmienne: `haslo[3] = "x"` rzuca `TypeError`. Dlatego wstawianie robi się przez sklejenie wycinków albo na liście.
-- `randint(0, len(haslo) - 1)` nigdy nie wstawi znaku na sam koniec. Górna granica to `len(haslo)`.
-- `random.choices(zestaw, k=3)` losuje z powtórzeniami, a `random.sample` bez nich. Pojedyncze `choice` w pętli jest najprostsze i zgodne z treścią.
-- Funkcja ma zwracać napis, a nie listę znaków. Po `shuffle` nie zapomnij `"".join()` (R.2.1, R.2.5).
+- Napisy w Pythonie są niezmienne: `haslo[3] = "x"` rzuca `TypeError`. Dlatego wstawianie robi się przez sklejenie wycinków.
+- `randint(0, len(haslo) - 1)` to błąd: przy pustym haśle daje `randint(0, -1)` i `ValueError`, a potem nigdy nie wstawi znaku na koniec. Górna granica to `len(haslo)`.
 - Sprawdź na wyniku: każde hasło ma 12 znaków, w tym 2 polskie i 2 specjalne.
-- Nie zapomnij jednego komentarza-nagłówka do dowolnej funkcji według wzoru z części III.
+- Komentarz-nagłówek do jednej, dowolnej funkcji według wzoru z części III.
 
 ## Powiązane
 
