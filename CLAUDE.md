@@ -13,8 +13,8 @@ Polecenia: `npm run dev`, `npm run build`, `npm run preview`, `npm run lint`.
 - Blok kodu: ` ```python petle.py {1,3-4} ` (język, opcjonalnie plik i wyróżnione linie). Wyróżnione
   linie dostają po kolei pinezki 1, 2, 3; lista numerowana pod kodem objaśnia je w tej kolejności.
   Języki: python, kotlin, xml, html, js, jsx, css, sql, cpp, json, ts, tsx (C#, Java i PHP bez kolorów).
-- Wynik programu: blok ` ```wynik ` zaraz pod kodem; `[[5]]` to dane z klawiatury, `$ ` na początku
-  linii to polecenie uruchomienia.
+- Wynik programu: blok ` ```wynik ` zaraz pod kodem; `[[5]]` na końcu linii (bez `[ ]` w środku) to dane
+  z klawiatury, `$ ` na początku linii to polecenie. Jednowierszowej listy list `[[1, 2]]` nie wypisuj samej w linii.
 - Ramki: `> [!egzamin]`, `> [!blad]`, `> [!wskazowka]`. Zakreślacz: `==tekst==` (bez kodu w środku);
   operator `==` w tekście pisz w backtickach.
 
