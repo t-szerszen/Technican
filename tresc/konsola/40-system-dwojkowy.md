@@ -101,7 +101,7 @@ Sprawdzenie int(): 13
 
 ## Powiązane
 
-- [Dzielenie całkowite i reszta](#/karta/konsola/24-dzielenie-i-reszta)
+- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
 - [Pętla while](#/karta/konsola/06-petla-while)
 - [Suma cyfr](#/karta/konsola/41-suma-cyfr)
-- [Funkcje wbudowane](#/karta/konsola/21-funkcje-wbudowane)
+- [sum, len, min, max, sorted, reversed, zip](#/karta/konsola/21-funkcje-wbudowane)

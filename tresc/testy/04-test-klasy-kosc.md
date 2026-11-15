@@ -131,5 +131,5 @@ OK
 - [Zadanie: klasa Kosc](#/karta/konsola/45-zadanie-klasa-kosc)
 - [Asercje](#/karta/testy/02-asercje)
 - [Czytanie wyniku testów](#/karta/testy/05-wynik-testow)
-- [Moduł random](#/karta/konsola/20-random)
+- [random: randint, choice, shuffle, sample](#/karta/konsola/20-random)
 - [Zrzuty ekranu](#/karta/dokumentacja/02-zrzuty-ekranu)

@@ -103,4 +103,4 @@ Czy 49 jest pierwsza? False
 
 - [Sito Eratostenesa](#/karta/konsola/34-sito-eratostenesa)
 - [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)
-- [Funkcje](#/karta/konsola/11-funkcje)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)

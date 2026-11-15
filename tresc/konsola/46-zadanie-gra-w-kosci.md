@@ -144,7 +144,7 @@ Jeszcze raz? (t/n) [[n]]
 ## Powiązane
 
 - [Pętla while](#/karta/konsola/06-petla-while)
-- [Funkcje](#/karta/konsola/11-funkcje)
-- [Moduł random](#/karta/konsola/20-random)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
+- [random: randint, choice, shuffle, sample](#/karta/konsola/20-random)
 - [Dane z klawiatury: input() i int()](#/karta/konsola/02-input-i-int)
-- [Komentarz-nagłówek](#/karta/dokumentacja/01-komentarz-naglowek)
+- [Komentarz-nagłówek funkcji](#/karta/dokumentacja/01-komentarz-naglowek)

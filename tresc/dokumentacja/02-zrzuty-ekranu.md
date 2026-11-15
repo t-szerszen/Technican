@@ -97,5 +97,5 @@ Razem zrzutów: 5
 
 - [Zadanie: gra w kości](#/karta/konsola/46-zadanie-gra-w-kosci)
 - [enumerate(): indeks i wartość](#/karta/konsola/07-enumerate)
-- [Wynik testów](#/karta/testy/05-wynik-testow)
+- [Czytanie wyniku testów](#/karta/testy/05-wynik-testow)
 - [Foldery i pakowanie](#/karta/dokumentacja/04-foldery-i-pakowanie)

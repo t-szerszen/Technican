@@ -97,6 +97,6 @@ Liczba znalezionych liczb pierwszych: 25
 ## Powiązane
 
 - [Liczby pierwsze](#/karta/konsola/33-liczby-pierwsze)
-- [Funkcje](#/karta/konsola/11-funkcje)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
 - [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
 - [Komentarz-nagłówek funkcji](#/karta/dokumentacja/01-komentarz-naglowek)

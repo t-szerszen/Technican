@@ -138,7 +138,7 @@ Wystąpienia liczby 49: 3
 ## Powiązane
 
 - [Lista dwuwymiarowa](#/karta/konsola/09-lista-dwuwymiarowa)
-- [Funkcje](#/karta/konsola/11-funkcje)
-- [Moduł random](#/karta/konsola/20-random)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
+- [random: randint, choice, shuffle, sample](#/karta/konsola/20-random)
 - [Pętla while](#/karta/konsola/06-petla-while)
-- [Komentarz-nagłówek](#/karta/dokumentacja/01-komentarz-naglowek)
+- [Komentarz-nagłówek funkcji](#/karta/dokumentacja/01-komentarz-naglowek)

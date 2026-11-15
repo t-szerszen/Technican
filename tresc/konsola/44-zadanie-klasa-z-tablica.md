@@ -159,9 +159,9 @@ Razem nieparzystych: 14
 
 ## Powiązane
 
-- [Pola prywatne](#/karta/konsola/14-pola-prywatne)
-- [Klasa i konstruktor](#/karta/konsola/13-klasa-i-init)
-- [Wyszukiwanie liniowe](#/karta/konsola/26-wyszukiwanie-liniowe)
+- [Pola prywatne z `__`](#/karta/konsola/14-pola-prywatne)
+- [Klasa i `__init__`](#/karta/konsola/13-klasa-i-init)
+- [Wyszukiwanie liniowe z -1](#/karta/konsola/26-wyszukiwanie-liniowe)
 - [Średnia i liczby nieparzyste](#/karta/konsola/32-srednia-i-nieparzyste)
-- [Moduł random](#/karta/konsola/20-random)
-- [Komentarz-nagłówek](#/karta/dokumentacja/01-komentarz-naglowek)
+- [random: randint, choice, shuffle, sample](#/karta/konsola/20-random)
+- [Komentarz-nagłówek funkcji](#/karta/dokumentacja/01-komentarz-naglowek)

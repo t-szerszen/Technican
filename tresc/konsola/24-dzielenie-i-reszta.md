@@ -105,5 +105,5 @@ Ujemne: -4 1 -3
 ## Powiązane
 
 - [Suma cyfr](#/karta/konsola/41-suma-cyfr)
-- [PESEL](#/karta/konsola/43-pesel)
-- [NWD: algorytm Euklidesa](#/karta/konsola/35-nwd-euklides)
+- [Walidacja numeru PESEL](#/karta/konsola/43-pesel)
+- [NWD algorytmem Euklidesa](#/karta/konsola/35-nwd-euklides)

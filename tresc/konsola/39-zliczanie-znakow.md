@@ -103,7 +103,7 @@ Litera o: 1
 
 ## Powiązane
 
-- [Metody napisów](#/karta/konsola/23-metody-napisow)
+- [join, split, strip, isdigit, count, in](#/karta/konsola/23-metody-napisow)
 - [Słowniki](#/karta/konsola/10-slowniki)
-- [Zadanie: loteria (zliczanie wystąpień liczb)](#/karta/konsola/47-zadanie-loteria)
+- [Zadanie: loteria](#/karta/konsola/47-zadanie-loteria)
 - [Palindrom i odwracanie napisu](#/karta/konsola/38-palindrom-i-odwracanie)

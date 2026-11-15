@@ -110,5 +110,5 @@ Dni z mrozem -5 lub większym: 2
 
 - [sum, len, min, max, sorted, reversed, zip](#/karta/konsola/21-funkcje-wbudowane)
 - [Sortowanie przez wybieranie](#/karta/konsola/29-sortowanie-przez-wybieranie)
-- [Średnia i nieparzyste](#/karta/konsola/32-srednia-i-nieparzyste)
-- [Metody i metoda prywatna](#/karta/konsola/16-metody-i-metoda-prywatna)
+- [Średnia i liczby nieparzyste](#/karta/konsola/32-srednia-i-nieparzyste)
+- [Metody i metoda tylko dla klasy](#/karta/konsola/16-metody-i-metoda-prywatna)

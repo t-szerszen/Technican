@@ -102,4 +102,4 @@ for liczba in [0, 7, 14, 40, 73, 99, 120]:
 - [Zadanie: klasa Kosc](#/karta/konsola/45-zadanie-klasa-kosc)
 - [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
 - [Słowniki](#/karta/konsola/10-slowniki)
-- [Dzielenie całkowite i reszta](#/karta/konsola/24-dzielenie-i-reszta)
+- [//, % i divmod](#/karta/konsola/24-dzielenie-i-reszta)

@@ -118,8 +118,8 @@ Hasło 5: LLŁ#7w(iQ2bŻ
 
 ## Powiązane
 
-- [Moduł random](#/karta/konsola/20-random)
-- [Metody napisów](#/karta/konsola/23-metody-napisow)
+- [random: randint, choice, shuffle, sample](#/karta/konsola/20-random)
+- [join, split, strip, isdigit, count, in](#/karta/konsola/23-metody-napisow)
 - [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
-- [Funkcje](#/karta/konsola/11-funkcje)
-- [Komentarz-nagłówek](#/karta/dokumentacja/01-komentarz-naglowek)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
+- [Komentarz-nagłówek funkcji](#/karta/dokumentacja/01-komentarz-naglowek)

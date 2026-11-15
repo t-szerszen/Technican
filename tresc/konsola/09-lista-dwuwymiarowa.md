@@ -115,5 +115,5 @@ Pierwsza liczba drugiego zestawu: 10
 
 - [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
 - [Słowniki](#/karta/konsola/10-slowniki)
-- [Moduł random](#/karta/konsola/20-random)
+- [random: randint, choice, shuffle, sample](#/karta/konsola/20-random)
 - [Zadanie: loteria](#/karta/konsola/47-zadanie-loteria)

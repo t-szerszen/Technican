@@ -99,6 +99,6 @@ Podaj liczbę naturalną n: [[5]]
 
 ## Powiązane
 
-- [Funkcje](#/karta/konsola/11-funkcje)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
 - [Pętla for i range()](#/karta/konsola/05-petla-for-i-range)
 - [Ciąg Fibonacciego](#/karta/konsola/37-fibonacci)

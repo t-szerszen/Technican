@@ -105,4 +105,4 @@ Odpowiedź: t | dalej: True
 
 - [Dane z klawiatury: input() i int()](#/karta/konsola/02-input-i-int)
 - [Zliczanie znaków](#/karta/konsola/39-zliczanie-znakow)
-- [PESEL](#/karta/konsola/43-pesel)
+- [Walidacja numeru PESEL](#/karta/konsola/43-pesel)

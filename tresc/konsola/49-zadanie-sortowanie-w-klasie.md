@@ -132,6 +132,6 @@ Liczby posortowane malejąco: 15 12 9 8 8 6 4 3 0 -1
 ## Powiązane
 
 - [Sortowanie przez wybieranie](#/karta/konsola/29-sortowanie-przez-wybieranie)
-- [Metody i metoda prywatna](#/karta/konsola/16-metody-i-metoda-prywatna)
-- [Ręczne min, max i suma](#/karta/konsola/25-reczne-min-max-suma)
-- [Klasa i konstruktor](#/karta/konsola/13-klasa-i-init)
+- [Metody i metoda tylko dla klasy](#/karta/konsola/16-metody-i-metoda-prywatna)
+- [Ręcznie: min, max, suma, liczenie](#/karta/konsola/25-reczne-min-max-suma)
+- [Klasa i `__init__`](#/karta/konsola/13-klasa-i-init)

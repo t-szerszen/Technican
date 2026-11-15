@@ -94,6 +94,6 @@ To jest palindrom.
 
 ## Powiązane
 
-- [Metody napisów](#/karta/konsola/23-metody-napisow)
+- [join, split, strip, isdigit, count, in](#/karta/konsola/23-metody-napisow)
 - [Listy i wycinki](#/karta/konsola/08-listy-i-wycinki)
 - [Zliczanie znaków](#/karta/konsola/39-zliczanie-znakow)

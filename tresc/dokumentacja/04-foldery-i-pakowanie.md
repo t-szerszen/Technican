@@ -117,4 +117,4 @@ W konsola.zip: ['KoscProjekt/', 'KoscProjekt/.idea/', 'KoscProjekt/main.py']
 
 - [Plik egzamin](#/karta/dokumentacja/03-plik-egzamin)
 - [Zrzuty ekranu](#/karta/dokumentacja/02-zrzuty-ekranu)
-- [Wynik testów](#/karta/testy/05-wynik-testow)
+- [Czytanie wyniku testów](#/karta/testy/05-wynik-testow)

@@ -102,4 +102,4 @@ Wiersz 0: [9, 0, 0] wiersz 1: [0, 0, 0]
 
 - [Pętla for i range()](#/karta/konsola/05-petla-for-i-range)
 - [Lista dwuwymiarowa](#/karta/konsola/09-lista-dwuwymiarowa)
-- [Metody napisów](#/karta/konsola/23-metody-napisow)
+- [join, split, strip, isdigit, count, in](#/karta/konsola/23-metody-napisow)

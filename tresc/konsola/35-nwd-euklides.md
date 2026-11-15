@@ -104,5 +104,5 @@ NWD(48, 18) = 6
 
 - [Dane z klawiatury: input() i int()](#/karta/konsola/02-input-i-int)
 - [Pętla while](#/karta/konsola/06-petla-while)
-- [Funkcje](#/karta/konsola/11-funkcje)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
 - [Komentarz-nagłówek funkcji](#/karta/dokumentacja/01-komentarz-naglowek)

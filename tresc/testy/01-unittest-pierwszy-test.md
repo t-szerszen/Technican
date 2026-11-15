@@ -113,5 +113,5 @@ OK
 
 - [Asercje](#/karta/testy/02-asercje)
 - [Czytanie wyniku testów](#/karta/testy/05-wynik-testow)
-- [NWD: algorytm Euklidesa](#/karta/konsola/35-nwd-euklides)
-- [Funkcje](#/karta/konsola/11-funkcje)
+- [NWD algorytmem Euklidesa](#/karta/konsola/35-nwd-euklides)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)

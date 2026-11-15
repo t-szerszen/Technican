@@ -106,6 +106,6 @@ autor: 1234
 
 ## Powiązane
 
-- [Funkcje](#/karta/konsola/11-funkcje)
-- [Metody i metoda prywatna](#/karta/konsola/16-metody-i-metoda-prywatna)
+- [Funkcje: def, parametry, return](#/karta/konsola/11-funkcje)
+- [Metody i metoda tylko dla klasy](#/karta/konsola/16-metody-i-metoda-prywatna)
 - [Zrzuty ekranu](#/karta/dokumentacja/02-zrzuty-ekranu)

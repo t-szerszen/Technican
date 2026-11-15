@@ -135,8 +135,8 @@ Plik obrazu: kosc0.png
 
 ## Powiązane
 
-- [Atrybut klasowy jako licznik](#/karta/konsola/15-atrybut-klasowy-licznik)
-- [Konstruktor z None](#/karta/konsola/19-konstruktor-z-none)
+- [Atrybut klasowy jako licznik instancji](#/karta/konsola/15-atrybut-klasowy-licznik)
+- [Jeden konstruktor z domyślnym None](#/karta/konsola/19-konstruktor-z-none)
 - [Liczba słownie](#/karta/konsola/42-liczba-slownie)
-- [Moduł random](#/karta/konsola/20-random)
-- [Test klasy Kosc](#/karta/testy/04-test-klasy-kosc)
+- [random: randint, choice, shuffle, sample](#/karta/konsola/20-random)
+- [Testy klasy Kosc](#/karta/testy/04-test-klasy-kosc)
