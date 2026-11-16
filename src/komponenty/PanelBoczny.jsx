@@ -19,7 +19,7 @@ export default function PanelBoczny({ trasa }) {
     <nav className="panel-boczny" aria-label="Działy i karty">
       <a href="#/" className="panel-logo">
         <Logo />
-        <span className="disp">kratka</span>
+        <span className="disp">Technikan</span>
         <span className="mono panel-egzamin">INF.04</span>
       </a>
 

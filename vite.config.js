@@ -10,8 +10,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeManifestIcons: false,
       manifest: {
-        name: 'kratka — notatki INF.04',
-        short_name: 'kratka',
+        name: 'Technikan — notatki INF.04',
+        short_name: 'Technikan',
         description: 'Ściąga ze składni na egzamin INF.04',
         lang: 'pl',
         start_url: '.',
