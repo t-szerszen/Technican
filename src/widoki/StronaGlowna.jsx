@@ -63,7 +63,7 @@ export default function StronaGlowna() {
     <main className="strona kratka od-gory">
       <div className="glowna-gora">
         <Logo />
-        <span className="disp glowna-nazwa">Technikan</span>
+        <span className="disp glowna-nazwa">Technican</span>
         <button
           type="button"
           className="przycisk-ikona z-ramka"

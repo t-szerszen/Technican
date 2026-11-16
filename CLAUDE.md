@@ -1,4 +1,4 @@
-# Technikan — notatki INF.04
+# Technican — notatki INF.04
 
 Osobista ściąga ze składni na egzamin INF.04 (technik programista). PWA na telefon, działa offline.
 React 19 + Vite (JavaScript), vite-plugin-pwa, czysty CSS. Bez backendu.
