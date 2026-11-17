@@ -17,7 +17,10 @@ export interface WpisOznaczenia {
 }
 export type WpisyOznaczen = Record<string, WpisOznaczenia>
 
-const KLUCZ = 'kratka:oznaczenia'
+// Nowy format ma nowy klucz, bo karta przeglądarki ze starą wersją aplikacji nie rozumie obiektów
+// i przy pierwszym kliknięciu nadpisałaby wszystkie wpisy. Stary klucz czytamy tylko do przeniesienia danych.
+const KLUCZ = 'kratka:oznaczenia-wpisy'
+const STARY_KLUCZ = 'kratka:oznaczenia'
 
 function jakoOznaczenie(wartosc: unknown): Oznaczenie | null {
   return wartosc === 'umiem' || wartosc === 'powtorka' ? wartosc : null
@@ -25,7 +28,7 @@ function jakoOznaczenie(wartosc: unknown): Oznaczenie | null {
 
 // Dawniej w pamięci był sam stan ('umiem'), teraz jest obiekt { stan, zmieniono }
 function czytajWpisy(): WpisyOznaczen {
-  const zapisane = czytajZPamieci(KLUCZ)
+  const zapisane = czytajZPamieci(KLUCZ) ?? czytajZPamieci(STARY_KLUCZ)
   const wynik: WpisyOznaczen = {}
   if (!zapisane || typeof zapisane !== 'object') return wynik
   for (const [id, wartosc] of Object.entries(zapisane)) {
