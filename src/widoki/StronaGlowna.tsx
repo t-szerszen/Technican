@@ -1,19 +1,19 @@
 import { dzialy, znajdzDzial } from '../dane/dzialy'
-import { karty, kartyDzialu, znajdzKarte } from '../dane/karty'
+import { karty, kartyDzialu, znajdzKarte, type Karta } from '../dane/karty'
 import { czytajZPamieci } from '../hooki/pamiec'
-import { useOznaczenia } from '../hooki/useOznaczenia'
+import { useOznaczenia, type Oznaczenia } from '../hooki/useOznaczenia'
 import { useMotyw, przelaczMotyw } from '../hooki/useMotyw'
 import { adresKarty } from '../hooki/useTrasa'
 import Ikona from '../komponenty/Ikona'
 import Logo from '../komponenty/Logo'
 import './StronaGlowna.css'
 
-function Kontynuuj({ karta, oznaczenia }) {
-  const dzial = znajdzDzial(karta.dzial)
+function Kontynuuj({ karta, oznaczenia }: { karta: Karta; oznaczenia: Oznaczenia }) {
+  const dzial = znajdzDzial(karta.dzial)!
   const wDziale = kartyDzialu(karta.dzial)
   const umiem = wDziale.filter((k) => oznaczenia[k.id] === 'umiem').length
 
-  function kolorPaska(k) {
+  function kolorPaska(k: Karta) {
     if (oznaczenia[k.id] === 'umiem') return 'var(--ok)'
     if (k.id === karta.id) return 'var(--ink)'
     return 'var(--line-2)'

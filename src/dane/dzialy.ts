@@ -1,5 +1,12 @@
+export interface Dzial {
+  id: string
+  nazwa: string
+  opis: string
+  kolor: string
+}
+
 // Kolejność taka jak na liście działów. Kolory to znaczniki z palety designu.
-export const dzialy = [
+export const dzialy: Dzial[] = [
   { id: 'konsola', nazwa: 'Konsola', opis: 'Python', kolor: 'var(--t-py)' },
   { id: 'web-frontend', nazwa: 'Web front-end', opis: 'HTML, CSS, JS, React', kolor: 'var(--t-re)' },
   { id: 'web-backend', nazwa: 'Web back-end', opis: 'Serwer i bazy danych', kolor: 'var(--t-bs)' },
@@ -9,6 +16,6 @@ export const dzialy = [
   { id: 'dokumentacja', nazwa: 'Dokumentacja i pakowanie', opis: 'Komentarze, zrzuty, archiwum', kolor: 'var(--t-kt)' },
 ]
 
-export function znajdzDzial(id) {
+export function znajdzDzial(id: string | undefined) {
   return dzialy.find((d) => d.id === id)
 }

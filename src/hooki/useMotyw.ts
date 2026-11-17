@@ -1,13 +1,19 @@
 import { useSyncExternalStore } from 'react'
 import { czytajZPamieci, zapiszWPamieci } from './pamiec'
 
+export type Motyw = 'jasny' | 'ciemny'
+
 const KLUCZ = 'kratka:motyw'
-const KOLOR_PASKA = { jasny: '#F3F3EF', ciemny: '#101114' }
+const KOLOR_PASKA: Record<Motyw, string> = { jasny: '#F3F3EF', ciemny: '#101114' }
+
+function jakoMotyw(wartosc: unknown): Motyw | null {
+  return wartosc === 'jasny' || wartosc === 'ciemny' ? wartosc : null
+}
 
 const media = window.matchMedia('(prefers-color-scheme: dark)')
 // null znaczy "tak jak system"; zapisujemy wybór tylko wtedy, gdy różni się od systemu
-let wybrany = czytajZPamieci(KLUCZ)
-const sluchacze = new Set()
+let wybrany = jakoMotyw(czytajZPamieci(KLUCZ))
+const sluchacze = new Set<() => void>()
 
 function czyCiemny() {
   return wybrany ? wybrany === 'ciemny' : media.matches
@@ -23,12 +29,14 @@ function zastosuj() {
 media.addEventListener('change', zastosuj)
 zastosuj()
 
-function subskrybuj(sluchacz) {
+function subskrybuj(sluchacz: () => void) {
   sluchacze.add(sluchacz)
-  return () => sluchacze.delete(sluchacz)
+  return () => {
+    sluchacze.delete(sluchacz)
+  }
 }
 
-export function ustawMotyw(motyw) {
+export function ustawMotyw(motyw: Motyw) {
   const zgodnyZSystemem = (motyw === 'ciemny') === media.matches
   wybrany = zgodnyZSystemem ? null : motyw
   zapiszWPamieci(KLUCZ, wybrany)
@@ -39,6 +47,6 @@ export function przelaczMotyw() {
   ustawMotyw(czyCiemny() ? 'jasny' : 'ciemny')
 }
 
-export function useMotyw() {
+export function useMotyw(): Motyw {
   return useSyncExternalStore(subskrybuj, czyCiemny) ? 'ciemny' : 'jasny'
 }

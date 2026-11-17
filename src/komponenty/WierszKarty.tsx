@@ -1,11 +1,21 @@
 import { znajdzDzial } from '../dane/dzialy'
+import type { Karta, Wycinek } from '../dane/karty'
+import type { Oznaczenie } from '../hooki/useOznaczenia'
 import { adresKarty } from '../hooki/useTrasa'
 import Ikona from './Ikona'
 import ZnakOznaczenia from './ZnakOznaczenia'
 import './Listy.css'
 
-export default function WierszKarty({ karta, oznaczenie, zDzialem = false, wycinek = null }) {
-  const dzial = znajdzDzial(karta.dzial)
+interface Wlasciwosci {
+  karta: Karta
+  oznaczenie: Oznaczenie | undefined
+  zDzialem?: boolean
+  wycinek?: Wycinek | null
+}
+
+export default function WierszKarty({ karta, oznaczenie, zDzialem = false, wycinek = null }: Wlasciwosci) {
+  // Karty spoza listy działów są odfiltrowane w dane/karty.ts, więc dział zawsze jest
+  const dzial = znajdzDzial(karta.dzial)!
   return (
     <li>
       <a href={adresKarty(karta)} className="wiersz">

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect } from 'react'
-import { ostatniKierunek, przejdz, useTrasa } from './hooki/useTrasa'
+import type { ReactNode } from 'react'
+import { ostatniKierunek, przejdz, useTrasa, type Trasa } from './hooki/useTrasa'
 import PanelBoczny from './komponenty/PanelBoczny'
 import DolnaNawigacja from './komponenty/DolnaNawigacja'
 import StronaGlowna from './widoki/StronaGlowna'
@@ -10,7 +11,9 @@ import Powtorki from './widoki/Powtorki'
 import NieZnaleziono from './widoki/NieZnaleziono'
 import './App.css'
 
-function wybierzWidok({ czesci, parametry }) {
+type Zakladka = 'dzialy' | 'szukaj' | 'powtorki'
+
+function wybierzWidok({ czesci, parametry }: Trasa): { widok: ReactNode; zakladka: Zakladka | null } {
   const [rodzaj, ...reszta] = czesci
   if (!rodzaj) return { widok: <StronaGlowna />, zakladka: 'dzialy' }
   if (rodzaj === 'dzial' && reszta.length === 1) {
@@ -29,7 +32,7 @@ function wybierzWidok({ czesci, parametry }) {
 }
 
 // Ostatnie przewinięcie każdej strony, żeby po powrocie z karty lista była tam, gdzie była
-const przewiniecia = new Map()
+const przewiniecia = new Map<string, number>()
 
 export default function App() {
   const trasa = useTrasa()
@@ -45,7 +48,7 @@ export default function App() {
   }, [trasa.sciezka])
 
   useEffect(() => {
-    function skrot(zdarzenie) {
+    function skrot(zdarzenie: KeyboardEvent) {
       if ((zdarzenie.metaKey || zdarzenie.ctrlKey) && zdarzenie.key.toLowerCase() === 'k') {
         zdarzenie.preventDefault()
         przejdz('/szukaj')

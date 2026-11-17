@@ -1,5 +1,5 @@
 // 1 karta, 2 karty, 5 kart, 22 karty, 12 kart
-export function liczbaKart(liczba) {
+export function liczbaKart(liczba: number) {
   const jednosci = liczba % 10
   const dziesiatki = liczba % 100
   if (liczba === 1) return '1 karta'

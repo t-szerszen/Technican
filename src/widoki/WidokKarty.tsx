@@ -28,11 +28,11 @@ function useCzytanie() {
   return postep
 }
 
-function przewinDoSekcji(indeks) {
+function przewinDoSekcji(indeks: number) {
   document.querySelectorAll('.tresc-karty h2')[indeks]?.scrollIntoView({ behavior: 'smooth' })
 }
 
-function linkZrodla(zrodlo) {
+function linkZrodla(zrodlo: string) {
   return /^https?:\/\//.test(zrodlo) ? (
     <a href={zrodlo} target="_blank" rel="noreferrer">
       {zrodlo.replace(/^https?:\/\/(www\.)?/, '')}
@@ -42,7 +42,7 @@ function linkZrodla(zrodlo) {
   )
 }
 
-export default function WidokKarty({ idKarty }) {
+export default function WidokKarty({ idKarty }: { idKarty: string }) {
   const oznaczenia = useOznaczenia()
   const postep = useCzytanie()
   const karta = znajdzKarte(idKarty)
@@ -53,7 +53,7 @@ export default function WidokKarty({ idKarty }) {
 
   if (!karta) return <NieZnaleziono />
 
-  const dzial = znajdzDzial(karta.dzial)
+  const dzial = znajdzDzial(karta.dzial)!
   const wDziale = kartyDzialu(karta.dzial)
   const indeks = wDziale.indexOf(karta)
   const poprzednia = wDziale[indeks - 1]

@@ -7,7 +7,7 @@ import WierszKarty from '../komponenty/WierszKarty'
 
 const filtryPowtorek = filtry.filter((f) => f.id === 'powtorka' || f.id === 'umiem').reverse()
 
-export default function Powtorki({ filtr }) {
+export default function Powtorki({ filtr }: { filtr: string | null }) {
   const oznaczenia = useOznaczenia()
   const aktywnyFiltr = filtr === 'umiem' ? 'umiem' : 'powtorka'
   const widoczne = karty.filter((k) => pasujeDoFiltra(k, aktywnyFiltr, oznaczenia))

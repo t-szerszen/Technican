@@ -1,6 +1,6 @@
 import { znajdzDzial } from '../dane/dzialy'
 import { kartyDzialu } from '../dane/karty'
-import { pasujeDoFiltra, useOznaczenia } from '../hooki/useOznaczenia'
+import { pasujeDoFiltra, useOznaczenia, type Filtr } from '../hooki/useOznaczenia'
 import { podmienAdres } from '../hooki/useTrasa'
 import FiltrOznaczen from '../komponenty/FiltrOznaczen'
 import Ikona from '../komponenty/Ikona'
@@ -9,7 +9,7 @@ import WierszKarty from '../komponenty/WierszKarty'
 import { liczbaKart } from '../komponenty/odmiana'
 import NieZnaleziono from './NieZnaleziono'
 
-export default function ListaTematow({ idDzialu, filtr }) {
+export default function ListaTematow({ idDzialu, filtr }: { idDzialu: string; filtr: string | null }) {
   const oznaczenia = useOznaczenia()
   const dzial = znajdzDzial(idDzialu)
   if (!dzial) return <NieZnaleziono />
@@ -19,8 +19,8 @@ export default function ListaTematow({ idDzialu, filtr }) {
   const widoczne = karty.filter((k) => pasujeDoFiltra(k, aktywnyFiltr, oznaczenia))
   const umiem = karty.filter((k) => oznaczenia[k.id] === 'umiem').length
 
-  function zmienFiltr(nowy) {
-    podmienAdres(`/dzial/${dzial.id}${nowy === 'wszystkie' ? '' : `?filtr=${nowy}`}`)
+  function zmienFiltr(nowy: Filtr) {
+    podmienAdres(`/dzial/${idDzialu}${nowy === 'wszystkie' ? '' : `?filtr=${nowy}`}`)
   }
 
   return (

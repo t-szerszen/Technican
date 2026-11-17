@@ -2,13 +2,13 @@ import { dzialy } from '../dane/dzialy'
 import { kartyDzialu } from '../dane/karty'
 import { useOznaczenia } from '../hooki/useOznaczenia'
 import { useMotyw, ustawMotyw } from '../hooki/useMotyw'
-import { adresKarty } from '../hooki/useTrasa'
+import { adresKarty, type Trasa } from '../hooki/useTrasa'
 import Ikona from './Ikona'
 import Logo from './Logo'
 import ZnakOznaczenia from './ZnakOznaczenia'
 import './PanelBoczny.css'
 
-export default function PanelBoczny({ trasa }) {
+export default function PanelBoczny({ trasa }: { trasa: Trasa }) {
   const oznaczenia = useOznaczenia()
   const motyw = useMotyw()
   const [rodzaj, idDzialu, plik] = trasa.czesci

@@ -1,7 +1,16 @@
-import { filtry, pasujeDoFiltra } from '../hooki/useOznaczenia'
+import type { Karta } from '../dane/karty'
+import { filtry, pasujeDoFiltra, type Filtr, type Oznaczenia } from '../hooki/useOznaczenia'
 import './Listy.css'
 
-export default function FiltrOznaczen({ aktywny, karty, oznaczenia, zmien, dostepne = filtry }) {
+interface Wlasciwosci {
+  aktywny: string
+  karty: Karta[]
+  oznaczenia: Oznaczenia
+  zmien: (filtr: Filtr) => void
+  dostepne?: typeof filtry
+}
+
+export default function FiltrOznaczen({ aktywny, karty, oznaczenia, zmien, dostepne = filtry }: Wlasciwosci) {
   return (
     <div className="filtr" role="group" aria-label="Filtr oznaczeń">
       {dostepne.map((f) => (

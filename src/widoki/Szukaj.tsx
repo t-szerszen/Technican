@@ -8,7 +8,7 @@ import WierszKarty from '../komponenty/WierszKarty'
 import { liczbaKart } from '../komponenty/odmiana'
 import './Szukaj.css'
 
-function adres(zapytanie, filtr) {
+function adres(zapytanie: string, filtr: string) {
   const parametry = new URLSearchParams()
   if (zapytanie) parametry.set('q', zapytanie)
   if (filtr && filtr !== 'wszystkie') parametry.set('filtr', filtr)
@@ -16,21 +16,21 @@ function adres(zapytanie, filtr) {
   return '/szukaj' + (reszta ? '?' + reszta : '')
 }
 
-export default function Szukaj({ zapytanie: zapytanieZAdresu, filtr }) {
+export default function Szukaj({ zapytanie: zapytanieZAdresu, filtr }: { zapytanie: string; filtr: string | null }) {
   const oznaczenia = useOznaczenia()
-  const pole = useRef(null)
+  const pole = useRef<HTMLInputElement>(null)
   // Pole ma własny stan; adres aktualizujemy obok, żeby po powrocie z karty zapytanie zostało.
   const [zapytanie, ustawZapytanie] = useState(zapytanieZAdresu)
   const aktywnyFiltr = filtr ?? 'wszystkie'
 
-  function zmienZapytanie(nowe) {
+  function zmienZapytanie(nowe: string) {
     ustawZapytanie(nowe)
     podmienAdres(adres(nowe, aktywnyFiltr))
   }
 
   // Klawiatura od razu, ale tylko przy pustym polu: po powrocie z karty nie zasłaniamy wyników.
   useEffect(() => {
-    if (!pole.current.value) pole.current.focus()
+    if (pole.current && !pole.current.value) pole.current.focus()
   }, [])
 
   const wyniki = zapytanie.trim()
@@ -63,7 +63,7 @@ export default function Szukaj({ zapytanie: zapytanieZAdresu, filtr }) {
             className="przycisk-ikona"
             onClick={() => {
               zmienZapytanie('')
-              pole.current.focus()
+              pole.current?.focus()
             }}
             aria-label="Wyczyść"
           >

@@ -5,7 +5,7 @@ import Ikona from '../komponenty/Ikona'
 const WPISANE = /\[\[([^[\]]*)\]\]$/
 
 // Wynik programu, zawsze ciemny jak terminal. Linia zaczynająca się od "$ " to polecenie uruchomienia.
-export default function BlokWyniku({ tekst }) {
+export default function BlokWyniku({ tekst }: { tekst: string }) {
   const linie = tekst.split('\n')
   const zKlawiatury = linie.some((linia) => WPISANE.test(linia))
   return (

@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { Highlight } from 'prism-react-renderer'
 import Ikona from '../komponenty/Ikona'
 
-const JEZYKI = {
+interface Jezyk {
+  prism: string
+  nazwa: string
+  kolor: string
+}
+
+const JEZYKI: Record<string, Jezyk> = {
   python: { prism: 'python', nazwa: 'Python', kolor: 'var(--t-py)' },
   py: { prism: 'python', nazwa: 'Python', kolor: 'var(--t-py)' },
   kotlin: { prism: 'kotlin', nazwa: 'Kotlin', kolor: 'var(--t-kt)' },
@@ -21,7 +27,7 @@ const JEZYKI = {
 }
 
 // Typy tokenów Prisma na klasy palety z designu (słowo kluczowe, funkcja, napis...)
-const KLASY = {
+const KLASY: Record<string, string> = {
   keyword: 'k',
   atrule: 'k',
   important: 'k',
@@ -55,7 +61,7 @@ const KLASY = {
 // Bierzemy najbardziej szczegółowy typ, ale interpunkcję tylko wtedy, gdy nic innego nie pasuje,
 // żeby np. nawiasy ostre znacznika XML miały kolor znacznika. Na granicy wstawki z innym kodem
 // (${...} w napisie JS, {...} w atrybucie JSX) się zatrzymujemy, żeby nie dziedziczyć koloru napisu czy znacznika.
-function klasaTokenu(typy, tresc) {
+function klasaTokenu(typy: string[], tresc: string) {
   // Prism liczy print jako słowo kluczowe (zaszłość po Pythonie 2), a w designie to funkcja wbudowana
   if (tresc === 'print' && typy.includes('keyword')) return 'b'
   for (let i = typy.length - 1; i >= 0; i--) {
@@ -67,8 +73,8 @@ function klasaTokenu(typy, tresc) {
 }
 
 // "petle.py {1,3-5}" -> nazwa pliku i zbiór wyróżnionych linii
-function czytajMeta(meta) {
-  const linie = new Set()
+function czytajMeta(meta: string) {
+  const linie = new Set<number>()
   const zakres = meta.match(/\{([\d,\s-]+)\}/)
   if (zakres) {
     for (const czesc of zakres[1].split(',')) {
@@ -80,7 +86,7 @@ function czytajMeta(meta) {
   return { plik, linie }
 }
 
-async function kopiujDoSchowka(tekst) {
+async function kopiujDoSchowka(tekst: string) {
   try {
     await navigator.clipboard.writeText(tekst)
     return true
@@ -99,10 +105,16 @@ async function kopiujDoSchowka(tekst) {
   }
 }
 
-export default function BlokKodu({ kod, jezyk, meta = '' }) {
+interface Wlasciwosci {
+  kod: string
+  jezyk: string
+  meta?: string
+}
+
+export default function BlokKodu({ kod, jezyk, meta = '' }: Wlasciwosci) {
   const [skopiowano, ustawSkopiowano] = useState(false)
-  const zegar = useRef(null)
-  const info = JEZYKI[jezyk] ?? { prism: 'text', nazwa: jezyk || 'Kod', kolor: 'var(--text-3)' }
+  const zegar = useRef<number | undefined>(undefined)
+  const info: Jezyk = JEZYKI[jezyk] ?? { prism: 'text', nazwa: jezyk || 'Kod', kolor: 'var(--text-3)' }
   const { plik, linie } = czytajMeta(meta)
 
   useEffect(() => () => clearTimeout(zegar.current), [])
@@ -111,7 +123,7 @@ export default function BlokKodu({ kod, jezyk, meta = '' }) {
     if (!(await kopiujDoSchowka(kod))) return
     ustawSkopiowano(true)
     clearTimeout(zegar.current)
-    zegar.current = setTimeout(() => ustawSkopiowano(false), 1600)
+    zegar.current = window.setTimeout(() => ustawSkopiowano(false), 1600)
   }
 
   // Pinezki numerujemy po kolei na wyróżnionych liniach; pod kodem lista numerowana je objaśnia.

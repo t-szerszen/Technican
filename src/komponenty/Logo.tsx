@@ -1,4 +1,4 @@
-export default function Logo({ rozmiar = 26 }) {
+export default function Logo({ rozmiar = 26 }: { rozmiar?: number }) {
   return (
     <svg viewBox="0 0 24 24" width={rozmiar} height={rozmiar} aria-hidden="true" style={{ flex: '0 0 auto' }}>
       <rect x="2" y="2" width="9" height="9" rx="2" style={{ fill: 'var(--ink)' }} />

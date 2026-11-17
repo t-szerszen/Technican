@@ -1,6 +1,7 @@
+import type { Oznaczenie } from '../hooki/useOznaczenia'
 import Ikona from './Ikona'
 
-export default function ZnakOznaczenia({ oznaczenie }) {
+export default function ZnakOznaczenia({ oznaczenie }: { oznaczenie: Oznaczenie | undefined }) {
   if (oznaczenie === 'umiem') {
     return (
       <span className="znak-oznaczenia znak-umiem">

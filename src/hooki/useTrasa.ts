@@ -1,13 +1,22 @@
 import { useSyncExternalStore } from 'react'
+import type { Karta } from '../dane/karty'
+
+export interface Trasa {
+  sciezka: string
+  czesci: string[]
+  parametry: URLSearchParams
+}
+
+type Kierunek = 'naprzod' | 'wstecz' | 'podmiana'
 
 // Trasy w hashu (#/dzial/konsola), bo aplikacja ma działać z dowolnego hostingu
 // i z dowolnego podfolderu, bez przekierowań po stronie serwera.
 
 // Każdy wpis historii dostaje swoją głębokość. Dzięki temu "Wróć" wie, czy jest
 // dokąd się cofnąć w obrębie aplikacji, a widok wie, czy przyszliśmy wstecz.
-let glebokosc = window.history.state?.glebokosc ?? 0
+let glebokosc: number = window.history.state?.glebokosc ?? 0
 let podmiana = false
-let kierunek = 'naprzod'
+let kierunek: Kierunek = 'naprzod'
 
 if (window.history.state?.glebokosc === undefined) {
   window.history.replaceState({ glebokosc }, '')
@@ -27,12 +36,12 @@ window.addEventListener('hashchange', () => {
   glebokosc = window.history.state.glebokosc
 })
 
-function subskrybuj(sluchacz) {
+function subskrybuj(sluchacz: () => void) {
   window.addEventListener('hashchange', sluchacz)
   return () => window.removeEventListener('hashchange', sluchacz)
 }
 
-export function useTrasa() {
+export function useTrasa(): Trasa {
   const hash = useSyncExternalStore(subskrybuj, () => window.location.hash)
   const [sciezka, zapytanie = ''] = hash.replace(/^#/, '').split('?')
   return {
@@ -46,22 +55,22 @@ export function ostatniKierunek() {
   return kierunek
 }
 
-export function przejdz(adres) {
+export function przejdz(adres: string) {
   window.location.hash = adres
 }
 
 // Zmienia adres bez dokładania wpisu do historii, np. przy pisaniu w wyszukiwarce.
-export function podmienAdres(adres) {
+export function podmienAdres(adres: string) {
   if (window.location.hash === '#' + adres) return
   podmiana = true
   window.location.replace('#' + adres)
 }
 
-export function wroc(adresRodzica) {
+export function wroc(adresRodzica: string) {
   if (glebokosc > 0) window.history.back()
   else podmienAdres(adresRodzica)
 }
 
-export function adresKarty(karta) {
+export function adresKarty(karta: Karta) {
   return `#/karta/${karta.id}`
 }

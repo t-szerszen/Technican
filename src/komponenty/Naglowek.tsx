@@ -1,10 +1,19 @@
-import { Fragment } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { useMotyw, przelaczMotyw } from '../hooki/useMotyw'
 import { wroc } from '../hooki/useTrasa'
 import Ikona from './Ikona'
 
 // Na telefonie: wstecz, tytuł i przyciski. Na desktopie ścieżka okruszków jak w designie.
-export default function Naglowek({ adresRodzica, maly, tytul, sciezka, postep, children }) {
+interface Wlasciwosci {
+  adresRodzica: string
+  maly?: string
+  tytul: string
+  sciezka: { nazwa: string; adres?: string }[]
+  postep?: number
+  children?: ReactNode
+}
+
+export default function Naglowek({ adresRodzica, maly, tytul, sciezka, postep, children }: Wlasciwosci) {
   const motyw = useMotyw()
   return (
     <header className="naglowek">

@@ -1,3 +1,5 @@
+import type { SVGProps } from 'react'
+
 // Ikony przerysowane z designu (siatka 24x24, kreska 1.75).
 const ksztalty = {
   wstecz: <path d="m15 6-6 6 6 6" />,
@@ -61,7 +63,15 @@ const ksztalty = {
   ),
 }
 
-export default function Ikona({ nazwa, rozmiar = 20, wypelniona = false, ...reszta }) {
+export type NazwaIkony = keyof typeof ksztalty
+
+interface Wlasciwosci extends SVGProps<SVGSVGElement> {
+  nazwa: NazwaIkony
+  rozmiar?: number
+  wypelniona?: boolean
+}
+
+export default function Ikona({ nazwa, rozmiar = 20, wypelniona = false, ...reszta }: Wlasciwosci) {
   return (
     <svg
       className="ic"
