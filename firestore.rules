@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Jeden dokument na użytkownika, widoczny tylko dla niego samego
+    match /uzytkownicy/{uid} {
+      allow read, delete: if wlasciciel(uid);
+      allow create, update: if wlasciciel(uid) && poprawnyDokument(request.resource.data);
+    }
+
+    // Wszystko inne jest zamknięte
+  }
+
+  function wlasciciel(uid) {
+    return request.auth != null && request.auth.uid == uid;
+  }
+
+  // Reguły nie umieją przejść pętlą po mapie, więc pojedyncze oznaczenia sprawdza aplikacja,
+  // a tu pilnujemy pól dokumentu, ich typów i rozmiaru mapy oznaczeń.
+  function poprawnyDokument(dane) {
+    return dane.keys().hasOnly(['oznaczenia', 'motyw', 'ostatniaKarta', 'zmieniono'])
+      && dane.keys().hasAll(['oznaczenia', 'zmieniono'])
+      && dane.oznaczenia is map
+      && dane.oznaczenia.size() <= 2000
+      && (!('motyw' in dane) || dane.motyw == null || dane.motyw in ['jasny', 'ciemny'])
+      && (!('ostatniaKarta' in dane) || dane.ostatniaKarta == null
+          || (dane.ostatniaKarta is string && dane.ostatniaKarta.size() <= 200))
+      && dane.zmieniono == request.time;
+  }
+}
