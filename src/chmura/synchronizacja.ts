@@ -21,6 +21,9 @@ export type StanSynchronizacji =
 // uid konta, z którym localStorage był już scalony. Jeśli loguje się ktoś inny albo to samo
 // konto po wylogowaniu, lokalne oznaczenia trzeba najpierw scalić z chmurą.
 const KLUCZ_KONTA = 'kratka:konto'
+// Motyw z konta, który to urządzenie już przyjęło. Przyjmujemy tylko nowy wybór z innego urządzenia;
+// inaczej każdy odczyt przestawiałby motyw ustawiony "tak jak system" na sztywno.
+const KLUCZ_MOTYWU_KONTA = 'kratka:motyw-konta'
 
 let stan: StanSynchronizacji = 'bez-konta'
 let sporne: SpornaKarta[] = []
@@ -73,7 +76,10 @@ function stanZOdczytu(odczyt: DocumentSnapshot): StanSynchronizacji {
 
 function przyjmij(dokument: Dokument) {
   przyjmijOznaczenia(dokument.oznaczenia)
-  if (dokument.motyw !== undefined) przyjmijMotyw(dokument.motyw)
+  if (dokument.motyw && dokument.motyw !== czytajZPamieci(KLUCZ_MOTYWU_KONTA)) {
+    zapiszWPamieci(KLUCZ_MOTYWU_KONTA, dokument.motyw)
+    przyjmijMotyw(dokument.motyw)
+  }
   if (dokument.ostatniaKarta !== undefined) przyjmijOstatnia(dokument.ostatniaKarta)
 }
 
@@ -90,27 +96,28 @@ function scalZKontem(odczyt: DocumentSnapshot, wybor: Wybor | null) {
     return
   }
 
-  // Motyw i ostatnia karta nie mają czasu zmiany, więc wygrywa to, co już jest na koncie
-  const motyw = naKoncie.motyw !== undefined ? naKoncie.motyw : wybranyMotyw()
+  // Motyw i ostatnia karta nie mają czasu zmiany, więc wygrywa to, co już jest na koncie.
+  // null z konta to brak wyboru, więc nie zasłania wyboru z urządzenia.
+  const motyw = naKoncie.motyw ?? wybranyMotyw()
   const ostatnia = naKoncie.ostatniaKarta ?? ostatniaKarta()
 
   const zmiany: Record<string, unknown> = {}
   if (wynik.doWyslania.length > 0) {
     zmiany.oznaczenia = Object.fromEntries(wynik.doWyslania.map((id) => [id, wpisDoChmury(wynik.wynik[id])]))
   }
-  if (naKoncie.motyw === undefined) zmiany.motyw = motyw
+  if (!naKoncie.motyw && motyw) zmiany.motyw = motyw
   if (naKoncie.ostatniaKarta === undefined && ostatnia) zmiany.ostatniaKarta = ostatnia
-  if (!odczyt.exists()) zmiany.oznaczenia ??= {}
 
   // merge: true dopisuje tylko podane karty i pola, reszty dokumentu nie rusza,
-  // nawet gdy dwa urządzenia scalają się w tym samym momencie
-  if (Object.keys(zmiany).length > 0) {
+  // nawet gdy dwa urządzenia scalają się w tym samym momencie. Pustej mapy oznaczeń
+  // nie wysyłamy, bo Firestore podmieniłby nią całą mapę na koncie.
+  if (Object.keys(zmiany).length > 0 || !odczyt.exists()) {
     setDoc(doc(chmura.baza, 'uzytkownicy', uid), { ...zmiany, zmieniono: serverTimestamp() }, { merge: true }).catch(
       (blad) => console.error('Nie udało się scalić oznaczeń z chmurą:', blad),
     )
   }
 
-  przyjmij({ oznaczenia: wynik.wynik, motyw, ostatniaKarta: ostatnia })
+  przyjmij({ oznaczenia: wynik.wynik, motyw: naKoncie.motyw, ostatniaKarta: ostatnia })
   sporne = []
   zgrane = true
   zapiszWPamieci(KLUCZ_KONTA, uid)
@@ -157,12 +164,15 @@ export function uruchomSynchronizacje() {
     if (!uid) {
       // Po wylogowaniu oznaczenia zostają na urządzeniu; przy następnym logowaniu zostaną scalone
       zapiszWPamieci(KLUCZ_KONTA, null)
+      zapiszWPamieci(KLUCZ_MOTYWU_KONTA, null)
       ustawStan('bez-konta')
       return
     }
     ustawStan('laczenie')
     przestanSluchac = onSnapshot(doc(baza, 'uzytkownicy', uid), { includeMetadataChanges: true }, naOdczyt, (blad) => {
+      // Po błędzie Firestore sam zamyka nasłuch; do ponownego logowania albo przeładowania zmiany zostają lokalnie
       console.error('Synchronizacja przerwana:', blad)
+      rozlacz()
       ustawStan('blad')
     })
   })

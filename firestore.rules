@@ -20,9 +20,8 @@ service cloud.firestore {
   // a tu pilnujemy pól dokumentu, ich typów i rozmiaru mapy oznaczeń.
   function poprawnyDokument(dane) {
     return dane.keys().hasOnly(['oznaczenia', 'motyw', 'ostatniaKarta', 'zmieniono'])
-      && dane.keys().hasAll(['oznaczenia', 'zmieniono'])
-      && dane.oznaczenia is map
-      && dane.oznaczenia.size() <= 2000
+      && dane.keys().hasAll(['zmieniono'])
+      && (!('oznaczenia' in dane) || (dane.oznaczenia is map && dane.oznaczenia.size() <= 2000))
       && (!('motyw' in dane) || dane.motyw == null || dane.motyw in ['jasny', 'ciemny'])
       && (!('ostatniaKarta' in dane) || dane.ostatniaKarta == null
           || (dane.ostatniaKarta is string && dane.ostatniaKarta.size() <= 200))
