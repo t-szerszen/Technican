@@ -6,6 +6,9 @@ import '@fontsource-variable/jetbrains-mono/wght.css'
 import '@fontsource-variable/jetbrains-mono/wght-italic.css'
 import './index.css'
 import App from './App'
+import { uruchomSynchronizacje } from './chmura/synchronizacja'
+
+uruchomSynchronizacje()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

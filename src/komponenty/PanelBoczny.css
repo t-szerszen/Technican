@@ -160,3 +160,25 @@
   gap: 12px;
   padding-top: 12px;
 }
+
+.panel-konto {
+  min-height: 44px;
+  padding-block: 4px;
+}
+
+.panel-konto .panel-nazwa {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.panel-konto-email {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.panel-konto .synchronizacja {
+  font-size: 12px;
+  font-weight: 400;
+}

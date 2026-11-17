@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { znajdzDzial } from '../dane/dzialy'
 import { kartyDzialu, znajdzKarte } from '../dane/karty'
-import { zapiszWPamieci } from '../hooki/pamiec'
+import { zapamietajOstatnia } from '../hooki/useOstatniaKarta'
 import { przelaczOznaczenie, useOznaczenia } from '../hooki/useOznaczenia'
 import { adresKarty } from '../hooki/useTrasa'
 import Ikona from '../komponenty/Ikona'
@@ -48,7 +48,7 @@ export default function WidokKarty({ idKarty }: { idKarty: string }) {
   const karta = znajdzKarte(idKarty)
 
   useEffect(() => {
-    if (karta) zapiszWPamieci('kratka:ostatnia', karta.id)
+    if (karta) zapamietajOstatnia(karta.id)
   }, [karta])
 
   if (!karta) return <NieZnaleziono />

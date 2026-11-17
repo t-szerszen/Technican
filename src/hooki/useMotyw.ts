@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { wyslijMotyw } from '../chmura/zapis'
 import { czytajZPamieci, zapiszWPamieci } from './pamiec'
 
 export type Motyw = 'jasny' | 'ciemny'
@@ -6,7 +7,7 @@ export type Motyw = 'jasny' | 'ciemny'
 const KLUCZ = 'kratka:motyw'
 const KOLOR_PASKA: Record<Motyw, string> = { jasny: '#F3F3EF', ciemny: '#101114' }
 
-function jakoMotyw(wartosc: unknown): Motyw | null {
+export function jakoMotyw(wartosc: unknown): Motyw | null {
   return wartosc === 'jasny' || wartosc === 'ciemny' ? wartosc : null
 }
 
@@ -39,6 +40,21 @@ function subskrybuj(sluchacz: () => void) {
 export function ustawMotyw(motyw: Motyw) {
   const zgodnyZSystemem = (motyw === 'ciemny') === media.matches
   wybrany = zgodnyZSystemem ? null : motyw
+  zapiszWPamieci(KLUCZ, wybrany)
+  zastosuj()
+  // Do chmury idzie sam wybór, bo inne urządzenie może mieć inny motyw systemu
+  wyslijMotyw(motyw)
+}
+
+export function wybranyMotyw() {
+  return wybrany
+}
+
+// Wybór z innego urządzenia albo null, gdy nikt jeszcze nie wybierał
+export function przyjmijMotyw(motyw: Motyw | null) {
+  const nowy = motyw && (motyw === 'ciemny') !== media.matches ? motyw : null
+  if (nowy === wybrany) return
+  wybrany = nowy
   zapiszWPamieci(KLUCZ, wybrany)
   zastosuj()
 }

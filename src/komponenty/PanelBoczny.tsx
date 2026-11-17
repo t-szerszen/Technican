@@ -1,3 +1,5 @@
+import { chmura } from '../chmura/firebase'
+import { useUzytkownik } from '../chmura/konto'
 import { dzialy } from '../dane/dzialy'
 import { kartyDzialu } from '../dane/karty'
 import { useOznaczenia } from '../hooki/useOznaczenia'
@@ -5,12 +7,14 @@ import { useMotyw, ustawMotyw } from '../hooki/useMotyw'
 import { adresKarty, type Trasa } from '../hooki/useTrasa'
 import Ikona from './Ikona'
 import Logo from './Logo'
+import StanSynchronizacji from './StanSynchronizacji'
 import ZnakOznaczenia from './ZnakOznaczenia'
 import './PanelBoczny.css'
 
 export default function PanelBoczny({ trasa }: { trasa: Trasa }) {
   const oznaczenia = useOznaczenia()
   const motyw = useMotyw()
+  const uzytkownik = useUzytkownik()
   const [rodzaj, idDzialu, plik] = trasa.czesci
   const otwartyDzial = rodzaj === 'dzial' || rodzaj === 'karta' ? idDzialu : null
   const otwartaKarta = rodzaj === 'karta' ? `${idDzialu}/${plik}` : null
@@ -70,6 +74,15 @@ export default function PanelBoczny({ trasa }: { trasa: Trasa }) {
           <Ikona nazwa="zakladka" rozmiar={16} />
           <span className="panel-nazwa">Powtórki</span>
         </a>
+        {chmura && (
+          <a href="#/konto" className="panel-dzial panel-konto" aria-current={rodzaj === 'konto' ? 'page' : undefined}>
+            <Ikona nazwa="osoba" rozmiar={16} />
+            <span className="panel-nazwa">
+              <span className="panel-konto-email">{uzytkownik ? uzytkownik.email : 'Zaloguj się'}</span>
+              <StanSynchronizacji />
+            </span>
+          </a>
+        )}
         <div className="segmenty" role="group" aria-label="Motyw">
           <button type="button" aria-pressed={motyw === 'jasny'} onClick={() => ustawMotyw('jasny')}>
             <Ikona nazwa="slonce" rozmiar={15} />

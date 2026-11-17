@@ -3,11 +3,13 @@ import type { ReactNode } from 'react'
 import { ostatniKierunek, przejdz, useTrasa, type Trasa } from './hooki/useTrasa'
 import PanelBoczny from './komponenty/PanelBoczny'
 import DolnaNawigacja from './komponenty/DolnaNawigacja'
+import PytanieOScalenie from './komponenty/PytanieOScalenie'
 import StronaGlowna from './widoki/StronaGlowna'
 import ListaTematow from './widoki/ListaTematow'
 import WidokKarty from './widoki/WidokKarty'
 import Szukaj from './widoki/Szukaj'
 import Powtorki from './widoki/Powtorki'
+import Konto from './widoki/Konto'
 import NieZnaleziono from './widoki/NieZnaleziono'
 import './App.css'
 
@@ -24,6 +26,9 @@ function wybierzWidok({ czesci, parametry }: Trasa): { widok: ReactNode; zakladk
   }
   if (rodzaj === 'szukaj') {
     return { widok: <Szukaj zapytanie={parametry.get('q') ?? ''} filtr={parametry.get('filtr')} />, zakladka: 'szukaj' }
+  }
+  if (rodzaj === 'konto') {
+    return { widok: <Konto />, zakladka: null }
   }
   if (rodzaj === 'powtorki') {
     return { widok: <Powtorki filtr={parametry.get('filtr')} />, zakladka: 'powtorki' }
@@ -63,6 +68,7 @@ export default function App() {
       <PanelBoczny trasa={trasa} />
       <div className={zakladka ? 'uklad-glowny z-nawigacja' : 'uklad-glowny'}>{widok}</div>
       {zakladka && <DolnaNawigacja aktywna={zakladka} />}
+      <PytanieOScalenie />
     </div>
   )
 }

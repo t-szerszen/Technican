@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react'
 import type { Karta } from '../dane/karty'
+import { wyslijOznaczenie } from '../chmura/zapis'
 import { czytajZPamieci, zapiszWPamieci } from './pamiec'
 
 export type Oznaczenie = 'umiem' | 'powtorka'
@@ -7,23 +8,54 @@ export type Oznaczenie = 'umiem' | 'powtorka'
 export type Oznaczenia = Record<string, Oznaczenie>
 export type Filtr = Oznaczenie | 'wszystkie' | 'brak'
 
+// Pod spodem każde oznaczenie pamięta, kiedy je zmieniono, żeby przy scalaniu z kontem wygrywał
+// nowszy zapis. Zdjęte oznaczenie zostaje jako stan null, bo to też jest zmiana do przeniesienia.
+// zmieniono to milisekundy; 0 znaczy "nie wiadomo kiedy", tak mają oznaczenia sprzed kont.
+export interface WpisOznaczenia {
+  stan: Oznaczenie | null
+  zmieniono: number
+}
+export type WpisyOznaczen = Record<string, WpisOznaczenia>
+
 const KLUCZ = 'kratka:oznaczenia'
 
-function czytajOznaczenia(): Oznaczenia {
+function jakoOznaczenie(wartosc: unknown): Oznaczenie | null {
+  return wartosc === 'umiem' || wartosc === 'powtorka' ? wartosc : null
+}
+
+// Dawniej w pamięci był sam stan ('umiem'), teraz jest obiekt { stan, zmieniono }
+function czytajWpisy(): WpisyOznaczen {
   const zapisane = czytajZPamieci(KLUCZ)
-  const wynik: Oznaczenia = {}
-  if (zapisane && typeof zapisane === 'object') {
-    for (const [id, wartosc] of Object.entries(zapisane)) {
-      if (wartosc === 'umiem' || wartosc === 'powtorka') wynik[id] = wartosc
+  const wynik: WpisyOznaczen = {}
+  if (!zapisane || typeof zapisane !== 'object') return wynik
+  for (const [id, wartosc] of Object.entries(zapisane)) {
+    if (typeof wartosc === 'string') {
+      const stan = jakoOznaczenie(wartosc)
+      if (stan) wynik[id] = { stan, zmieniono: 0 }
+    } else if (wartosc && typeof wartosc === 'object') {
+      const { stan, zmieniono } = wartosc as Record<string, unknown>
+      wynik[id] = { stan: jakoOznaczenie(stan), zmieniono: typeof zmieniono === 'number' ? zmieniono : 0 }
     }
   }
   return wynik
 }
 
-let oznaczenia = czytajOznaczenia()
+function tylkoStany(wpisy: WpisyOznaczen) {
+  const wynik: Oznaczenia = {}
+  for (const [id, wpis] of Object.entries(wpisy)) {
+    if (wpis.stan) wynik[id] = wpis.stan
+  }
+  return wynik
+}
+
+let wpisy = czytajWpisy()
+let oznaczenia = tylkoStany(wpisy)
 const sluchacze = new Set<() => void>()
 
-function powiadom() {
+function ustaw(nowe: WpisyOznaczen) {
+  wpisy = nowe
+  oznaczenia = tylkoStany(wpisy)
+  zapiszWPamieci(KLUCZ, wpisy)
   sluchacze.forEach((sluchacz) => sluchacz())
 }
 
@@ -37,18 +69,29 @@ function subskrybuj(sluchacz: () => void) {
 // Zmiana w innej karcie przeglądarki
 window.addEventListener('storage', (zdarzenie) => {
   if (zdarzenie.key !== KLUCZ) return
-  oznaczenia = czytajOznaczenia()
-  powiadom()
+  wpisy = czytajWpisy()
+  oznaczenia = tylkoStany(wpisy)
+  sluchacze.forEach((sluchacz) => sluchacz())
 })
+
+export function wpisyOznaczen() {
+  return wpisy
+}
+
+// Dane z chmury nie wracają do chmury, tylko podmieniają lokalną kopię
+export function przyjmijOznaczenia(nowe: WpisyOznaczen) {
+  if (JSON.stringify(nowe) === JSON.stringify(wpisy)) return
+  ustaw(nowe)
+}
 
 // Ponowne kliknięcie tego samego oznaczenia je zdejmuje.
 export function przelaczOznaczenie(idKarty: string, oznaczenie: Oznaczenie) {
-  const nowe = { ...oznaczenia }
-  if (nowe[idKarty] === oznaczenie) delete nowe[idKarty]
-  else nowe[idKarty] = oznaczenie
-  oznaczenia = nowe
-  zapiszWPamieci(KLUCZ, oznaczenia)
-  powiadom()
+  const wpis: WpisOznaczenia = {
+    stan: oznaczenia[idKarty] === oznaczenie ? null : oznaczenie,
+    zmieniono: Date.now(),
+  }
+  ustaw({ ...wpisy, [idKarty]: wpis })
+  wyslijOznaczenie(idKarty, wpis)
 }
 
 export function useOznaczenia() {

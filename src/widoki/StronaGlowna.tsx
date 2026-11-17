@@ -1,11 +1,14 @@
 import { dzialy, znajdzDzial } from '../dane/dzialy'
 import { karty, kartyDzialu, znajdzKarte, type Karta } from '../dane/karty'
-import { czytajZPamieci } from '../hooki/pamiec'
+import { chmura } from '../chmura/firebase'
+import { useUzytkownik } from '../chmura/konto'
 import { useOznaczenia, type Oznaczenia } from '../hooki/useOznaczenia'
 import { useMotyw, przelaczMotyw } from '../hooki/useMotyw'
+import { useOstatniaKarta } from '../hooki/useOstatniaKarta'
 import { adresKarty } from '../hooki/useTrasa'
 import Ikona from '../komponenty/Ikona'
 import Logo from '../komponenty/Logo'
+import StanSynchronizacji from '../komponenty/StanSynchronizacji'
 import './StronaGlowna.css'
 
 function Kontynuuj({ karta, oznaczenia }: { karta: Karta; oznaczenia: Oznaczenia }) {
@@ -56,7 +59,8 @@ function Kontynuuj({ karta, oznaczenia }: { karta: Karta; oznaczenia: Oznaczenia
 export default function StronaGlowna() {
   const oznaczenia = useOznaczenia()
   const motyw = useMotyw()
-  const ostatnia = znajdzKarte(czytajZPamieci('kratka:ostatnia'))
+  const uzytkownik = useUzytkownik()
+  const ostatnia = znajdzKarte(useOstatniaKarta())
   const umiemWszystkie = karty.filter((k) => oznaczenia[k.id] === 'umiem').length
 
   return (
@@ -64,6 +68,12 @@ export default function StronaGlowna() {
       <div className="glowna-gora">
         <Logo />
         <span className="disp glowna-nazwa">Technican</span>
+        {chmura && (
+          <a href="#/konto" className="przycisk-ikona z-ramka glowna-konto" aria-label={uzytkownik ? 'Konto' : 'Zaloguj się'}>
+            <Ikona nazwa="osoba" rozmiar={19} />
+            <StanSynchronizacji zOpisem={false} />
+          </a>
+        )}
         <button
           type="button"
           className="przycisk-ikona z-ramka"
