@@ -5,15 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:emulator": "vite --mode emulator",
+    "emulator": "npx -y firebase-tools@15 emulators:start --only auth,firestore --project demo-technican",
     "typy": "tsc --noEmit",
     "build": "npm run typy && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "reguly": "npx -y firebase-tools@15 deploy --only firestore:rules"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource-variable/ibm-plex-sans": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "firebase": "^13.4.0",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

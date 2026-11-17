@@ -12,6 +12,17 @@ dist
 dist-ssr
 *.local
 
+# Klucze Firebase trzymamy w .env.local; w repo są tylko wzór i ustawienia emulatora
+.env
+.env.*
+!.env.example
+!.env.emulator
+
+# Logi i dane emulatora Firebase
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

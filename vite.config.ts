@@ -28,6 +28,9 @@ export default defineConfig({
       workbox: {
         // Fonty mają też podzbiory cyrylicy, greki itd. Do offline wystarczy łaciński z polskimi znakami.
         globPatterns: ['**/*.{js,css,html,svg,png}', '**/*latin*.woff2'],
+        // Z Firebase główny plik JS ma ponad 1,5 MB, a powyżej domyślnych 2 MB Workbox
+        // po cichu pomija plik i aplikacja przestaje działać offline.
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
     }),
   ],
