@@ -1,0 +1,170 @@
+.konto {
+  justify-content: flex-start;
+}
+
+.konto-karta {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  padding: 22px 18px;
+  border-radius: 18px;
+  background: var(--sheet);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+@media (min-width: 1024px) {
+  .strona.konto > * {
+    max-width: 440px;
+  }
+
+  .konto-karta {
+    padding: 30px 28px;
+  }
+}
+
+.konto-karta > svg {
+  align-self: flex-start;
+}
+
+.konto-karta h1 {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.konto-opis {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--text-2);
+}
+
+.konto-email {
+  overflow-wrap: anywhere;
+}
+
+.konto-formularz {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.konto-pole {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.konto-pole small {
+  font-weight: 400;
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.konto-pole input {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  background: var(--sheet);
+  color: var(--text);
+  /* 16px, żeby iPhone nie powiększał strony przy wpisywaniu */
+  font: 400 16px var(--font-tekst);
+}
+
+.konto-pole input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px var(--ink-soft);
+}
+
+.konto-haslo {
+  position: relative;
+  display: flex;
+}
+
+.konto-haslo input {
+  padding-right: 50px;
+}
+
+.konto-haslo .przycisk-ikona {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: var(--text-3);
+}
+
+.konto-komunikat {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.konto-komunikat .ic {
+  margin-top: 1px;
+}
+
+.konto-blad {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+
+.konto-informacja {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.konto-link {
+  align-self: center;
+  min-height: 40px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.konto-awatar {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: var(--ink-soft);
+  color: var(--ink);
+}
+
+.konto-wiersz {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14.5px;
+  color: var(--text-2);
+}
+
+.konto-wiersz .ic {
+  margin-top: 2px;
+  color: var(--text-3);
+}
+
+.konto-przypis {
+  margin: -4px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-3);
+}
