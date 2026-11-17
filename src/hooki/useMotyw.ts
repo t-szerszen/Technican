@@ -50,9 +50,9 @@ export function wybranyMotyw() {
   return wybrany
 }
 
-// Wybór z innego urządzenia albo null, gdy nikt jeszcze nie wybierał
-export function przyjmijMotyw(motyw: Motyw | null) {
-  const nowy = motyw && (motyw === 'ciemny') !== media.matches ? motyw : null
+// Wybór z innego urządzenia. Zgodny z systemem zapisujemy jako null, tak jak przy ustawMotyw.
+export function przyjmijMotyw(motyw: Motyw) {
+  const nowy = (motyw === 'ciemny') !== media.matches ? motyw : null
   if (nowy === wybrany) return
   wybrany = nowy
   zapiszWPamieci(KLUCZ, wybrany)
