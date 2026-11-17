@@ -4,9 +4,20 @@ import { czytajZPamieci, zapiszWPamieci } from './pamiec'
 
 const KLUCZ = 'kratka:ostatnia'
 
-const zapisana = czytajZPamieci(KLUCZ)
-let ostatnia = typeof zapisana === 'string' ? zapisana : null
+function czytajOstatnia() {
+  const zapisana = czytajZPamieci(KLUCZ)
+  return typeof zapisana === 'string' ? zapisana : null
+}
+
+let ostatnia = czytajOstatnia()
 const sluchacze = new Set<() => void>()
+
+// Karta otwarta w innej karcie przeglądarki
+window.addEventListener('storage', (zdarzenie) => {
+  if (zdarzenie.key !== KLUCZ) return
+  ostatnia = czytajOstatnia()
+  sluchacze.forEach((sluchacz) => sluchacz())
+})
 
 function ustaw(idKarty: string | null) {
   ostatnia = idKarty
